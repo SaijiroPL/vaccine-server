@@ -34,14 +34,14 @@
                     </thead>
                     <tbody>
                     @forelse ($coupons as $ind => $u)
-                        <tr class="row-{{ (($coupons->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($coupons->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($coupons->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
                             <td>{{ $u->from_date }} ~ {{ $u->to_date }}</td>
                             <td>
-                                @if ($u->shop_no != 0)
-                                    {{ $u->name }}
+                                @if ($u->shop_id != 0)
+                                    {{ $u->shop_name }}
                                 @else
                                     共通
                                 @endif
@@ -58,8 +58,8 @@
                             </td>
                         <td>
                             <div class="p-action">
-                                <a href="/coupon/edit/{{ $u->no }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
-                                <a href="#" onclick="delete_confirm('{{ $u->no }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
+                                <a href="/coupon/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
                         </tr>

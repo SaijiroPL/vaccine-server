@@ -72,16 +72,15 @@ class AtecController extends Controller
         else
         {
             $atec = new Atec;
-            $atec->no = $atec->get_new_record_no();
         }
 
         $atec->kind = $request->input('kind');
         $atec->title = $request->input('title');
         $atec->content = $request->input('content');
-        $atec->date = $request->input('date');
         if ($request->file('thumbnail') != NULL)
         {
-            $atec->image = $atec->no.'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $atec->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $atec->image_path = asset(Storage::url('atec_image/').$atec->image);
             $request->file('thumbnail')->storeAs('public/atec_image/',$atec->image);
         }
         $atec->save();

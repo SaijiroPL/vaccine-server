@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                     @forelse ($carries as $ind => $u)
-                        <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($carries->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->date }}</td>

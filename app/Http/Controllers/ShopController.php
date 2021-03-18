@@ -99,12 +99,11 @@ class ShopController extends Controller
      */
     public function update(Request $request)
     {
-        if ( $request->input('no') != '')
-            $shop = Shop::find($request->input('no'));
+        if ( $request->input('id') != '')
+            $shop = Shop::find($request->input('id'));
         else
         {
             $shop = new Shop;
-            $shop->no = $shop->get_new_record_no();
         }
 
         $shop->name = $request->input('name');
@@ -115,7 +114,8 @@ class ShopController extends Controller
         $shop->tel_no = $request->input('tel_no');
         if ($request->file('thumbnail') != NULL)
         {
-            $shop->image = $shop->no.'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $shop->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $shop->image_path = asset(Storage::url('shop_image/').$shop->image);
             $request->file('thumbnail')->storeAs('public/shop_image/',$shop->image);
         }
         $shop->save();

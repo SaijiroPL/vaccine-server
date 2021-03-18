@@ -36,18 +36,14 @@ class TossupController extends Controller
      */
     public function tossup(Request $request)
     {
-        $no = $request->input('toss_no');
+        $id = $request->input('toss_no');
         $shop = $request->input('shop');
-        $tossup = Tossup::find($no);
+        $tossup = Tossup::find($id);
+
         $inquiry = new Inquiry;
-
-        $inquiry->no = $inquiry->get_new_record_no();
-        $inquiry->shop_no = $shop;
+        $inquiry->shop = $shop;
         $inquiry->content = $tossup->content;
-        $inquiry->customer = Shop::get_shop($tossup->shop_no)->name;
-        $inquiry->date = date('Y/m/d');
-        $inquiry->sender = "admin";
-
+        $inquiry->sender = $tossup->shop;
         $inquiry->save();
 
         $tossup->tossed = 1;
@@ -55,6 +51,4 @@ class TossupController extends Controller
 
         return redirect("/tossup");
     }
-
-
 }

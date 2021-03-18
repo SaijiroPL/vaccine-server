@@ -8,7 +8,7 @@
     <!--begin::Form-->
 <form class="m-form m-form--fit m-form--label-align-right" action="/atec/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($atec) ?  $atec->no : '' }}" />
+        <input type="hidden" name="no" value="{{ isset($atec) ?  $atec->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">アーテック通信ジャンル</label>
@@ -29,13 +29,6 @@
                 <div class="col-6">
                     <textarea class="form-control m-input m-input--air" name="content" required
                     data-msg-required="アーテック通信詳細を選択してください." rows="3">{{ isset($atec) ? $atec->content : '' }}</textarea>
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label for="example-datetime-local-input" class="col-2 col-form-label">日付</label>
-                <div class="col-6">
-                    <input class="form-control m-input" type="date-local" name="date" id="date"
-                    value="{{ isset($atec) ? $atec->date : '' }}" required data-msg-required="日付を選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -83,11 +76,6 @@
 <script>
     $(function() {
         $('form').validate();
-
-        $('#date').datepicker({
-            language: 'ja',
-            orientation:"bottom left"
-        });
 
         $('input[name="thumbnail"]').on('change', function() {
             $('input[name="change_thumb"]').val(1);

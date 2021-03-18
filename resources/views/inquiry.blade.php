@@ -14,10 +14,10 @@
                             <input type="text" class="form-control" name="shop_name" value="{{ $old['shop_name'] }}" placeholder="店舗">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
-                                        <span>
-                                            <i class="fa fa-search"></i>
-                                            <span>&nbsp;&nbsp;検 索&nbsp;&nbsp;</span>
-                                        </span>
+                                    <span>
+                                        <i class="fa fa-search"></i>
+                                        <span>&nbsp;&nbsp;検 索&nbsp;&nbsp;</span>
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -38,13 +38,13 @@
                     </thead>
                     <tbody>
                     @forelse ($inquiries as $ind => $u)
-                        <tr class="row-{{ (($inquiries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($inquiries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($inquiries->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                            <td>{{ $u->name }}</td>
-                            <td><pre>{{ $u->content }}</pre></td>
-                            <td>{{ $u->customer }}</td>
-                            <td>{{ $u->date }}</td>
-                            <td>{{ $u->sender }}</td>
+                            <td>{{ $u->shop_name }}</td>
+                            <td>{{ $u->content }}</td>
+                            <td>{{ $u->customer_name }}</td>
+                            <td>{{ $u->created_at }}</td>
+                            <td>{{ $u->sender_name }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>

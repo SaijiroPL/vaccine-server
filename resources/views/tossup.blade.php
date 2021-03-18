@@ -12,7 +12,6 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>申請名</td>
                             <td>申請内容</td>
                             <td>申請店舗</td>
                             <td>日付</td>
@@ -21,23 +20,16 @@
                     </thead>
                     <tbody>
                     @forelse ($tossups as $ind => $u)
-                        <tr class="row-{{ (($tossups->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($tossups->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($tossups->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                            <td>{{ $u->title }}</td>
                             <td>
-                                <pre>{{ $u->content }}</pre>
+                                {{ $u->content }}
                             </td>
-                            <td>
-                                @if ($u->shop_no != 0)
-                                    {{ $u->name }}
-                                @else
-                                    ""
-                                @endif
-                            </td>
-                            <td>{{ $u->date }}</td>
+                            <td>{{ $u->shop_name }}</td>
+                            <td>{{ $u->created_at }}</td>
                             <td>
                                 <div class="p-action">
-                                    <a href="#" class="btn btn-outline-primary" onclick ="tossup_record('{{ $u->no }}')">トスアップ</a>
+                                    <a href="#" class="btn btn-outline-primary btn-sm" onclick ="tossup_record('{{ $u->id }}')">トスアップ</a>
                                 </div>
                             </td>
                         </tr>
@@ -64,14 +56,14 @@
                 </button>
             </div>
             <form class="m-form m-form--fit m-form--label-align-right" id="toss_form" action="/tossup/tossup" method="POST" enctype="multipart/form-data">
-                <input type=hidden id="toss_no" name="toss_no" value="{{ $u->no }}"/>
+                <input type=hidden id="toss_no" name="toss_no" value="{{ $u->id }}"/>
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="recipient-name" class="form-control-label">ショップを選択してください.</label>
                         <select class="form-control m-input" name="shop">
                             @foreach ($shops as $ind => $shop)
-                                <option value="{{ $shop->no }}">{{ $shop->name }}</option>
+                                <option value="{{ $shop->id }}">{{ $shop->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -11,20 +11,25 @@ class Carrying extends Model
     protected $table = 't_carrying';
 
     protected $fillable = [
-        'shop_no', 'date', 'goods',
+        'shop_id', 'date', 'goods',
     ];
 
     public static function get_data($date, $goods) {
-        if ( $date == "")
+        if (!isset($date))
+        {
             $carries =  DB::table('t_carrying')
-                    ->join('t_shop', 't_carrying.shop_no', '=', 't_shop.no')
+                    ->select('t_carrying.*', 't_shop.name')
+                    ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $goods)
+                    ->latest()
                     ->paginate(10);
-        else
+        } else
             $carries =  DB::table('t_carrying')
-                    ->join('t_shop', 't_carrying.shop_no', '=', 't_shop.no')
+                    ->select('t_carrying.*, t_shop.name')
+                    ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $goods)
                     ->where('t_carrying.date', '=', $date)
+                    ->latest()
                     ->paginate(10);
 
         return $carries;

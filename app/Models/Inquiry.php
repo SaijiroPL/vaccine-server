@@ -9,24 +9,27 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model
 {
     protected $table = 't_inquiry';
-    protected $primaryKey = 'no';
-    public $timestamps = false;
 
     protected $fillable = [
-        'shop_no', 'content', 'customer', 'date', 'sender',
+        'shop', 'content', 'customer', 'sender', 'reply'
     ];
 
     public static function get_data($shop_name) {
 
-        $inquiries =  DB::table('t_inquiry')
-                ->join('t_shop', 't_inquiry.shop_no', '=', 't_shop.no')
-                ->where('t_shop.name', 'like', $shop_name)
+        $inquiries = DB::table('v_inquiry')
+                ->where('shop_name', 'like', $shop_name)
+                ->latest()
                 ->paginate(10);
 
         return $inquiries;
     }
 
-    public static function get_new_record_no() {
-        return  DB::table('t_inquiry')->max('no')+1;
+    public static function get_by_shop($shop)
+    {
+        return DB::table('v_inquiry')
+            ->where('shop', $shop)
+            ->where('reply', NULL)
+            ->latest()
+            ->get();
     }
 }

@@ -58,8 +58,7 @@ class MasterController extends Controller
         $old['goods'] = $goods;
         $goods = "%".$goods."%";
 
-        $carrying_model = new Carrying();
-        $carries = $carrying_model->get_data($date, $goods);
+        $carries = Carrying::get_data($date, $goods);
 
         return view('carrying', [
             'carries' => $carries,
@@ -74,8 +73,7 @@ class MasterController extends Controller
         $old['shop_name'] = $shop_name;
         $shop_name = "%".$shop_name."%";
 
-        $inquiry_model = new Inquiry();
-        $inquiries = $inquiry_model->get_data($shop_name);
+        $inquiries = Inquiry::get_data($shop_name);
 
         return view('inquiry', [
             'inquiries' => $inquiries,

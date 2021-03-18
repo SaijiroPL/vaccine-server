@@ -38,25 +38,25 @@
                     </thead>
                     <tbody>
                     @forelse ($notices as $ind => $u)
-                        <tr class="row-{{ (($notices->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($notices->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($notices->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->kind }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
                             <td>
-                                @if ($u->shop_no != 0)
-                                    {{ $u->name }}
+                                @if ($u->shop_id != 0)
+                                    {{ $u->shop_name }}
                                 @else
                                     全員
                                 @endif
                             </td>
-                            <td>{{ $u->date }}</td>
+                            <td>{{ $u->created_at }}</td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
                             </td>
                         <td>
                             <div class="p-action">
-                                <a href="#" onclick="agree_confirm('{{ $u->no }}');" class="btn btn-outline-primary">承認</a>
+                                <a href="#" onclick="agree_confirm('{{ $u->id }}');" class="btn btn-outline-primary">承認</a>
                             </div>
                         </td>
                         </tr>

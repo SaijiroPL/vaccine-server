@@ -9,41 +9,35 @@ use Illuminate\Database\Eloquent\Model;
 class Notice extends Model
 {
     protected $table = 't_notice';
-    protected $primaryKey = 'no';
-    public $timestamps = false;
 
     protected $fillable = [
-        'kind', 'title', 'content', 'date', 'shop_no', 'created_by', 'agree',
+        'kind', 'title', 'content', 'shop_id', 'agree',
     ];
 
     public static function get_data() {
-        $notices =  DB::table('v_notice')
+        $notices =  DB::table('v_notice')->latest()
                     ->paginate(10);
         return $notices;
     }
 
     public static function get_agree_data() {
         $notices =  DB::table('v_notice')
-                    ->where('agree','=',1)
+                    ->where('agree','=',1)->latest()
                     ->paginate(10);
         return $notices;
     }
 
     public static function get_application_data() {
         $coupons =  DB::table('v_notice')
-                    ->where('agree','=',0)
+                    ->where('agree','=',0)->latest()
                     ->paginate(10);
         return $coupons;
     }
 
-    public static function get_notice($no) {
+    public static function get_notice($id) {
         $notice =  DB::table('v_notice')
-                    ->where('no', '=', $no)
+                    ->where('id', '=', $id)
                     ->first();
         return $notice;
-    }
-
-    public static function get_new_record_no() {
-        return  DB::table('v_notice')->max('no')+1;
     }
 }

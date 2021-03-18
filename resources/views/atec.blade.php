@@ -33,19 +33,19 @@
                     </thead>
                     <tbody>
                     @forelse ($atecs as $ind => $u)
-                        <tr class="row-{{ (($atecs->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($atecs->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($atecs->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->kind }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
-                            <td>{{ $u->date }}</td>
+                            <td>{{ $u->created_at }}</td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
                             </td>
                         <td>
                             <div class="p-action">
-                                <a href="/atec/edit/{{ $u->no }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
-                                <a href="#" onclick="delete_confirm('{{ $u->no }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
+                                <a href="/atec/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
                         </tr>

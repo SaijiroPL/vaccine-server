@@ -102,20 +102,20 @@ class CouponController extends Controller
         else
         {
             $coupon = new Coupon;
-            $coupon->no = $coupon->get_new_record_no();
         }
 
         $coupon->title = $request->input('title');
         $coupon->content = $request->input('content');
         $coupon->from_date = $request->input('from_date');
         $coupon->to_date = $request->input('to_date');
-        $coupon->shop_no = $request->input('shop');
+        $coupon->shop_id = $request->input('shop');
         $coupon->reuse = $request->input('reuse');
         $coupon->agree = 1;
         $coupon->created_by = "admin";
         if ($request->file('thumbnail') != NULL)
         {
-            $coupon->image = $coupon->no.'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $coupon->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $coupon->image_path = asset(Storage::url('coupon_image/').$coupon->image);
             $request->file('thumbnail')->storeAs('public/coupon_image/',$coupon->image);
         }
         $coupon->save();

@@ -88,20 +88,19 @@ class NoticeController extends Controller
             $notice = Notice::find($request->input('no'));
         else
         {
-            $notice = new notice;
-            $notice->no = $notice->get_new_record_no();
+            $notice = new Notice;
         }
 
         $notice->kind = $request->input('kind');
         $notice->title = $request->input('title');
         $notice->content = $request->input('content');
-        $notice->date = $request->input('date');
-        $notice->shop_no = $request->input('shop');
+        $notice->shop_id = $request->input('shop');
         $notice->agree = 1;
         $notice->created_by = "admin";
         if ($request->file('thumbnail') != NULL)
         {
-            $notice->image = $notice->no.'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $notice->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $notice->image_path = asset(Storage::url('notice_image/').$notice->image);
             $request->file('thumbnail')->storeAs('public/notice_image/',$notice->image);
         }
         $notice->save();

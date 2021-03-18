@@ -8,7 +8,7 @@
     <!--begin::Form-->
     <form class="m-form m-form--fit m-form--label-align-right" action="/shop/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($shop) ?  $shop->no : '' }}" />
+        <input type="hidden" name="no" value="{{ isset($shop) ?  $shop->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-3 col-form-label">ショップ名</label>
@@ -17,27 +17,6 @@
                     required data-msg-required="ショップ名を選択してください.">
                 </div>
             </div>
-            {{-- <div class="form-group m-form__group row">
-                <label for="exampleSelect1" class="col-3 col-form-label">ショップエリア</label>
-                <div class="col-5">
-                    <select class="form-control m-input" name="province">
-                        @foreach ($provinces as $ind => $p)
-                            @if (isset($shop) && $shop->province_no == $p->no)
-                                <option value="{{ $p->no }}" selected>{{ $p->province_name }}</option>
-                            @else
-                                <option value="{{ $p->no }}">{{ $p->province_name }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label for="exampleSelect1" class="col-3 col-form-label">ショップエリア詳細</label>
-                <div class="col-5">
-                    <select class="form-control m-input" name="county">
-                    </select>
-                </div>
-            </div> --}}
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-3 col-form-label">住所</label>
                 <div class="col-5">
@@ -102,34 +81,6 @@
 
 @section('script')
 <script>
-    function onChangeProvince() {
-        var province_no = $('select[name="province"]').val();
-        $.ajax({
-            method: "POST",
-            url: "/shop/get_counties_by_province",
-            dataType: "json",
-            data:{
-                _token: '{{ csrf_token() }}',
-                province_no:province_no,
-            },
-            success: function (data) {
-                var html = '';
-                for (var i = 0; i < data.length; i++) {
-                    selected = ''
-@if (isset($shop))
-                    if (data[i].no == {{ $shop->county_no }})
-                        selected = 'selected';
-@endif
-                    html += '<option value="' + data[i].no + '" ' + selected + '>' + data[i].county_name + '</option>';
-                }
-                $('select[name="county"]').html(html);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Connection error. Please check the connection to the server.');
-            }
-        });
-    }
-
     $(function() {
         $('form').validate();
 
@@ -154,8 +105,6 @@
             $('#path_dsp').val($(this).val());
         });
 
-        {{-- $('select[name="province"]').on('change', onChangeProvince);
-        onChangeProvince(); --}}
 
     });
 </script>

@@ -6,7 +6,7 @@
 @section('content')
 <form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/shop/delete" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
-    <input type=hidden id="del_no" name="del_no" />
+    <input type=hidden id="del_id" name="del_no" />
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
         <div class="row">
@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     @forelse ($shops as $ind => $u)
-                        <tr class="row-{{ (($shops->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->no }}">
+                        <tr class="row-{{ (($shops->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($shops->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->province }}</td>
@@ -48,8 +48,8 @@
                             </td>
                         <td>
                             <div class="p-action">
-                                <a href="/shop/edit/{{ $u->no }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
-                                <a href="#" onclick="delete_confirm('{{ $u->no }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
+                                <a href="/shop/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
                         </tr>
@@ -70,7 +70,7 @@
 
 @section('script')
 <script>
-        function delete_confirm(del_no){
+        function delete_confirm(del_id){
 
             swal({title:"Are you sure?",
                     text:"You won't be able to revert this!",
@@ -81,7 +81,7 @@
                 .then(function(e){
                     if (e.value == 1)
                     {
-                        $('#del_no').val(del_no);
+                        $('#del_id').val(del_id);
                         $('#del_form').submit();
                     }
                 })

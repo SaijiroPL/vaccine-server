@@ -8,7 +8,7 @@
     <!--begin::Form-->
 <form class="m-form m-form--fit m-form--label-align-right" action="/notice/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($notice) ?  $notice->no : '' }}" />
+        <input type="hidden" name="no" value="{{ isset($notice) ?  $notice->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">おしらせジャンル</label>
@@ -35,26 +35,19 @@
                 <label for="exampleSelect1" class="col-2 col-form-label">対象ショップ</label>
                 <div class="col-6">
                     <select class="form-control m-input" name="shop">
-                        @if (isset($notice) && $notice->shop_no == 0)
+                        @if (isset($notice) && $notice->shop_id == 0)
                             <option value="0" selected>全員</option>
                         @else
                             <option value="0">全員</option>
                         @endif
                         @foreach ($shops as $ind => $shop)
-                            @if (isset($notice) && $shop->no == $notice->shop_no)
-                                <option value="{{ $shop->no }}" selected>{{ $shop->name }}</option>
+                            @if (isset($notice) && $shop->id == $notice->shop_id)
+                                <option value="{{ $shop->id }}" selected>{{ $shop->name }}</option>
                             @else
-                                <option value="{{ $shop->no }}">{{ $shop->name }}</option>
+                                <option value="{{ $shop->id }}">{{ $shop->name }}</option>
                             @endif
                         @endforeach
                     </select>
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label for="example-datetime-local-input" class="col-2 col-form-label">日付</label>
-                <div class="col-6">
-                    <input class="form-control m-input" type="date-local" name="date" id="date"
-                    value="{{ isset($notice) ? $notice->date : '' }}" required data-msg-required="日付を選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -102,11 +95,6 @@
 <script>
     $(function() {
         $('form').validate();
-
-        $('#date').datepicker({
-            language: 'ja',
-            orientation:"bottom left"
-        });
 
         $('input[name="thumbnail"]').on('change', function() {
             $('input[name="change_thumb"]').val(1);

@@ -8,7 +8,7 @@
     <!--begin::Form-->
 <form class="m-form m-form--fit m-form--label-align-right" action="/coupon/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($coupon) ?  $coupon->no : '' }}" />
+        <input type="hidden" name="no" value="{{ isset($coupon) ?  $coupon->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">クーポン名</label>
@@ -40,16 +40,16 @@
                 <label for="exampleSelect1" class="col-2 col-form-label">ショップ</label>
                 <div class="col-6">
                     <select class="form-control m-input" name="shop">
-                        @if (isset($coupon) && $coupon->shop_no == 0)
+                        @if (isset($coupon) && $coupon->shop_id == 0)
                             <option value="0" selected>共通</option>
                         @else
                             <option value="0">共通</option>
                         @endif
                         @foreach ($shops as $ind => $shop)
-                            @if (isset($coupon) && $shop->no == $coupon->shop_no)
-                                <option value="{{ $shop->no }}" selected>{{ $shop->name }}</option>
+                            @if (isset($coupon) && $shop->id == $coupon->shop_id)
+                                <option value="{{ $shop->id }}" selected>{{ $shop->name }}</option>
                             @else
-                                <option value="{{ $shop->no }}">{{ $shop->name }}</option>
+                                <option value="{{ $shop->id }}">{{ $shop->name }}</option>
                             @endif
                         @endforeach
                     </select>
