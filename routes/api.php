@@ -35,9 +35,25 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::post('/store/add_notice', 'Api\StoreApiController@add_notice');
     Route::any('/store/get_notice', 'Api\StoreApiController@get_notice');
     Route::any('/store/get_member', 'Api\StoreApiController@get_member');
+    Route::any('/store/register_member', 'Api\StoreApiController@register_member');
     Route::any('/store/get_bottle', 'Api\StoreApiController@get_bottle');
     Route::any('/store/get_bottle_use', 'Api\StoreApiController@get_bottle_use');
     Route::any('/store/bottle_input', 'Api\StoreApiController@bottle_input');
+    Route::any('/store/bottle_delete', 'Api\StoreApiController@bottle_delete');
+    Route::any('/store/index_carrying', 'Api\StoreApiController@index_carrying');
+    Route::any('/store/carrying_confirm', 'Api\StoreApiController@carrying_confirm');
+    Route::any('/store/history_image', 'Api\StoreApiController@history_image');
+    Route::any('/store/get_goods', 'Api\StoreApiController@get_goods');
+    Route::any('/store/get_carryings', 'Api\StoreApiController@get_carryings');
+    Route::any('/store/get_carrying_image_history', 'Api\StoreApiController@get_carrying_image_history');
+    Route::any('/store/getReservedDataByShop', 'Api\StoreApiController@getReservedDataByShop');
+    Route::any('/store/restDate_register', 'Api\StoreApiController@restDate_register');
+    Route::any('/store/restDate_register_time', 'Api\StoreApiController@restDate_register_time');
+    Route::any('/store/reserve_confirm', 'Api\StoreApiController@reserve_confirm');
+    Route::any('/store/calcualtion_save', 'Api\StoreApiController@calcualtion_save');
+    Route::any('/store/calcualtion_get', 'Api\StoreApiController@calcualtion_get');
+    Route::any('/store/calcualtion_get_goods', 'Api\StoreApiController@calcualtion_get_goods');
+    Route::any('/store/get_new_counts', 'Api\StoreApiController@get_new_counts');
 });
 
 Route::any('/client/test', 'Api\ClientApiController@test');
@@ -46,7 +62,24 @@ Route::post('/client/sendVerifyNumber', 'Api\ClientApiController@sendVerifyNumbe
 Route::post('/client/confirmVerifyNumber', 'Api\ClientApiController@confirmVerifyNumber');
 Route::post('/client/signup', 'Api\ClientApiController@signup');
 Route::post('/client/getLicense', 'Api\ClientApiController@getLicense');
+Route::get('/client/resetPassword', 'Api\ClientApiController@resetPassword');
+Route::post('/client/doResetPassword', 'Api\ClientApiController@doResetPassword');
 Route::group(['middleware'=>'token:client'], function() {
     Route::any('/logout', 'Api\ClientApiController@logout');
-
+    Route::any('/client/getNotice', 'Api\ClientApiController@getNotice');
+    Route::any('/client/getShopList', 'Api\ClientApiController@getShopList');
+    Route::any('/client/sendQuestion', 'Api\ClientApiController@sendQuestion');
+    Route::any('/client/getAreaList', 'Api\ClientApiController@getAreaList');
+    Route::any('/client/getShopByArea', 'Api\ClientApiController@getShopByArea');
+    Route::any('/client/getMyShop', 'Api\ClientApiController@getMyShop');
+    Route::any('/client/registerMyShop', 'Api\ClientApiController@registerMyShop');
+    Route::any('/client/getTimeList', 'Api\ClientApiController@getTimeList');
+    Route::any('/client/getReservedDataByShop', 'Api\ClientApiController@getReservedDataByShop');
+    Route::any('/client/reserveShop', 'Api\ClientApiController@reserveShop');
+    Route::any('/client/getSigongList', 'Api\ClientApiController@getSigongList');
+    Route::any('/client/getCouponList', 'Api\ClientApiController@getCouponList');
+    Route::any('/client/useCoupon', 'Api\ClientApiController@useCoupon');
+    Route::any('/client/getQuestionList', 'Api\ClientApiController@getQuestionList');
+    Route::any('/client/calcUnReadInquires', 'Api\ClientApiController@calcUnReadInquires');
+    Route::any('/client/setInquiryRead', 'Api\ClientApiController@setInquiryRead');
 });

@@ -70,7 +70,6 @@ class CouponController extends Controller
      */
     public function edit($no=NULL)
     {
-        //$no = $request->input('edit_no');
 
         $coupon_model = new Coupon();
         $shop_model = new Shop();

@@ -20,8 +20,14 @@ class Shop extends Model
         return $shops;
     }
 
-    public static function get_shops() {
-        return Shop::select('*')->get();
+    public static function get_shops($myShopID=NULL) {
+        if (isset($myShopID) && $myShopID !== '') {
+            $myShop = Shop::where('id', $myShopID)->get()->toArray();
+            $otherShop = Shop::where('id', '<>', $myShopID)->get()->toArray();
+            return array_merge($myShop, $otherShop);
+        } else {
+            return Shop::select('*')->get();
+        }
     }
 
     public static function get_shop($id) {
@@ -29,6 +35,24 @@ class Shop extends Model
                     ->where('id', '=', $id)
                     ->first();
         return $shop;
+    }
+
+    public static function get_shop_by_area_id($areaID)
+    {
+        return Shop::where('area_id', $areaID)
+            ->get();
+    }
+
+    public static function get_shop_by_postalCode($postalCode)
+    {
+        return Shop::where('postal', $postalCode)
+            ->first();
+    }
+
+    public static function get_shop_name($id) {
+        $shop = Shop::where('id', $id)
+                ->first();
+        return $shop->name;
     }
 
 }

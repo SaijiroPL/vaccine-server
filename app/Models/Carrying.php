@@ -34,4 +34,43 @@ class Carrying extends Model
 
         return $carries;
     }
+
+    public static function get_data_by_customer($customer_id, $shop_id)
+    {
+        $carries = DB::table('v_carrying')
+                    ->where('shop_id', $shop_id)
+                    ->where('customer_id', $customer_id)
+                    ->latest()
+                    ->get();
+        return $carries;
+    }
+
+    public static function get_data_by_shop($shop_id)
+    {
+        $carries = DB::table('v_carrying')
+                    ->where('shop_id', $shop_id)
+                    ->latest()
+                    ->get();
+        return $carries;
+    }
+
+    public static function get_last_carrying_date($customer_id, $shop_id)
+    {
+        $carrying = DB::table('t_carrying')
+                    ->select('date')
+                    ->where('shop_id', $shop_id)
+                    ->where('customer_id', $customer_id)
+                    ->latest()
+                    ->first();
+        return $carrying;
+    }
+
+    public static function get_sigong_by_customer($customerID, $sortMode)
+    {
+        return DB::table('v_carrying')
+            ->where('customer_id', $customerID)
+            ->orderBy('created_at', $sortMode)
+            ->get();
+    }
+
 }

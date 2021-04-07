@@ -11,7 +11,7 @@ class Manager extends Model
     protected $table = 't_manager';
     protected $primaryKey = 'id';
 
-    protected $fillable = ['email', 'password', 'store', 'device_id', 'access_token'];
+    protected $fillable = ['name, email', 'password', 'store', 'device_id', 'access_token'];
     protected $hidden = ['password'];
 
     public static function generate_access_token(Manager $account)

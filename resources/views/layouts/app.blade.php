@@ -161,7 +161,7 @@
               </li>
               <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_ITEM) echo 'm-menu__item--active';?>"
                     aria-haspopup="true" m-menu-submenu-toggle="hover">
-                <a href="{{ url('/carrying_manual') }}" class="m-menu__link m-menu__toggle">
+                <a href="{{ url('/manual') }}" class="m-menu__link m-menu__toggle">
                 <span class="m-menu__item-here"></span>
                 <i class="m-menu__link-icon fa fa-list-alt"></i>
                 <span class="m-menu__link-text">施工マニュアル</span>
@@ -193,6 +193,22 @@
                 <span class="m-menu__item-here"></span>
                 <i class="m-menu__link-icon fa fa-comments"></i>
                   <span class="m-menu__link-text">お問い合わせ一覧</span>
+                </a>
+              </li>
+              <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_PRIVACY) echo 'm-menu__item--active';?>"
+                    aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="{{ url('/master/policy') }}" class="m-menu__link m-menu__toggle">
+                <span class="m-menu__item-here"></span>
+                <i class="m-menu__link-icon fa fa-comments"></i>
+                <span class="m-menu__link-text">利用規約 & プライバシーポリシー</span>
+                </a>
+              </li>
+              <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_PRIVACY) echo 'm-menu__item--active';?>"
+                aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="{{ url('/master/carrying_goods') }}" class="m-menu__link m-menu__toggle">
+                <span class="m-menu__item-here"></span>
+                <i class="m-menu__link-icon fa fa-comments"></i>
+                <span class="m-menu__link-text">施工商品一覧</span>
                 </a>
               </li>
             </ul>

@@ -60,10 +60,17 @@ Route::group(['middleware'=>'auth'], function() {
     Route::any('/tossup', 'TossupController@index');
     Route::any('/tossup/tossup', 'TossupController@tossup');
 
-    Route::any('/carrying_manual', 'CarryingManualController@index');
+    Route::any('/manual', 'CarryingManualController@index');
+    Route::get('/manual/delete/{id}', 'CarryingManualController@delete');
+    Route::post('/manual/add', 'CarryingManualController@add');
 
     Route::any('/master/customer','MasterController@show_customer');
     Route::any('/master/carrying','MasterController@show_carrying');
     Route::any('/master/inquiry','MasterController@show_inquiry');
-
+    Route::any('/master/policy','MasterController@policy');
+    Route::post('/master/save_policy','MasterController@save_policy');
+    Route::any('/master/carrying_goods','CarryingGoodsController@index');
+    Route::any('/master/carrying_goods/edit/{id?}', 'CarryingGoodsController@edit');
+    Route::post('/master/carrying_goods/delete', 'CarryingGoodsController@delete');
+    Route::post('/master/carrying_goods/update', 'CarryingGoodsController@update');
 });

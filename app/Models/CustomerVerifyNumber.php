@@ -21,4 +21,12 @@ class CustomerVerifyNumber extends Model
         return CustomerVerifyNumber::where('f_phone_number', $phone_number)
                     ->first();
     }
+
+    public static function check_phoneNumber($phoneNumber)
+    {
+        return DB::table('t_customer')
+            ->where('tel_no', $phoneNumber)
+            ->limit(1)
+            ->get();
+    }
 }

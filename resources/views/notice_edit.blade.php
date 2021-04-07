@@ -13,14 +13,14 @@
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">おしらせジャンル</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="kind" value="{{ isset($notice) ? $notice->kind : '' }} "
+                    <input class="form-control m-input" type="text" name="kind" value="{{ isset($notice) ? $notice->kind : '' }}"
                     required data-msg-required="おしらせジャンルを選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">おしらせタイトル</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="title" value="{{ isset($notice) ? $notice->title : '' }} "
+                    <input class="form-control m-input" type="text" name="title" value="{{ isset($notice) ? $notice->title : '' }}"
                     required data-msg-required="おしらせタイトルを選択してください.">
                 </div>
             </div>

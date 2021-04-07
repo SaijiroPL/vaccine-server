@@ -18,7 +18,7 @@ class Bottle extends Model
     public static function get_data($type, $customer_id, $shop_id) {
         if ($shop_id != 0)
             return DB::table('t_bottle')
-                ->select('t_bottle.*', 't_shop.name')
+                ->select(DB::raw('t_bottle.*, t_shop.name, DATE_FORMAT(t_bottle.created_at,"%Y-%m-%d") as date'))
                 ->join('t_shop', 't_bottle.shop_id', '=', 't_shop.id')
                 ->where('customer_id', $customer_id)
                 ->where('shop_id', $shop_id)
@@ -27,7 +27,7 @@ class Bottle extends Model
                 ->get();
         else
             return DB::table('t_bottle')
-                ->select('t_bottle.*', 't_shop.name')
+                ->select(DB::raw('t_bottle.*, t_shop.name, DATE_FORMAT(t_bottle.created_at,"%Y-%m-%d") as date'))
                 ->join('t_shop', 't_bottle.shop_id', '=', 't_shop.id')
                 ->where('customer_id', $customer_id)
                 ->where('use_type', $type)
@@ -37,7 +37,7 @@ class Bottle extends Model
 
     public static function get_limit_data($type, $customer_id, $shop_id) {
             return DB::table('t_bottle')
-                ->select('t_bottle.*', 't_shop.name')
+                ->select(DB::raw('t_bottle.*, t_shop.name, DATE_FORMAT(t_bottle.created_at,"%Y-%m-%d") as date'))
                 ->join('t_shop', 't_bottle.shop_id', '=', 't_shop.id')
                 ->where('customer_id', $customer_id)
                 ->where('shop_id', $shop_id)
@@ -59,6 +59,22 @@ class Bottle extends Model
             ->where('shop_id', $shop_id)
             ->where('use_type', 2)
             ->sum('amount');
-        return $input-$use;
+        $delete = DB::table('t_bottle')
+            ->where('customer_id', $customer_id)
+            ->where('shop_id', $shop_id)
+            ->where('use_type', 3)
+            ->sum('amount');
+        return $input-$use-$delete;
+    }
+
+    public static function get_last_input_date($customer_id, $shop_id)
+    {
+        return DB::table('t_bottle')
+                ->select(DB::raw('DATE_FORMAT(t_bottle.created_at,"%Y-%m-%d") as from_date'))
+                ->where('customer_id', $customer_id)
+                ->where('shop_id', $shop_id)
+                ->where('use_type', 1)
+                ->latest()
+                ->first();
     }
 }

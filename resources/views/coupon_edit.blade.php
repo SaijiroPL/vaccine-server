@@ -13,7 +13,7 @@
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">クーポン名</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="title" value="{{ isset($coupon) ? $coupon->title : '' }} "
+                    <input class="form-control m-input" type="text" name="title" value="{{ isset($coupon) ? $coupon->title : '' }}"
                     required data-msg-required="クーポン名を選択してください.">
                 </div>
             </div>

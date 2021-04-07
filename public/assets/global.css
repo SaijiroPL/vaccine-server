@@ -24,3 +24,7 @@ display: inline-block !important;
 div.img {
     height: 150px;
 }
+
+div.note-editable {
+    margin-top: 5px;
+}

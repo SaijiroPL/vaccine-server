@@ -6,11 +6,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Manager;
+use App\Models\Atec;
 use App\Models\AtecConfirm;
 use App\Models\Customer;
 use App\Models\Notice;
 use App\Models\Bottle;
 use App\Models\Coupon;
+use App\Models\Shop;
+use App\Models\Carrying;
+use App\Models\CarryingHistoryImage;
+use App\Models\MyShop;
+use App\Models\CarryingGoods;
+use App\Models\ShopReserve;
+use App\Models\ShopRestDate;
+use App\Models\Calculation;
+use App\Models\CalculationGoods;
+use App\Models\Inquiry;
 
 use Config;
 use App\Http\Controllers\Api\CommonApi;
@@ -34,17 +45,22 @@ class StoreApiController extends Controller
             return response()->json([
                 'result' => Config::get('constants.errno.E_LOGIN'),
                 'accessToken' => null,
+                'shopId' => null,
+                'shopName' => null,
             ]);
         else
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'accessToken' => $account->access_token,
+                'shopId' => $account->store,
+                'shopName' => Shop::get_shop_name($account->store),
             ]);
     }
 
     public function signup(Request $request)
     {
         $account = new Manager;
+        $account->email = $request->input('name');
         $account->email = $request->input('email');
         $account->password = sha1($request->input('password'));
         $account->device_id = $request->input('deviceId');
@@ -134,11 +150,13 @@ class StoreApiController extends Controller
         $account = $request->account;
         $name = $request->input('name');
         $tel_no = $request->input('tel_no');
-        $count = Customer::search_member_count($name, $tel_no);
+        $code = $request->input('code');
+        $count = Customer::search_member_count($code, $name, $tel_no);
         if ($count === 0)
         {
             return response()->json([
                 'result' => Config::get('constants.errno.E_NO_MEMBER'),
+                'count' => $count,
             ]);
         }
         if ($count > 1)
@@ -147,10 +165,12 @@ class StoreApiController extends Controller
                 'result' => Config::get('constants.errno.E_TOO_MANY_MEMBER'),
             ]);
         }
-        $data = Customer::search_member_id($name, $tel_no);
+        $data = Customer::search_member_id($code, $name, $tel_no);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'memberId' => $data[0]->id,
+            'first_name' => $data[0]->first_name,
+            'last_name' => $data[0]->last_name,
         ]);
     }
 
@@ -158,22 +178,66 @@ class StoreApiController extends Controller
     {
         $id = $request->input('id');
         $account = $request->account;
+        $carries = Carrying::get_data_by_customer($id, $account->store);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'data' => Customer::get_member($id),
             'bottleInputData' => Bottle::get_data(1, $id, 0),
             'bottleRemain' => Bottle::get_remain($id, $account->store),
+            'carryingData' => $carries,
+            'carryingCount' => count($carries),
+            'lastCarryingDate' => Carrying::get_last_carrying_date($id, $account->store),
+            'myShopData' => MyShop::get_my_shop_history($id),
+            'myShop' => MyShop::get_my_shop($id),
+            'couponData' => Coupon::get_coupon_by_customer($id, $account->store),
+            'calculationData' => Calculation::get_data_by_customer($id, $account->store),
         ]);
+    }
+
+    public function register_member(Request $request)
+    {
+        if ($request->input('id') == 0)
+        {
+            $account = new Customer;
+        }
+        else
+        {
+            $account = Customer::find($request->input('id'));
+        }
+        $account->email = $request->input('email');
+        $account->password =  sha1($request->input('password'));
+        $account->fax = $request->input('fax');
+        $account->birthday = $request->input('birthday');
+        $account->first_name = $request->input('first_name');
+        $account->last_name = $request->input('last_name');
+        $account->name = $request->input('first_name').' '.$request->input('last_name');
+        $account->first_huri = $request->input('first_huri');
+        $account->last_huri = $request->input('last_huri');
+        $account->name_japan = $request->input('first_huri').' '.$request->input('last_huri');
+        $account->tel_no = $request->input('tel_no');
+        $account->access_token = Customer::generate_access_token($account);
+
+        $account->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'accessToken' => $account->access_token,
+        ]);
+
     }
 
     public function get_bottle(Request $request)
     {
         $id = $request->input('id');
         $account = $request->account;
+        $from_date = Bottle::get_last_input_date($id, $account->store)->from_date;
+        $to_date = strtotime(date("Y-m-d", strtotime($from_date)) . " +1 year");
+        $to_date = date('Y-m-d', $to_date);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'bottleUseDataLimit' => Bottle::get_limit_data(2, $id, $account->store),
             'bottleRemain' => Bottle::get_remain($id, $account->store),
+            'from_date' => $from_date,
+            'to_date' => $to_date,
         ]);
     }
 
@@ -203,6 +267,22 @@ class StoreApiController extends Controller
             $bottle->amount = 100;
         $bottle->save();
         return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function bottle_delete(Request $request)
+    {
+        $id = $request->input('id');
+        $account = $request->account;
+        $bottle = new Bottle;
+        $bottle->customer_id = $id;
+        $bottle->shop_id = $account->store;
+        $bottle->use_type = 3; //type 3: delete
+        $bottle->amount = Bottle::get_remain($id, $account->store);
+        $bottle->save();
+        return response()->json([
+            'bottleRemain' => Bottle::get_remain($id, $account->store),
             'result' => Config::get('constants.errno.E_OK'),
         ]);
     }
@@ -274,4 +354,228 @@ class StoreApiController extends Controller
             'data' => CommonApi::get_coupon_by_shop($account->store),
         ]);
     }
+
+    public function index_carrying(Request $request)
+    {
+        $account = $request->account;
+        $memberid = $request->input('memberid');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'bottleRemain' => Bottle::get_remain($memberid, $account->store),
+            'goods' => CommonApi::get_goods_list(),
+        ]);
+    }
+
+    public function carrying_confirm(Request $request)
+    {
+        $account = $request->account;
+        $carrying = new Carrying;
+
+        $carrying->shop_id = $request->input('shop_id');
+        $carrying->customer_id = $request->input('customer_id');
+        $carrying->carrying_kind = $request->input('carrying_kind');
+        $carrying->goods_id = $request->input('goods_id');
+        $carrying->goods = $request->input('goods');
+        $carrying->face = $request->input('face');
+        $carrying->phone_kind = $request->input('phone_kind');
+        $carrying->amount = $request->input('amount');
+        $carrying->price = $request->input('price');
+        $carrying->bottle_use = $request->input('bottle_use');
+        $carrying->bottle_use_amount = $request->input('bottle_use_amount');
+        $carrying->performer = $request->input('performer');
+        $carrying->date = date('yy-m-d');
+        $carrying->c1 = $request->input('c1');
+        $carrying->c2 = $request->input('c2');
+        $carrying->c3 = $request->input('c3');
+        $carrying->c4 = $request->input('c4');
+        $carrying->c5 = $request->input('c5');
+        $carrying->c6 = $request->input('c6');
+        $carrying->c7 = $request->input('c7');
+        $carrying->c8 = $request->input('c8');
+
+        if ($request->file('_file') != NULL)
+        {
+            $carrying->sign_image = time().'_'.$request->file( '_file')->getClientOriginalName();
+            $carrying->sign_image_path = asset(Storage::url('sign_image/').$carrying->sign_image);
+            $request->file('_file')->storeAs('public/sign_image/', $carrying->sign_image);
+        }
+
+        $carrying->save();
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'newId' => $carrying->id,
+        ]);
+    }
+
+    public function history_image(Request $request)
+    {
+        $account = $request->account;
+        $history_image = new CarryingHistoryImage;
+
+        $history_image->carrying_id = $request->input('carrying_id');
+
+        if ($request->file('_file') != NULL)
+        {
+            $history_image->image = time().'_'.$request->file( '_file')->getClientOriginalName();
+            $history_image->image_path = asset(Storage::url('carrying_history_image/').$history_image->image);
+            $request->file('_file')->storeAs('public/carrying_history_image/', time().'_'.$request->file( '_file')->getClientOriginalName());
+        }
+
+        $history_image->save();
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function get_goods(Request $request)
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'goodsData' => CarryingGoods::get_goods_list(),
+        ]);
+    }
+
+    public function get_carryings(Request $request)
+    {
+        $account = $request->account;
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => Carrying::get_data_by_shop($account->store),
+        ]);
+    }
+
+    public function get_carrying_image_history(Request $request)
+    {
+        $account = $request->account;
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'imageData' => CarryingHistoryImage::get_image_by_carrying($request->input('carrying_id')),
+        ]);
+    }
+
+    public function getReservedDataByShop(Request $request)
+    {
+        $shopID = $request->input('shopID');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'restDateList' => ShopReserve::get_rest_date($shopID),
+            'reservedData' => ShopReserve::get_reserved_data($shopID),
+            'timeList' => ShopReserve::get_time_list(),
+        ]);
+    }
+
+    public function restDate_register(Request $request)
+    {
+        $count = ShopRestDate::where('f_shop_id', $request->input('shopId'))
+                    ->where('f_rest_date', $request->input('rest_date'))
+                    ->where('f_rest_time', 0)
+                    ->count();
+        if ($count > 0) {
+            ShopRestDate::where('f_shop_id', $request->input('shopId'))
+                    ->where('f_rest_date', $request->input('rest_date'))
+                    ->where('f_rest_time', 0)
+                    ->forceDelete();
+        }
+        else {
+            $rest = new ShopRestDate;
+            $rest->f_shop_id = $request->input('shopId');
+            $rest->f_rest_date = $request->input('rest_date');
+
+            $rest->save();
+        }
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function restDate_register_time(Request $request)
+    {
+        if ($request->input('rest_type') == 'OK')
+        {
+            $rest = new ShopRestDate;
+            $rest->f_shop_id = $request->input('shopId');
+            $rest->f_rest_date = $request->input('rest_date');
+            $rest->f_rest_time = $request->input('rest_time');
+
+            $rest->save();
+        } else {
+            ShopRestDate::where('f_shop_id', $request->input('shopId'))
+                ->where('f_rest_date', $request->input('rest_date'))
+                ->where('f_rest_time', $request->input('rest_time'))
+                ->forceDelete();
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function reserve_confirm(Request $request)
+    {
+        $reserve = ShopReserve::find($request->input('reserveId'));
+        $reserve->f_confirm = 1;
+        $reserve->save();
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function calcualtion_save(Request $request)
+    {
+        $calculation = new Calculation;
+        $calculation->customer_id = $request->input('customer_id');
+        $calculation->shop_id = $request->input('shop_id');
+        $calculation->sum1 = $request->input('sum1');
+        $calculation->sum2 = $request->input('sum2');
+        $calculation->sum1 = $request->input('sum1');
+        $calculation->date = date('Y-m-d');
+
+        $calculation->save();
+
+        foreach ($request->input('goods') as $goods)
+            $this->calculation_goods_save($calculation->id, $goods);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function calculation_goods_save($calculation_id, $goods)
+    {
+        $calculation_goods = new CalculationGoods;
+        $calculation_goods->calculation_id = $calculation_id;
+        $calculation_goods->type = $goods['type'];
+        $calculation_goods->name = $goods['name'];
+        $calculation_goods->other = $goods['other'];
+        $calculation_goods->amount = $goods['amount'];
+        $calculation_goods->price = $goods['price'];
+
+        $calculation_goods->save();
+        return;
+    }
+
+    public function calcualtion_get_goods(Request $request)
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'goodsData' => CalculationGoods::get_data_by_calculation($request->input('id')),
+        ]);
+    }
+
+    public function get_new_counts(Request $request)
+    {
+        $account = $request->account;
+        $new_atec_count = Atec::get_new_atecs($account->store);
+        $new_inquiry_count = Inquiry::get_new_inqueries($account->store);
+        $new_reserve_count = ShopReserve::get_new_reserve($account->store);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'new_atec_count' => $new_atec_count,
+            'new_inquiry_count' => $new_inquiry_count,
+            'new_reserve_count' => $new_reserve_count,
+        ]);
+    }
+
 }

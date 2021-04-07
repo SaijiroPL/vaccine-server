@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Customer;
 use DB;
 use App\Models\Shop;
 use App\Models\Tossup;
@@ -9,6 +10,7 @@ use App\Models\Inquiry;
 use App\Models\Atec;
 use App\Models\Coupon;
 use App\Models\Notice;
+use App\Models\CarryingGoods;
 
 class CommonApi
 {
@@ -74,5 +76,43 @@ class CommonApi
             ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date'))
             ->latest()
             ->get();
+    }
+
+    public static function get_goods_list()
+    {
+        return CarryingGoods::select()->get();
+    }
+
+    public static function generate_member_unique_id($firstName, $lastName, $email)
+    {
+        $year = date('Y');
+        $month = date('m');
+        $day = date('d');
+        $hour = date('H');
+        $minute = date('i');
+        $second = date('s');
+        $suffix = (string)strlen($firstName).(string)strlen($lastName).(string)strlen($email);
+        return (string)($year - 2010).(string)($month * 31 + $day).(string)($hour * 3600 + $minute * 60 + $second).$suffix;
+    }
+
+    public static function makeResetURL($customerID)
+    {
+        $resetToken = rand(100000, 999999);
+        Customer::setResetToken($customerID, $resetToken);
+        return url('/api/client/resetPassword'.'?resetToken='.$resetToken.'&customerID='.$customerID);
+    }
+
+    public static function sendSMS($phoneNumber, $data)
+    {
+        /**
+         * TODO: 해당전화번호로 SMS전송코드작성
+         */
+    }
+
+    public static function sendEmail($email, $data)
+    {
+        /**
+         * TODO: 해당주소로 email전송코드작성
+         */
     }
 }

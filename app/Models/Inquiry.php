@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model
 {
     protected $table = 't_inquiry';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'shop', 'content', 'customer', 'sender', 'reply'
@@ -27,9 +28,42 @@ class Inquiry extends Model
     public static function get_by_shop($shop)
     {
         return DB::table('v_inquiry')
+            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date'))
             ->where('shop', $shop)
             ->where('reply', NULL)
             ->latest()
             ->get();
+    }
+
+    public static function get_new_inqueries($shop)
+    {
+        return DB::table('v_inquiry')
+            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date'))
+            ->where('shop', $shop)
+            ->where('reply', NULL)
+            ->latest()
+            ->count();
+    }
+
+    public static function get_inquiry_list($customerID)
+    {
+        return Inquiry::select('t_inquiry.*', 't_shop.name AS shop_name')
+            ->leftjoin('t_shop', 't_inquiry.sender', '=', 't_shop.id')
+            ->where('customer', $customerID)
+            ->where('isReply', 1)
+            ->get();
+    }
+
+    public static function count_inquiries_by_customer($customerID)
+    {
+        return Inquiry::where('customer', $customerID)
+            ->where('isReply', 1)
+            ->count();
+    }
+
+    public static function count_read_inquiries_by_customer($customerID)
+    {
+        return DB::table('t_customer_inquiry_read')->where('f_customer', $customerID)
+            ->count();
     }
 }

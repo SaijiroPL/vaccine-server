@@ -3,8 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\CommonApi;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Notice;
+use App\Models\Inquiry;
+use App\Models\Area;
+use App\Models\Shop;
+use App\Models\Coupon;
+use App\Models\MyShop;
+use App\Models\Carrying;
+use App\Models\ShopReserve;
+use App\Models\CustomerInquiryRead;
+use App\Models\CouponCustomer;
 use App\Models\CustomerVerifyNumber;
 use Config;
 
@@ -25,10 +37,13 @@ class ClientApiController extends Controller
         if (!isset($account))
             return response()->json([
                 'result' => Config::get('constants.errno.E_LOGIN'),
+                'access_token' => null
             ]);
         else
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
+                'account' => $account,
+                'accessToken' => $account->access_token
             ]);
     }
 
@@ -37,39 +52,84 @@ class ClientApiController extends Controller
         $license = Customer::getLicenseData();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'privacy' => $license['f_privacy'],
-            'license' => $license['f_use']
+            'license' => $license,
         ]);
     }
 
     public function signup(Request $request)
     {
-        $account = new Customer;
-        $account->email = $request->input('email');
-        $account->password = sha1($request->input('password'));
-        $account->fax = $request->input('fax');
-        $account->birthday = $request->input('birthDate');
-        $account->first_name = $request->input('firstName');
-        $account->last_name = $request->input('lastName');
-        $account->name = $request->input('lastName').' '.$request->input('firstName');
-        $account->first_huri = $request->input('japanese_firstName');
-        $account->last_huri = $request->input('japanese_lastName');
-        $account->name_japan = $request->input('japanese_firstName').' '.$request->input('japanese_lastName');
-        $account->tel_no = $request->input('phoneNumber');
+        $memberInfo = $request->input('memberInfo');
+        $isUpdate = $request->input('isUpdate');
+        if ($isUpdate == true) {
+            $updateInfo = array(
+                'email' => $memberInfo['email'],
+                'password' => $memberInfo['password'],
+                'fax' => $memberInfo['fax'],
+                'birthday' => $memberInfo['birthDate'],
+                'first_name' => $memberInfo['firstName'],
+                'last_name' => $memberInfo['lastName'],
+                'name' => $memberInfo['firstName'].' '.$memberInfo['lastName'],
+                'first_huri' => $memberInfo['japanese_firstName'],
+                'last_huri' => $memberInfo['japanese_lastName'],
+                'tel_no' => $memberInfo['phoneNumber'],
+                'device_id' => $memberInfo['device_id'],
+                'access_token' => Customer::generate_access_token($memberInfo['device_id'], $memberInfo['email'])
+            );
+            Customer::updateMember($updateInfo, $request->input('member_no'));
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'accessToken' => $updateInfo['access_token'],
+            ]);
+        } else {
+            $account = new Customer;
+            $account->email = $memberInfo['email'];
+            $account->password =  sha1($memberInfo['password']);
+            $account->fax = $request->input('fax');
+            $account->birthday = $memberInfo['birthDate'];
+            $account->first_name = $memberInfo['firstName'];
+            $account->last_name = $memberInfo['lastName'];
+            $account->name = $memberInfo['firstName'].' '.$memberInfo['lastName'];
+            $account->first_huri = $memberInfo['japanese_firstName'];
+            $account->last_huri = $memberInfo['japanese_lastName'];
+            $account->name_japan = $memberInfo['japanese_firstName'].' '.$memberInfo['japanese_lastName'];
+            $account->tel_no = $request->input('phoneNumber');
+            $account->member_no = CommonApi::generate_member_unique_id($account->first_name, $account->last_name, $account->email);
+            $account->device_id = $memberInfo['device_id'];
+            $account->access_token = Customer::generate_access_token($account->device_id, $account->email);
 
-        $account->save();
-        return response()->json([
-            'result' => Config::get('constants.errno.E_OK'),
-        ]);
+            $check_account = Customer::authenticate($account->email, $account->password);
+            if (isset($check_account)) {
+                return response()->json([
+                    'result' => Config::get('constants.errno.E_MEMBER_ALREADY_EXIST'),
+                ]);
+            } else {
+                $account->save();
+                return response()->json([
+                    'result' => Config::get('constants.errno.E_OK'),
+                    'accessToken' => $account->access_token,
+                ]);
+            }
+        }
+
     }
 
     public function sendVerifyNumber(Request $request)
     {
         $phoneNumber = $request->input('phoneNumber');
-        $verifyNumber = '123456';
-        /*
-        * 해당전화번호로 verifyNumber를 전송하는 코드삽입
-        */
+        CustomerVerifyNumber::where('f_phone_number', $phoneNumber)->forceDelete();
+        $forgotAccount = $request->input('forgotAccount');
+        if ($forgotAccount === true)
+        {
+            $tmp = CustomerVerifyNumber::check_phoneNumber($phoneNumber);
+            if (!isset($tmp) || count($tmp) < 1) {
+               return response()->json([
+                   'result' => Config::get('constants.errno.E_INTERNAL'),
+                   'aa' => $tmp,
+               ]);
+            }
+        }
+        $verifyNumber = (string)rand(100000, 999999);
+        CommonApi::sendSMS($phoneNumber, $verifyNumber);
         $verify = new CustomerVerifyNumber;
         $verify->f_phone_number = $phoneNumber;
         $verify->f_verify_number = $verifyNumber;
@@ -85,19 +145,266 @@ class ClientApiController extends Controller
     {
         $verifyNumber = $request->input('verifyNumber');
         $phoneNumber = $request->input('phoneNumber');
+        $forgotAccount = $request->input('forgotAccount');
 
         $verifyNumber_org = CustomerVerifyNumber::get_verifyNumber_by_phoneNumber($phoneNumber);
         $isMatch = 999;
+        $customerAccount = CustomerVerifyNumber::check_phoneNumber($phoneNumber);
+        $resetURL = '';
 
         if (isset($verifyNumber_org) && $verifyNumber_org['f_verify_number'] == $verifyNumber) {
             $isMatch = 0;
             CustomerVerifyNumber::where('f_phone_number', $phoneNumber)->forceDelete();
+            if ($forgotAccount === true) {
+                $email = $customerAccount[0]->email;
+                $customerID = $customerAccount[0]->id;
+                $resetURL = CommonApi::makeResetURL($customerID);
+                CommonApi::sendSMS($phoneNumber, $email);
+                CommonApi::sendEmail($email, $resetURL);
+            }
         }
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'isMatch' => $isMatch,
+            'memberInfo' => $customerAccount,
+            'resetURL' => $resetURL,
+        ]);
+    }
+
+    public function getNotice()
+    {
+        return response() -> json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'notice' => Notice::get_all_data(),
+        ]);
+    }
+
+    public function getShopList(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $myShopID = $request->input('myShopID');
+        if (isset($customerID)) {
+            return response() -> json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'recentReserveDate' => ShopReserve::get_my_recent_reserve_date($customerID),
+                'shopList' => Shop::get_shops($myShopID),
+            ]);
+        } else {
+            return response() -> json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'shopList' => Shop::get_shops($myShopID),
+            ]);
+        }
+    }
+
+    public function sendQuestion(Request $request)
+    {
+        $inquiry = new Inquiry;
+        $inquiry->shop = $request->input('shop');
+        $inquiry->content = $request->input('contentOfQuery');
+        $inquiry->customer = $request->input('customer');
+        $inquiry->save();
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function getAreaList()
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'areaList' => Area::get_area_list(),
+        ]);
+    }
+
+    public function getShopByArea(Request $request)
+    {
+        $areaID = $request->input('areaID');
+        $postalCode = $request->input('postalCode');
+        if (isset($postalCode)) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'shop' => Shop::get_shop_by_postalCode($postalCode),
+            ]);
+        } else {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'shopList' => Shop::get_shop_by_area_id($areaID),
+            ]);
+        }
+    }
+
+    public function getMyShop(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $myShop = MyShop::get_my_shop($customerID);
+        if(isset($myShop)) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'myShop' => $myShop,
+            ]);
+        } else {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_NO_MY_SHOP'),
+            ]);
+        }
+    }
+
+    public function registerMyShop(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $shopID = $request->input('shopID');
+        $myShop = new MyShop;
+        $myShop->f_customer_id = $customerID;
+        $myShop->f_shop_id = $shopID;
+        $myShop->save();
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
         ]);
 
+    }
+
+    public function getTimeList()
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'timeList' => ShopReserve::get_time_list(),
+        ]);
+    }
+
+    public function getReservedDataByShop(Request $request)
+    {
+        $shopID = $request->input('shopID');
+        $customerID = $request->input('customerID');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'restDateList' => ShopReserve::get_rest_date($shopID),
+            'reservedData' => ShopReserve::get_reserved_data($shopID),
+        ]);
+    }
+
+    public function reserveShop(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $shopID = $request->input('shopID');
+        $purpose = $request->input('purpose');
+        $other = $request->input('other');
+        $reserveDate = $request->input('reserveDate');
+//        $reserveCancelDate = $request->input('reserveCancelDate');
+//        if (isset($reserveCancelDate) && count($reserveCancelDate) > 0) {
+//            $cancelList = array();
+//            foreach ($reserveCancelDate as $cancel)
+//                $cancelList[] = $cancel['date'].'|'.$cancel['time'];
+//            ShopReserve::cancel_reserve($shopID, $customerID, $cancelList);
+//        }
+        if (isset($reserveDate))
+        {
+            $reserveData = array(
+                'f_customer_id' => $customerID,
+                'f_shop_id' => $shopID,
+                'f_reserve_date' => $reserveDate['date'],
+                'f_reserve_time' => $reserveDate['time'],
+                'f_reserve_purpose' => $purpose,
+                'updated_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'f_other' => $other
+            );
+            ShopReserve::reserve_visit_date($reserveData);
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function getSigongList(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $sortMode = $request->input('sortMode');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'sigongList' => Carrying::get_sigong_by_customer($customerID, $sortMode),
+        ]);
+    }
+
+    public function getCouponList(Request $request)
+    {
+        $myShopID = $request->input('myShopID');
+        [$myShopCoupon, $commonCoupon] = Coupon::get_coupon_by_shop_id($myShopID);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'commonCoupon' => $commonCoupon,
+            'myShopCoupon' => $myShopCoupon,
+        ]);
+    }
+
+    public function useCoupon(Request $request)
+    {
+        $useCoupon = new CouponCustomer;
+        $useCoupon->f_customer = $request->input('customerID');
+        $useCoupon->f_coupon = $request->input('couponID');
+        $useCoupon->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function getQuestionList(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'inquiryList' => Inquiry::get_inquiry_list($customerID),
+            'readInquiryList' => CustomerInquiryRead::get_read_inquiry_list($customerID),
+        ]);
+    }
+
+    public function calcUnReadInquires(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $total = Inquiry::count_inquiries_by_customer($customerID);
+        $read = Inquiry::count_read_inquiries_by_customer($customerID);
+        if (isset($total) && isset($read)) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'countUnread' => $total - $read,
+            ]);
+        } else {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_INTERNAL'),
+            ]);
+        }
+    }
+
+    public function setInquiryRead(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $inquiryID = $request->input('inquiryID');
+        $inquiryRead = new CustomerInquiryRead;
+        $inquiryRead->f_customer = $customerID;
+        $inquiryRead->f_inquiry = $inquiryID;
+        $inquiryRead->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $resetToken = $request->input('resetToken');
+        $customerID = $request->input('customerID');
+        $rlt = Customer::checkResetToken($customerID, $resetToken);
+        if (isset($rlt) && count($rlt) > 0) {
+            return view('api.password_reset', ['customerID' => $customerID]);
+        }
+    }
+
+    public function doResetPassword(Request $request)
+    {
+        $password = $request->input('password');
+        $customerID = $request->input('customerID');
+        Customer::resetPassword($customerID, $password);
     }
 }

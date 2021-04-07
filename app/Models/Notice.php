@@ -11,7 +11,7 @@ class Notice extends Model
     protected $table = 't_notice';
 
     protected $fillable = [
-        'kind', 'title', 'content', 'shop_id', 'agree',
+        'kind', 'title', 'content', 'shop_id', 'agree', 'image_path',
     ];
 
     public static function get_data() {
@@ -39,5 +39,9 @@ class Notice extends Model
                     ->where('id', '=', $id)
                     ->first();
         return $notice;
+    }
+
+    public static function get_all_data() {
+        return Notice::orderBy('updated_at')->get();
     }
 }

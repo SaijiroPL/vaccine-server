@@ -38,7 +38,7 @@
             <a href = "{{ url('/coupon_application') }}" class="btn btn-outline-brand btn-lg">代理店からの申請</a>
             <a href = "{{ url('/tossup') }}" class="btn btn-outline-success btn-lg">トスアップ申請</a>
             <a href = "{{ url('/atec') }}" class="btn btn-outline-info btn-lg">アーテック通信</a>
-            <a href = "{{ url('/carrying_manual') }}" class="btn btn-outline-warning btn-lg">施工マニュアル</a>
+            <a href = "{{ url('/manual') }}" class="btn btn-outline-warning btn-lg">施工マニュアル</a>
         </div>
     </div>
 </div>

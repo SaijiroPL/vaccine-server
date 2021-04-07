@@ -13,39 +13,56 @@ class Customer extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 'name_japan', 'tel_no', 'email', 'birthday', 'fax', 'password', 'first_name', 'last_name', 'first_huri', 'last_huri'
+        'name', 'name_japan', 'tel_no', 'email', 'birthday', 'fax', 'password', 'first_name', 'last_name', 'first_huri', 'last_huri', 'device_id', 'access_token', 'member_no',
     ];
+
+    public static function generate_access_token($deviceID, $email)
+    {
+        return sha1($deviceID.$email);
+    }
+
+    public static function from_access_token($token)
+    {
+        return Customer::where('access_token', $token)->first();
+    }
 
     public static function get_data($name) {
         return Customer::where('name', 'like', $name)->latest()->paginate(10);
     }
 
-    public static function search_member_count($name, $tel_no) {
-        return Customer::where([
-            ['name', '=', $name],
-            ['tel_no', '=', $tel_no],
-            ])->count();
+    public static function search_member_count($code, $name, $tel_no) {
+        if (isset($code) && $code !== '')
+            return Customer::where('member_no', $code)->count();
+        else {
+            $name = "%".$name."%";
+            $tel_no = "%".$tel_no."%";
+            return Customer::where('name', 'like', $name)
+                            ->where('tel_no', 'like', $tel_no)->count();
+        }
     }
 
     public static function getLicenseData()
     {
         return DB::table('t_license')
-            ->first();
+            ->latest()->first();
     }
 
-    public static function search_member_id($name, $tel_no) {
-        return DB::table('t_customer')
-            ->select('id')
-            ->where([
-                ['name', '=', $name],
-                ['tel_no', '=', $tel_no],
-            ])->get();
+    public static function search_member_id($code, $name, $tel_no) {
+        $db = DB::table('t_customer')->select('*');
+        if (isset($code) && $code !== '')
+            return $db->where('member_no', $code)->get();
+        else {
+            $name = "%".$name."%";
+            $tel_no = "%".$tel_no."%";
+            return Customer::where('name', 'like', $name)
+                            ->where('tel_no', 'like', $tel_no)->get();
+        }
     }
 
     public static function get_member($id) {
         return Customer::where([
             ['id', '=', $id],
-            ])->get();
+            ])->first();
     }
 
 	public static function authenticate($email, $password)
@@ -53,4 +70,29 @@ class Customer extends Model
         return Customer::where('email', $email)
                     ->where('password', sha1($password))
                     ->first();
-    }}
+    }
+
+    public static function updateMember($data, $member_no)
+    {
+        Customer::where('member_noo', $member_no)
+            ->update($data);
+    }
+
+    public static function setResetToken($customerID, $resetToken)
+    {
+        Customer::where('id', $customerID)
+            ->update(['resetPasswordToken' => $resetToken]);
+    }
+
+    public static function checkResetToken($customerID, $resetToken)
+    {
+        return Customer::where('id', $customerID)
+            ->where('resetPasswordToken', $resetToken)->get();
+    }
+
+    public static function resetPassword($customerID, $password)
+    {
+        Customer::where('id', $customerID)
+            ->update(['password' => sha1($password), 'resetPasswordToken' => null]);
+    }
+}

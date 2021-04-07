@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Carrying;
 use App\Models\Inquiry;
+use App\Models\Policy;
 
 class MasterController extends Controller
 {
@@ -82,4 +83,26 @@ class MasterController extends Controller
         ]);
     }
 
+    public function policy()
+    {
+        $data = Policy::first();
+        return view('policy', ['data' => $data]);
+    }
+
+    public function save_policy(Request $request)
+    {
+        $policy = $request->input('policy');
+        $privacy = $request->input('privacy');
+
+        $data = Policy::first();
+        if (!isset($data))
+            $data = new Policy;
+        if (isset($policy))
+            $data->policy = $policy;
+        if (isset($privacy))
+            $data->privacy = $privacy;
+        $data->save();
+
+        return redirect('/master/policy');
+    }
 }

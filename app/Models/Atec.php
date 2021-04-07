@@ -22,11 +22,19 @@ class Atec extends Model
     }
 
     public static function get_atecs($shop) {
-        $query='select * from t_atec
+        $query='select *, DATE_FORMAT(t_atec.created_at,"%Y-%m-%d") as date from t_atec
                 left JOIN (select shop_id, atec_id from t_atec_confirm where shop_id='.$shop.') A on t_atec.id=A.atec_id
                 where shop_id is NULL';
         $atecs =  DB::select($query);
         return $atecs;
+    }
+
+    public static function get_new_atecs($shop) {
+        $query='select * from t_atec
+                left JOIN (select shop_id, atec_id from t_atec_confirm where shop_id='.$shop.') A on t_atec.id=A.atec_id
+                where shop_id is NULL';
+        $atec =  DB::select($query);
+        return count($atec);
     }
 
     public static function get_atec($id) {

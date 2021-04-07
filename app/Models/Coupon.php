@@ -43,4 +43,21 @@ class Coupon extends Model
                     ->first();
         return $coupon;
     }
+
+    public static function get_coupon_by_shop_id($shopID)
+    {
+        $myShopCoupon = Coupon::where('shop_id', $shopID)->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
+            ->get();
+        $commonCoupon = Coupon::where('shop_id', '<>', $shopID)->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
+            ->get();
+        return array($myShopCoupon, $commonCoupon);
+    }
+
+    public static function get_coupon_by_customer($customer_id, $shop_id)
+    {
+        $coupon = DB::table('v_customer_coupon')->where('shop_id', $shop_id)->where('f_customer', $customer_id)
+            ->latest()->get();
+        return $coupon;
+    }
+
 }
