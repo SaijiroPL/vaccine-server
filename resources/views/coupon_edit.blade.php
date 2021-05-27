@@ -11,6 +11,29 @@
         <input type="hidden" name="no" value="{{ isset($coupon) ?  $coupon->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
+                <label for="example-text-input" class="col-2 col-form-label"></label>
+                <div class="col-6">
+                  <label class="m-radio">
+                    @if (isset($coupon) && $coupon->type == 0)
+                      <input type="radio" name="type" value="0" checked="checked"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @elseif(!isset($counpon))
+                      <input type="radio" name="type" value="0" checked="checked"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @else
+                      <input type="radio" name="type" value="0"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @endif
+                    <span></span>
+                  </label>
+                  <label class="m-radio">
+                    @if (isset($coupon) && $coupon->type == 1)
+                      <input type="radio" name="type" value="1" checked="checked"> ハルトtypeF
+                    @else
+                      <input type="radio" name="type" value="1"> ハルトtypeF
+                    @endif
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+            <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">クーポン名</label>
                 <div class="col-6">
                     <input class="form-control m-input" type="text" name="title" value="{{ isset($coupon) ? $coupon->title : '' }}"
@@ -23,6 +46,34 @@
                     <textarea class="form-control m-input m-input--air" name="content" required
                     data-msg-required="クーポン内容を選択してください." rows="3">{{ isset($coupon) ? $coupon->content : '' }}</textarea>
                 </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label for="example-text-input" class="col-2 col-form-label">割引内容</label>
+                <div class="col-4">
+                    <input class="form-control m-input" type="text" name="amount" value="{{ isset($coupon) ? $coupon->amount : '' }}"
+                    required data-msg-required="割引内容を選択してください.">
+                </div>
+                <div class="col-2">
+                    <label class="m-radio">
+                      @if (isset($coupon) && $coupon->unit == 0)
+                        <input type="radio" name="unit" value="0" checked="checked">円引き
+                      @elseif(!isset($counpon))
+                        <input type="radio" name="unit" value="0" checked="checked">円引き
+                      @else
+                        <input type="radio" name="unit" value="0">円引き
+                      @endif
+                      <span></span>
+                    </label>
+                    <div class='col-1'></div>
+                    <label class="m-radio">
+                      @if (isset($coupon) && $coupon->unit == 1)
+                        <input type="radio" name="unit" value="1" checked="checked">％引き
+                      @else
+                        <input type="radio" name="unit" value="1">％引き
+                      @endif
+                      <span></span>
+                    </label>
+                  </div>
             </div>
             <div class="form-group m-form__group row">
                 <label for="example-datetime-local-input" class="col-2 col-form-label">有効期限</label>
@@ -60,11 +111,11 @@
                 <div class="col-6">
                     <select class="form-control m-input" name="reuse">
                         @if (isset($coupon) && $coupon->reuse == 0)
-                            <option value="0" selected>NG</option>
-                            <option value="1">OK</option>
+                            <option value="0" selected>一回きり</option>
+                            <option value="1">期間内無制限</option>
                         @else
-                        <option value="0">NG</option>
-                        <option value="1" selected>OK</option>
+                          <option value="0">一回きり</option>
+                          <option value="1" selected>期間内無制限</option>
                         @endif
                     </select>
                 </div>

@@ -18,6 +18,7 @@ use App\Models\ShopReserve;
 use App\Models\CustomerInquiryRead;
 use App\Models\CouponCustomer;
 use App\Models\CustomerVerifyNumber;
+use App\Models\ShopRestDate;
 use Config;
 
 class ClientApiController extends Controller
@@ -29,11 +30,15 @@ class ClientApiController extends Controller
 
     public function login(Request $request)
     {
-        $email = $request->input('email');
+        $id = $request->input('id');
         $password = $request->input('password');
         $device_id = $request->input('deviceId');
-
-        $account = Customer::authenticate($email, $password);
+        $transferCode = $request->input('transferCode');
+        if ($transferCode) {
+            $account = Customer::authenticate_transferCode($transferCode);
+        } else {
+            $account = Customer::authenticate($id, $password, $device_id);
+        }
         if (!isset($account))
             return response()->json([
                 'result' => Config::get('constants.errno.E_LOGIN'),
@@ -54,6 +59,38 @@ class ClientApiController extends Controller
             'result' => Config::get('constants.errno.E_OK'),
             'license' => $license,
         ]);
+    }
+
+    public function createAccount(Request $request)
+    {
+        $shopID = $request->input('shop');
+        $member_no = CommonApi::generate_member_unique_id($shopID);
+        $password = CommonApi::generate_password();
+        $account = new Customer;
+        $account->password =  $password;
+        $account->device_id = $request->input('device_id');
+        $account->member_no = $member_no;
+        $account->access_token = Customer::generate_access_token($account->device_id, $member_no);
+
+        $check_account = Customer::authenticate($member_no, $password, $account->device_id);
+        if (isset($check_account)) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_MEMBER_ALREADY_EXIST'),
+            ]);
+        } else {
+            $account->save();
+            $myShop = new MyShop;
+            $myShop->f_customer_id = $account->id;
+            $myShop->f_shop_id = $shopID;
+            $myShop->save();
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'accessToken' => $account->access_token,
+                'member_no' => $member_no,
+                'password' => $account->password,
+                'id' => $account->id,
+            ]);
+        }
     }
 
     public function signup(Request $request)
@@ -97,7 +134,7 @@ class ClientApiController extends Controller
             $account->device_id = $memberInfo['device_id'];
             $account->access_token = Customer::generate_access_token($account->device_id, $account->email);
 
-            $check_account = Customer::authenticate($account->email, $account->password);
+            $check_account = Customer::authenticate($account->email, $account->password, $account->device_id);
             if (isset($check_account)) {
                 return response()->json([
                     'result' => Config::get('constants.errno.E_MEMBER_ALREADY_EXIST'),
@@ -211,11 +248,37 @@ class ClientApiController extends Controller
         ]);
     }
 
-    public function getAreaList()
+    public function getProvinceList()
     {
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'areaList' => Area::get_area_list(),
+            'provinceList' => Shop::get_province_list(),
+        ]);
+    }
+
+    public function getCityListByProvince(Request $request)
+    {
+        $name_province = $request->input('name_province');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'cityList' => Shop::get_city_list_by_province($name_province),
+        ]);
+    }
+
+    public function getMapCoordinate()
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'coordinate' => Area::get_map_coordinate(),
+        ]);
+    }
+
+    public function getShopListByCity(Request $request)
+    {
+        $name_city = $request->input('name_city');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopList' => Shop::get_shop_by_city($name_city),
         ]);
     }
 
@@ -236,6 +299,19 @@ class ClientApiController extends Controller
         }
     }
 
+    public function getShopByProvince(Request $request)
+    {
+        $name_province = $request->input('province');
+        $shop_groupByCity = Shop::get_shop_by_province($name_province);
+        $cityList = array_keys($shop_groupByCity);
+        $shopList = array_values($shop_groupByCity);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'cityList' => $cityList,
+            'shopList' => $shopList,
+        ]);
+    }
+
     public function getMyShop(Request $request)
     {
         $customerID = $request->input('customerID');
@@ -243,7 +319,9 @@ class ClientApiController extends Controller
         if(isset($myShop)) {
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
+                'restType' => ShopRestDate::check_rest($myShop->f_shop_id),
                 'myShop' => $myShop,
+                'myShopImage' => MyShop::get_my_shop_image($myShop->f_shop_id),
             ]);
         } else {
             return response()->json([
@@ -251,6 +329,16 @@ class ClientApiController extends Controller
             ]);
         }
     }
+
+    public function getShopImage(Request $request)
+    {
+        $shopID = $request->input('shopID');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopImage' => MyShop::get_my_shop_image($shopID),
+        ]);
+    }
+
 
     public function registerMyShop(Request $request)
     {
@@ -264,7 +352,6 @@ class ClientApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
         ]);
-
     }
 
     public function getTimeList()
@@ -332,11 +419,15 @@ class ClientApiController extends Controller
     public function getCouponList(Request $request)
     {
         $myShopID = $request->input('myShopID');
-        [$myShopCoupon, $commonCoupon] = Coupon::get_coupon_by_shop_id($myShopID);
+        $customerID = $request->input('customerID');
+        [$myShopCoupon, $commonCoupon, $usedCoupon, $usedCouponState, $isExpireList] = Coupon::get_coupon_by_shop_id($myShopID, $customerID);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'commonCoupon' => $commonCoupon,
             'myShopCoupon' => $myShopCoupon,
+            'usedCoupon' => $usedCoupon,
+            'usedCouponState' => $usedCouponState,
+            'isExpireList' => $isExpireList,
         ]);
     }
 
@@ -346,6 +437,16 @@ class ClientApiController extends Controller
         $useCoupon->f_customer = $request->input('customerID');
         $useCoupon->f_coupon = $request->input('couponID');
         $useCoupon->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function expireCoupon(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $couponID = $request->input('couponID');
+        Coupon::expire_customer_coupon($customerID, $couponID);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
         ]);
@@ -406,5 +507,15 @@ class ClientApiController extends Controller
         $password = $request->input('password');
         $customerID = $request->input('customerID');
         Customer::resetPassword($customerID, $password);
+    }
+
+    public function generateTransferCode(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $transferCode = $request->input('transferCode');
+        Customer::set_transfer_code($customerID, $transferCode);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+        ]);
     }
 }

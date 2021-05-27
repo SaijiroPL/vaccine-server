@@ -10,11 +10,11 @@ class Shop extends Model
     protected $table = 't_shop';
 
     protected $fillable = [
-        'name', 'province', 'county', 'address', 'postal', 'tel_no', 'image',
+        'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link',
     ];
 
     public static function get_data() {
-        $shops = DB::table('t_shop')
+        $shops = DB::table('v_shop')
                 ->latest()
                 ->paginate(10);
         return $shops;
@@ -55,4 +55,47 @@ class Shop extends Model
         return $shop->name;
     }
 
+    public static function get_province_list()
+    {
+        return DB::table('v_shop')->select(DB::raw('name_p'))
+            ->groupBy('name_p')
+            ->orderby('name_p', 'asc')
+            ->get();
+    }
+
+    public static function get_city_list_by_province($name_province)
+    {
+        return DB::table('v_shop')->select(DB::raw('name_c, name_p'))
+            ->where('name_p', $name_province)
+            ->groupBy('name_c')
+            ->orderby('name_c', 'asc')
+            ->get();
+    }
+
+    public static function get_shop_by_city($city_name)
+    {
+        return DB::table('v_shop')
+                ->where('name_c', $city_name)
+                ->get();
+    }
+
+    public static function get_shop_by_province($name_province)
+    {
+        $cityList = DB::table('v_shop')
+                ->select('name_c')
+                ->where('name_p', $name_province)
+                ->groupBy('name_c')
+                ->get();
+        $shopList = DB::table('v_shop')
+                ->where('name_p', $name_province)
+                ->get();
+        $shopByCity = [];
+        foreach($cityList as $city) {
+            $shopByCity[$city->name_c] = array();
+        }
+        foreach($shopList as $shop){
+            $shopByCity[$shop->name_c][] = $shop;
+        }
+        return $shopByCity;
+    }
 }

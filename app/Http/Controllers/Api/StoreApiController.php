@@ -22,6 +22,8 @@ use App\Models\ShopRestDate;
 use App\Models\Calculation;
 use App\Models\CalculationGoods;
 use App\Models\Inquiry;
+use App\Models\CarryingManual;
+use App\Models\ShopImage;
 
 use Config;
 use App\Http\Controllers\Api\CommonApi;
@@ -36,37 +38,51 @@ class StoreApiController extends Controller
 
     public function login(Request $request)
     {
-        $email = $request->input('email');
+        $name = $request->input('name');
         $password = $request->input('password');
         $device_id = $request->input('deviceId');
 
-        $account = Manager::authenticate($email, $password, $device_id);
+        $account = Manager::authenticate($name, $password, $device_id);
         if (!isset($account))
             return response()->json([
                 'result' => Config::get('constants.errno.E_LOGIN'),
                 'accessToken' => null,
-                'shopId' => null,
-                'shopName' => null,
+                'shopData' => null,
+            ]);
+        else if($account->allow == 0)
+            return response()->json([
+                'result' => Config::get('constants.errno.E_MANAGER_DISABLED'),
+                'accessToken' => null,
+                'shopData' => null,
             ]);
         else
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'accessToken' => $account->access_token,
-                'shopId' => $account->store,
-                'shopName' => Shop::get_shop_name($account->store),
+                'shopData' => Shop::get_shop($account->store),
             ]);
     }
 
     public function signup(Request $request)
     {
+        $device_id = $request->input('deviceId');
+        if (Manager::where('device_id', $device_id)->count() > 0)
+        {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_SHOP_DEVICE_ALREADY_EXIST'),
+            ]);
+        }
         $account = new Manager;
-        $account->email = $request->input('name');
-        $account->email = $request->input('email');
-        $account->password = sha1($request->input('password'));
-        $account->device_id = $request->input('deviceId');
+        $account->device_id = $device_id;
         $account->store = $request->input('store');
+        $account->real_password = CommonApi::generate_password();
+        $account->password = sha1($account->real_password);
+        $account->allow = 0;
         $account->access_token = Manager::generate_access_token($account);
 
+        $account->save();
+
+        $account->name = CommonApi::generate_shop_unique_id($account->id);
         $account->save();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
@@ -296,6 +312,29 @@ class StoreApiController extends Controller
         ]);
     }
 
+    public function get_last_coupon(Request $request)
+    {
+        $account = $request->account;
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => CommonApi::get_last_coupon_by_shop($account->store),
+        ]);
+    }
+
+    public function change_date_coupon(Request $request)
+    {
+        $account = $request->account;
+        $coupon = Coupon::find($request->input('id'));
+        $coupon->from_date = $request->input('from_date');
+        $coupon->to_date = $request->input('to_date');
+        $coupon->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => CommonApi::get_coupon_by_shop($account->store),
+            'item' => $coupon,
+        ]);
+    }
+
     public function get_notice(Request $request)
     {
         $account = $request->account;
@@ -308,7 +347,13 @@ class StoreApiController extends Controller
     public function add_notice(Request $request)
     {
         $account = $request->account;
-        $notice = new Notice;
+        if ($request->input('id') == 0) {
+            $notice = new Notice;
+        }
+        else {
+            $notice = Notice::find($request->input('id'));
+
+        }
         $notice->kind = $request->input('kind');
         $notice->title = $request->input('title');
         $notice->content = $request->input('content');
@@ -328,6 +373,17 @@ class StoreApiController extends Controller
         ]);
     }
 
+    public function delete_notice(Request $request)
+    {
+        $account = $request->account;
+        Notice::where('id', $request->input('id'))
+                    ->forceDelete();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => CommonApi::get_notice_by_shop($account->store),
+        ]);
+    }
+
     public function add_coupon(Request $request)
     {
         $account = $request->account;
@@ -338,7 +394,11 @@ class StoreApiController extends Controller
         $coupon->to_date = $request->input('to');
         $coupon->shop_id = $account->store;
         $coupon->reuse = $request->input('reuse');
-        $coupon->agree = 1;
+        $coupon->type = $request->input('type');
+        $coupon->amount = $request->input('amount');
+        $coupon->unit = $request->input('unit');
+        $coupon->agree = 0;
+        $coupon->stop = 0;
         $coupon->created_by = $account->email;
 
         if ($request->file('_file') != NULL)
@@ -358,10 +418,10 @@ class StoreApiController extends Controller
     public function index_carrying(Request $request)
     {
         $account = $request->account;
-        $memberid = $request->input('memberid');
+        //$memberid = $request->input('memberid');
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'bottleRemain' => Bottle::get_remain($memberid, $account->store),
+            //'bottleRemain' => Bottle::get_remain($memberid, $account->store),
             'goods' => CommonApi::get_goods_list(),
         ]);
     }
@@ -373,6 +433,7 @@ class StoreApiController extends Controller
 
         $carrying->shop_id = $request->input('shop_id');
         $carrying->customer_id = $request->input('customer_id');
+        $carrying->serial_no = $request->input('serial_no');
         $carrying->carrying_kind = $request->input('carrying_kind');
         $carrying->goods_id = $request->input('goods_id');
         $carrying->goods = $request->input('goods');
@@ -380,10 +441,11 @@ class StoreApiController extends Controller
         $carrying->phone_kind = $request->input('phone_kind');
         $carrying->amount = $request->input('amount');
         $carrying->price = $request->input('price');
-        $carrying->bottle_use = $request->input('bottle_use');
-        $carrying->bottle_use_amount = $request->input('bottle_use_amount');
+        $carrying->notify = $request->input('notify');
+        //$carrying->bottle_use = $request->input('bottle_use');
+        //$carrying->bottle_use_amount = $request->input('bottle_use_amount');
         $carrying->performer = $request->input('performer');
-        $carrying->date = date('yy-m-d');
+        $carrying->date = date('Y-m-d');
         $carrying->c1 = $request->input('c1');
         $carrying->c2 = $request->input('c2');
         $carrying->c3 = $request->input('c3');
@@ -440,6 +502,20 @@ class StoreApiController extends Controller
     public function get_carryings(Request $request)
     {
         $account = $request->account;
+        if ($request->input('today_search') == 1)
+        {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'data' => Carrying::get_today_data_by_shop($account->store),
+            ]);
+        }
+        if ($request->input('from_date') || $request->input('to_date'))
+        {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'data' => Carrying::get_date_data_by_shop($account->store, $request->input('from_date'), $request->input('to_date')),
+            ]);
+        }
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'data' => Carrying::get_data_by_shop($account->store),
@@ -577,5 +653,97 @@ class StoreApiController extends Controller
             'new_reserve_count' => $new_reserve_count,
         ]);
     }
+
+    public function get_manuals(Request $request)
+    {
+        $account = $request->account;
+        $new_atec_count = Atec::get_new_atecs($account->store);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'manuals' => CarryingManual::orderBy('id', 'DESC')->get(),
+        ]);
+    }
+
+    public function change_shop_time(Request $request)
+    {
+        $account = $request->account;
+        $shop = Shop::find($account->store);
+        $shop->start_time = $request->input('start_time');
+        $shop->end_time = $request->input('end_time');
+        $shop->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopData' => Shop::get_shop($account->store),
+        ]);
+    }
+
+    public function get_nine_images_array($shop_id)
+    {
+        $images = ShopImage::get_images_by_shop($shop_id);
+        $imageList = array();
+        $tmp = array();
+        $c = 0;
+        foreach ($images as $image) {
+            $c++;
+            $tmp = array('no'=> $c, 'image'=>$image);
+            array_push($imageList, $tmp);
+        }
+        for($i = $c+1; $i <= 9; $i++) {
+            $tmp = array('no'=> $i, 'image'=>null);
+            array_push($imageList, $tmp);
+        }
+
+        return $imageList;
+
+    }
+
+    public function get_shop_images(Request $request)
+    {
+        $account = $request->account;
+        $imageList = $this->get_nine_images_array($account->store);
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopImages' => $imageList,
+        ]);
+    }
+
+    public function update_shop_image(Request $request)
+    {
+        $account = $request->account;
+        $id = $request->input('id');
+        if ($id == 0)
+        {
+            $shopImage = new ShopImage;
+        }
+        else
+        {
+            $shopImage = ShopImage::find($id);
+            $org_file = 'storage/shop_image/'.$shopImage->filename;
+            if (file_exists($org_file))
+                unlink($org_file);
+        }
+
+        $shopImage->shop_id = $account->store;
+
+        if ($request->file('_file') != NULL)
+        {
+            $shopImage->filename = time().'_'.$request->file( '_file')->getClientOriginalName();
+            $shopImage->display_name = $request->file( '_file')->getClientOriginalName();
+            $shopImage->url = asset(Storage::url('shop_image/').$shopImage->filename);
+            $request->file('_file')->storeAs('public/shop_image/', $shopImage->filename);
+        }
+
+        $shopImage->save();
+
+
+        $imageList = $this->get_nine_images_array($account->store);
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopImages' => $imageList,
+        ]);
+    }
+
 
 }

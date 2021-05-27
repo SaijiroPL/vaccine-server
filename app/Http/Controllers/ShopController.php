@@ -35,11 +35,7 @@ class ShopController extends Controller
 
     public function edit($no=NULL)
     {
-        //$no = $request->input('edit_no');
-
         $shop_model = new Shop();
-
-        //$provinces = Shop::get_provinces();
         $image_url = Storage::url('shop_image/');
 
         if (isset($no))
@@ -53,14 +49,13 @@ class ShopController extends Controller
 
         return view('shop_edit', [
             'shop' => $shop,
-            //'provinces' => $provinces,
             'image_url' => $image_url
         ]);
     }
 
     public function update(Request $request)
     {
-        if ( $request->input('id') != '')
+        if ($request->input('id') != '')
             $shop = Shop::find($request->input('id'));
         else
         {
@@ -68,11 +63,11 @@ class ShopController extends Controller
         }
 
         $shop->name = $request->input('name');
-        //$shop->province_no = $request->input('province');
-        //$shop->county_no = $request->input('county');
         $shop->address = $request->input('address');
         $shop->postal = $request->input('postal');
         $shop->tel_no = $request->input('tel_no');
+        $shop->docomo = (NULL !== $request->input('docomo'));
+        $shop->link = $request->input('link');
         if ($request->file('thumbnail') != NULL)
         {
             $shop->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();

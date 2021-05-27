@@ -37,7 +37,14 @@
                         <tr class="row-{{ (($coupons->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($coupons->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->title }}</td>
-                            <td>{{ $u->content }}</td>
+                            <td>
+                                {{ $u->amount }}
+                                @if ($u->unit == 0)
+                                  円引き
+                                @else
+                                  ％引き
+                                @endif
+                              </td>
                             <td>{{ $u->from_date }} ~ {{ $u->to_date }}</td>
                             <td>
                                 @if ($u->shop_id != 0)
@@ -48,9 +55,9 @@
                             </td>
                             <td>
                                 @if ($u->reuse == 0)
-                                    NG
+                                  一回きり
                                 @else
-                                    OK
+                                  期間内無制限
                                 @endif
                             </td>
                             <td>

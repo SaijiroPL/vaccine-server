@@ -8,7 +8,7 @@
     <!--begin::Form-->
     <form class="m-form m-form--fit m-form--label-align-right" action="/shop/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($shop) ?  $shop->id : '' }}" />
+        <input type="hidden" name="id" value="{{ isset($shop) ?  $shop->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-3 col-form-label">ショップ名</label>
@@ -21,23 +21,40 @@
                 <label for="example-text-input" class="col-3 col-form-label">住所</label>
                 <div class="col-5">
                     <input class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}"
-                    required data-msg-required="住所を選択してください.">
+                           required data-msg-required="住所を選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
-                <label for="example-text-input" class="col-3 col-form-label">郵便番号</label>
+              <label for="example-text-input" class="col-3 col-form-label">郵便番号</label>
+              <div class="col-5">
+                  <input class="form-control m-input" type="text" name="postal" value="{{ isset($shop) ? $shop->postal : '' }}"
+                          minlength="7" maxlength="7" required
+                          data-msg-required="郵便番号を選択してください."
+                          data-msg-minlength="郵便番号を選択してください."
+                          data-msg-maxlength="郵便番号を選択してください.">
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label for="example-text-input" class="col-3 col-form-label">電話番号</label>
                 <div class="col-5">
-                    <input class="form-control m-input" type="text" name="postal" value="{{ isset($shop) ? $shop->postal : '' }}"
-                    required data-msg-required="郵便番号を選択してください.">
+                    <input class="form-control m-input" type="text" name="tel_no" value="{{ isset($shop) ? $shop->tel_no : '' }}"
+                    required data-msg-required="電話番号を選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
-                    <label for="example-text-input" class="col-3 col-form-label">電話番号</label>
-                    <div class="col-5">
-                        <input class="form-control m-input" type="text" name="tel_no" value="{{ isset($shop) ? $shop->tel_no : '' }}"
-                        required data-msg-required="電話番号を選択してください.">
-                    </div>
-                </div>
+              <div class="col-5 offset-3">
+                <label class="m-checkbox m-checkbox--bold">
+                  <input type="checkbox" name="docomo" value="1" @if (isset($shop) && $shop->docomo == 1) {{ 'checked' }} @endif> ドコモショップ
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <label for="example-text-input" class="col-3 col-form-label">予約ページ URL</label>
+              <div class="col-5">
+                  <input class="form-control m-input" type="text" name="link" value="{{ isset($shop) ? $shop->link : '' }}">
+              </div>
+            </div>
             <div class="form-group m-form__group row">
                 <label for="exampleInputEmail1" class="col-3 col-form-label">画像</label>
                 <div class="col-5">
@@ -105,7 +122,16 @@
             $('#path_dsp').val($(this).val());
         });
 
-
+        $('input[name="docomo"]').on('change', function() {
+          if (this.checked)
+            $('input[name="link"]').parents('div.form-group').show();
+          else
+            $('input[name="link"]').parents('div.form-group').hide();
+        });
+@if (!isset($shop) || $shop->docomo != 1)
+        $('input[name="link"]').parents('div.form-group').hide();
+@endif
+        $('input[name="postal"]').inputmask({mask: '9{0,7}'});
     });
 </script>
 @endsection

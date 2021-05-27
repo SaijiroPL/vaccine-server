@@ -65,10 +65,18 @@ class Customer extends Model
             ])->first();
     }
 
-	public static function authenticate($email, $password)
+	public static function authenticate($id, $password, $deviceID)
     {
-        return Customer::where('email', $email)
-                    ->where('password', sha1($password))
+        return Customer::where('member_no', $id)
+                    ->where('password', $password)
+                    ->where('device_id', $deviceID)
+                    ->first();
+    }
+
+    public static function authenticate_transferCode($transferCode)
+    {
+        return Customer::where('transferCode', $transferCode)
+                    ->where('transferCode_date', '>',  date('Y-m-d H:i:s', time() - 60 * 60 * 24))
                     ->first();
     }
 
@@ -94,5 +102,11 @@ class Customer extends Model
     {
         Customer::where('id', $customerID)
             ->update(['password' => sha1($password), 'resetPasswordToken' => null]);
+    }
+
+    public static function set_transfer_code($customerID, $transferCode)
+    {
+        Customer::where('id', $customerID)
+            ->update(['transferCode' => $transferCode, 'transferCode_date' => date('Y-m-d H:i:s')]);
     }
 }

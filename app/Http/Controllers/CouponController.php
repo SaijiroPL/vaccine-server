@@ -109,6 +109,9 @@ class CouponController extends Controller
         $coupon->to_date = $request->input('to_date');
         $coupon->shop_id = $request->input('shop');
         $coupon->reuse = $request->input('reuse');
+        $coupon->type = $request->input('type');
+        $coupon->amount = $request->input('amount');
+        $coupon->unit = $request->input('unit');
         $coupon->agree = 1;
         $coupon->created_by = "admin";
         if ($request->file('thumbnail') != NULL)

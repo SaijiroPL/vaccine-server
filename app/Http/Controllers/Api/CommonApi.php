@@ -59,21 +59,30 @@ class CommonApi
 
     public static function get_coupon_by_shop($shop)
     {
-        return Coupon::where('shop_id', $shop)
-            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date'))
+        $today = date('Y-m-d');
+
+        return Coupon::whereIn('shop_id', [$shop, 0])
+            ->where('to_date', '>=', $today)
+            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date, DATE_FORMAT(from_date,"%Y/%m/%d") as from_date1, DATE_FORMAT(to_date,"%Y/%m/%d") as to_date1'))
             ->latest()
             ->get();
     }
 
-    public static function add_notice()
+    public static function get_last_coupon_by_shop($shop)
     {
+        $today = date('Y-m-d');
 
+        return Coupon::whereIn('shop_id', [$shop, 0])
+            ->where('to_date', '<', $today)
+            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date, DATE_FORMAT(from_date,"%Y/%m/%d") as from_date1, DATE_FORMAT(to_date,"%Y/%m/%d") as to_date1'))
+            ->latest()
+            ->get();
     }
 
     public static function get_notice_by_shop($shop)
     {
         return Notice::where('shop_id', $shop)
-            ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date'))
+            ->select(DB::raw('*, DATE_FORMAT(updated_at,"%Y-%m-%d") as date'))
             ->latest()
             ->get();
     }
@@ -83,7 +92,7 @@ class CommonApi
         return CarryingGoods::select()->get();
     }
 
-    public static function generate_member_unique_id($firstName, $lastName, $email)
+    public static function generate_member_unique_id($prefix_no)
     {
         $year = date('Y');
         $month = date('m');
@@ -91,8 +100,30 @@ class CommonApi
         $hour = date('H');
         $minute = date('i');
         $second = date('s');
-        $suffix = (string)strlen($firstName).(string)strlen($lastName).(string)strlen($email);
-        return (string)($year - 2010).(string)($month * 31 + $day).(string)($hour * 3600 + $minute * 60 + $second).$suffix;
+        $prefix_str = substr(sha1($prefix_no), 0, 2);
+        // $suffix = (string)strlen($firstName).(string)strlen($lastName).(string)strlen($email);
+        return $prefix_str.(string)($year - 2020).(string)($month * 31 + $day).(string)($hour).(string)$minute.(string)$second;
+    }
+
+    public static function generate_shop_unique_id($shop_id)
+    {
+        $tmp = '0000';
+        $tmp = $tmp.$shop_id;
+        $tmp_str = 'id';
+        return $tmp_str.substr($tmp, strlen($tmp)-4, 4);
+    }
+
+    public static function generate_password()
+    {
+        $text="";
+        $length=8;
+        $startAscii=48;
+        $endAscii=122;
+
+        for($count = 0; $count < $length; $count++) {
+            $text=$text.chr(mt_rand($startAscii, $endAscii));
+        }
+        return $text;
     }
 
     public static function makeResetURL($customerID)

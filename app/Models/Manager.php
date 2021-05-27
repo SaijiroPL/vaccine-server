@@ -11,7 +11,7 @@ class Manager extends Model
     protected $table = 't_manager';
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name, email', 'password', 'store', 'device_id', 'access_token'];
+    protected $fillable = ['name', 'password', 'store', 'allow', 'device_id', 'access_token'];
     protected $hidden = ['password'];
 
     public static function generate_access_token(Manager $account)
@@ -24,11 +24,19 @@ class Manager extends Model
         return Manager::where('access_token', $token)->first();
     }
 
-    public static function authenticate($email, $password, $device_id)
+    public static function authenticate($name, $password, $device_id)
     {
-        return Manager::where('email', $email)
+        return Manager::where('name', $name)
                     ->where('password', sha1($password))
                     ->where('device_id', $device_id)
                     ->first();
+    }
+
+    public static function get_managers()
+    {
+        $managers = DB::table('v_manager')
+                ->latest()
+                ->paginate(10);
+        return $managers;
     }
 }

@@ -32,7 +32,10 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/search_member', 'Api\StoreApiController@search_member');
     Route::post('/store/add_coupon', 'Api\StoreApiController@add_coupon');
     Route::any('/store/get_coupon', 'Api\StoreApiController@get_coupon');
+    Route::any('/store/change_date_coupon', 'Api\StoreApiController@change_date_coupon');
+    Route::any('/store/get_last_coupon', 'Api\StoreApiController@get_last_coupon');
     Route::post('/store/add_notice', 'Api\StoreApiController@add_notice');
+    Route::post('/store/delete_notice', 'Api\StoreApiController@delete_notice');
     Route::any('/store/get_notice', 'Api\StoreApiController@get_notice');
     Route::any('/store/get_member', 'Api\StoreApiController@get_member');
     Route::any('/store/register_member', 'Api\StoreApiController@register_member');
@@ -54,6 +57,10 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/calcualtion_get', 'Api\StoreApiController@calcualtion_get');
     Route::any('/store/calcualtion_get_goods', 'Api\StoreApiController@calcualtion_get_goods');
     Route::any('/store/get_new_counts', 'Api\StoreApiController@get_new_counts');
+    Route::any('/store/get_manuals', 'Api\StoreApiController@get_manuals');
+    Route::any('/store/change_shop_time', 'Api\StoreApiController@change_shop_time');
+    Route::any('/store/get_shop_images', 'Api\StoreApiController@get_shop_images');
+    Route::any('/store/update_shop_image', 'Api\StoreApiController@update_shop_image');
 });
 
 Route::any('/client/test', 'Api\ClientApiController@test');
@@ -61,17 +68,22 @@ Route::post('/client/login', 'Api\ClientApiController@login');
 Route::post('/client/sendVerifyNumber', 'Api\ClientApiController@sendVerifyNumber');
 Route::post('/client/confirmVerifyNumber', 'Api\ClientApiController@confirmVerifyNumber');
 Route::post('/client/signup', 'Api\ClientApiController@signup');
+Route::post('/client/createAccount', 'Api\ClientApiController@createAccount');
 Route::post('/client/getLicense', 'Api\ClientApiController@getLicense');
 Route::get('/client/resetPassword', 'Api\ClientApiController@resetPassword');
 Route::post('/client/doResetPassword', 'Api\ClientApiController@doResetPassword');
+Route::any('/client/getProvinceList', 'Api\ClientApiController@getProvinceList');
+Route::any('/client/getCityListByProvince', 'Api\ClientApiController@getCityListByProvince');
+Route::any('/client/getShopListByCity', 'Api\ClientApiController@getShopListByCity');
+Route::any('/client/getMapCoordinate', 'Api\ClientApiController@getMapCoordinate');
 Route::group(['middleware'=>'token:client'], function() {
     Route::any('/logout', 'Api\ClientApiController@logout');
     Route::any('/client/getNotice', 'Api\ClientApiController@getNotice');
     Route::any('/client/getShopList', 'Api\ClientApiController@getShopList');
     Route::any('/client/sendQuestion', 'Api\ClientApiController@sendQuestion');
-    Route::any('/client/getAreaList', 'Api\ClientApiController@getAreaList');
     Route::any('/client/getShopByArea', 'Api\ClientApiController@getShopByArea');
     Route::any('/client/getMyShop', 'Api\ClientApiController@getMyShop');
+    Route::any('/client/getShopImage', 'Api\ClientApiController@getShopImage');
     Route::any('/client/registerMyShop', 'Api\ClientApiController@registerMyShop');
     Route::any('/client/getTimeList', 'Api\ClientApiController@getTimeList');
     Route::any('/client/getReservedDataByShop', 'Api\ClientApiController@getReservedDataByShop');
@@ -79,7 +91,10 @@ Route::group(['middleware'=>'token:client'], function() {
     Route::any('/client/getSigongList', 'Api\ClientApiController@getSigongList');
     Route::any('/client/getCouponList', 'Api\ClientApiController@getCouponList');
     Route::any('/client/useCoupon', 'Api\ClientApiController@useCoupon');
+    Route::any('/client/expireCoupon', 'Api\ClientApiController@expireCoupon');
     Route::any('/client/getQuestionList', 'Api\ClientApiController@getQuestionList');
     Route::any('/client/calcUnReadInquires', 'Api\ClientApiController@calcUnReadInquires');
     Route::any('/client/setInquiryRead', 'Api\ClientApiController@setInquiryRead');
+    Route::any('/client/getShopByProvince', 'Api\ClientApiController@getShopByProvince');
+    Route::any('/client/generateTransferCode', 'Api\ClientApiController@generateTransferCode');
 });

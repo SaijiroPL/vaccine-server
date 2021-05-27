@@ -167,6 +167,14 @@
                 <span class="m-menu__link-text">施工マニュアル</span>
                 </a>
               </li>
+              <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_ITEM) echo 'm-menu__item--active';?>"
+                aria-haspopup="true" m-menu-submenu-toggle="hover">
+              <a href="{{ url('/manager') }}" class="m-menu__link m-menu__toggle">
+                <span class="m-menu__item-here"></span>
+                <i class="m-menu__link-icon fa fa-id-card"></i>
+                <span class="m-menu__link-text">代理店マスタ管理</span>
+              </a>
+            </li>
               <li class="m-menu__section ">
                 <h4 class="m-menu__section-text">マスター管理機能</h4>
                 <i class="m-menu__section-icon flaticon-more-v2"></i>

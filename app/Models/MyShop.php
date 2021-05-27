@@ -22,6 +22,13 @@ class MyShop extends Model
             ->first();
     }
 
+    public static function get_my_shop_image($myShopID)
+    {
+        return DB::table('t_shop_image')
+            ->where('shop_id', $myShopID)
+            ->get();
+    }
+
     public static function get_my_shop_history($customerID)
     {
         return DB::table('v_my_shop')
