@@ -726,7 +726,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`coating`@`localhost` SQL SECURITY DEFINER  V
 -- View structure for v_my_shop
 -- ----------------------------
 DROP VIEW IF EXISTS `v_my_shop`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`coating`@`localhost` SQL SECURITY DEFINER  VIEW `v_my_shop` AS select `t_myshop`.`f_id` AS `f_id`,`t_myshop`.`f_customer_id` AS `f_customer_id`,`t_myshop`.`f_shop_id` AS `f_shop_id`,`t_myshop`.`created_at` AS `created_at`,`t_myShop`.`updated_at` AS `updated_at`,`t_shop`.`name` AS `name`,`t_shop`.`image_path` AS `image_path`,`t_shop`.`address` AS `address`,`t_shop`.`postal` AS `postal`,`t_shop`.`tel_no` AS `tel_no`,`t_shop`.`docomo` AS `docomo` from (`t_shop` left join `t_myshop` on((`t_myshop`.`f_shop_id` = `t_shop`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`coating`@`localhost` SQL SECURITY DEFINER  VIEW `v_my_shop` AS select `t_myshop`.`f_id` AS `f_id`,`t_myshop`.`f_customer_id` AS `f_customer_id`,`t_myshop`.`f_shop_id` AS `f_shop_id`,`t_myshop`.`created_at` AS `created_at`,`t_myshop`.`updated_at` AS `updated_at`,`t_shop`.`name` AS `name`,`t_shop`.`image_path` AS `image_path`,`t_shop`.`address` AS `address`,`t_shop`.`postal` AS `postal`,`t_shop`.`tel_no` AS `tel_no`,`t_shop`.`docomo` AS `docomo` from (`t_shop` left join `t_myshop` on((`t_myshop`.`f_shop_id` = `t_shop`.`id`))) ;
 
 -- ----------------------------
 -- View structure for v_notice
