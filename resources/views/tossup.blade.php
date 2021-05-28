@@ -56,7 +56,7 @@
                 </button>
             </div>
             <form class="m-form m-form--fit m-form--label-align-right" id="toss_form" action="/tossup/tossup" method="POST" enctype="multipart/form-data">
-                <input type=hidden id="toss_no" name="toss_no" value="{{ $u->id }}"/>
+                <input type=hidden id="toss_no" name="toss_no"/>
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
