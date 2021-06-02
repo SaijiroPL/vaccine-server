@@ -24,6 +24,7 @@ use App\Models\CalculationGoods;
 use App\Models\Inquiry;
 use App\Models\CarryingManual;
 use App\Models\ShopImage;
+use App\Models\Area;
 
 use Config;
 use App\Http\Controllers\Api\CommonApi;
