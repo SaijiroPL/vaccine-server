@@ -16,9 +16,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-
-        $shop_model = new Shop();
-        $shops = $shop_model->get_data();
+        $shops = Shop::get_data();
         $image_url = Storage::url('shop_image/');
         return view('shop', [
             'shops' => $shops,

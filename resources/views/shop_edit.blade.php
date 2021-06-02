@@ -18,20 +18,21 @@
                 </div>
             </div>
             <div class="form-group m-form__group row">
-                <label for="example-text-input" class="col-3 col-form-label">住所</label>
-                <div class="col-5">
-                    <input class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}"
-                           required data-msg-required="住所を選択してください.">
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
               <label for="example-text-input" class="col-3 col-form-label">郵便番号</label>
               <div class="col-5">
-                  <input class="form-control m-input" type="text" name="postal" value="{{ isset($shop) ? $shop->postal : '' }}"
+                  <input id="zipcode" class="form-control m-input" type="text" name="postal" value="{{ isset($shop) ? $shop->postal : '' }}"
                           minlength="7" maxlength="7" required
                           data-msg-required="郵便番号を選択してください."
                           data-msg-minlength="郵便番号を選択してください."
                           data-msg-maxlength="郵便番号を選択してください.">
+              </div>
+              <button type="button" class="btn" onclick="fetchAddress()">〒</button>
+            </div>
+            <div class="form-group m-form__group row">
+              <label for="example-text-input" class="col-3 col-form-label">住所</label>
+              <div class="col-5">
+                  <input id="address" class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}"
+                         required data-msg-required="住所を選択してください.">
               </div>
             </div>
             <div class="form-group m-form__group row">
@@ -133,5 +134,23 @@
 @endif
         $('input[name="postal"]').inputmask({mask: '9{0,7}'});
     });
+    function fetchAddress() {
+      var zipcode = $('#zipcode').val();
+      console.log(zipcode);
+      $.ajax({
+        type: "POST",
+        url: "{{ url('/api/store/get_address') }}",
+        data: {
+          code: zipcode,
+        },
+        success: function (v) {
+          if (v.code) {
+            $('#address').val(`${v.name_p} ${v.name_c}`);
+          }
+        },
+        error: function(data, status, err) {
+        }
+      });
+    }
 </script>
 @endsection

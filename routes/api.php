@@ -22,6 +22,7 @@ Route::any('/store/test', 'Api\StoreApiController@test');
 Route::post('/store/login', 'Api\StoreApiController@login');
 Route::post('/store/signup', 'Api\StoreApiController@signup');
 Route::get('/store/get_stores/{code?}', 'Api\StoreApiController@get_stores');
+Route::post('/store/get_address', 'Api\StoreApiController@address');
 Route::group(['middleware'=>'token:store'], function() {
     Route::post('/store/add_tossup', 'Api\StoreApiController@add_tossup');
     Route::any('/store/get_tossup', 'Api\StoreApiController@get_tossup');

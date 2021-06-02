@@ -745,5 +745,9 @@ class StoreApiController extends Controller
         ]);
     }
 
-
+    public function address(Request $request) {
+        $code = $request->code;
+        $area = Area::where('postal', $code)->first();
+        return response()->json($area);
+    }
 }
