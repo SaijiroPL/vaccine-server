@@ -10,7 +10,7 @@ class Shop extends Model
     protected $table = 't_shop';
 
     protected $fillable = [
-        'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link',
+        'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link', 'latitude', 'longitude'
     ];
 
     public static function get_data() {

@@ -24,11 +24,10 @@ use App\Models\CalculationGoods;
 use App\Models\Inquiry;
 use App\Models\CarryingManual;
 use App\Models\ShopImage;
-use App\Models\Area;
 
 use Config;
 use App\Http\Controllers\Api\CommonApi;
-
+use App\Models\Area;
 
 class StoreApiController extends Controller
 {
@@ -748,7 +747,20 @@ class StoreApiController extends Controller
 
     public function address(Request $request) {
         $code = $request->code;
-        $area = Area::where('postal', $code)->first();
-        return response()->json($area);
+        $area = Area::where('postal', implode('', explode('-', $code)))->first();
+        $curl = curl_init();
+        $where = urlencode('{ "Postal_Code": "'.$code.'" }');
+        curl_setopt($curl, CURLOPT_URL, 'https://parseapi.back4app.com/classes/Japanzipcode_Japan_Postal_Code?limit=10&where=' . $where);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'X-Parse-Application-Id: Sda3VP3mt7IOm4MMfFU9rrBeW1riTtouLN1IcSV7', // This is your app's application id
+            'X-Parse-REST-API-Key: lDht8g8bbmY0Uga2pBZqyasy99if6nYBzqMWo2qF' // This is your app's REST API key
+        ));
+        $data = json_decode(curl_exec($curl)); // Here you have the data that you need
+        curl_close($curl);
+        return response()->json([
+            'text' => $area,
+            'location' => $data,
+        ]);
     }
 }

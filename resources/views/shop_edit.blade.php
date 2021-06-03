@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-    <form class="m-form m-form--fit m-form--label-align-right" action="/shop/update" method="POST" enctype="multipart/form-data">
+    <form class="m-form m-form--fit m-form--label-align-right" action="/shop/update" method="POST" enctype="multipart/form-data" id="theform">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="{{ isset($shop) ?  $shop->id : '' }}" />
         <div class="m-portlet__body">
@@ -31,8 +31,8 @@
             <div class="form-group m-form__group row">
               <label for="example-text-input" class="col-3 col-form-label">住所</label>
               <div class="col-5">
-                  <input id="address" class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}"
-                         required data-msg-required="住所を選択してください.">
+                  <input id="address" class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}" required data-msg-required="住所を選択してください.">
+                  <br />
               </div>
             </div>
             <div class="form-group m-form__group row">
@@ -80,12 +80,15 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group m-form__group row">
+              <div id="googleMap" style="width:100%;height:600px;"></div>
+            </div>
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions">
                 <div class="row">
                     <div class="col-2 offset-3">
-                        <button type="submit" class="btn btn-success btn-block">OK</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="onSubmit()">OK</button>
                     </div>
                     <div class="col-2">
                             <a href="{{ url('/shop') }}" class="btn btn-secondary btn-block">Cancel</a>
@@ -93,6 +96,8 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="latitude" id="latitude" />
+        <input type="hidden" name="longitude" id="longitude" />
     </form>
 </div>
 @endsection
@@ -134,9 +139,10 @@
 @endif
         $('input[name="postal"]').inputmask({mask: '9{0,7}'});
     });
+
     function fetchAddress() {
       var zipcode = $('#zipcode').val();
-      console.log(zipcode);
+      zipcode = zipcode.slice(0, 3) + '-' + zipcode.slice(3, 7);
       $.ajax({
         type: "POST",
         url: "{{ url('/api/store/get_address') }}",
@@ -144,13 +150,54 @@
           code: zipcode,
         },
         success: function (v) {
-          if (v.code) {
-            $('#address').val(`${v.name_p} ${v.name_c}`);
+          if (v.location.results.length > 0) {
+            $('#address').val(`${v.text.name_p} ${v.text.name_c}`);
+            const loc = v.location.results[0];
+            if (marker) {
+              marker.setPosition(new google.maps.LatLng(loc.Latitude, loc.Longitude));
+            } else {
+              marker = new google.maps.Marker({
+                map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: { lat: loc.Latitude, lng: loc.Longitude },
+              });
+            }
+            const center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
+            window.map.setCenter(center);
           }
         },
         error: function(data, status, err) {
         }
       });
     }
+
+    window.map = undefined;
+    let marker;
+    let lat = {{ isset($shop) ? $shop->latitude : 0 }};
+    let lng = {{ isset($shop) ? $shop->longitude : 0 }};
+
+    function myMap() {
+      var mapProp= {
+        center: new google.maps.LatLng(lat, lng),
+        zoom: 11,
+      };
+      window.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+      if (lat != 0 && lng != 0) {
+        marker = new google.maps.Marker({
+          map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: { lat: lat, lng: lng },
+        });
+      }
+    }
+
+    function onSubmit() {
+      $('#latitude').val(marker.getPosition().lat());
+      $('#longitude').val(marker.getPosition().lng());
+      $('#theform').submit();
+    }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTD8_DBxzt1CZh0Agh_kCowzXsw9BhsZY&callback=myMap"></script>
 @endsection
