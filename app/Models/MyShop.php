@@ -8,7 +8,7 @@ use DB;
 
 class MyShop extends Model
 {
-    protected $table = 't_myShop';
+    protected $table = 't_myshop';
     protected $fillable = [
         'f_customer_id', 'f_shop_id'
     ];
