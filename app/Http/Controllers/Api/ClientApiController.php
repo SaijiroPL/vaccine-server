@@ -18,6 +18,7 @@ use App\Models\ShopReserve;
 use App\Models\CustomerInquiryRead;
 use App\Models\CouponCustomer;
 use App\Models\CustomerVerifyNumber;
+use App\Models\Policy;
 use App\Models\ShopRestDate;
 use Config;
 
@@ -54,10 +55,10 @@ class ClientApiController extends Controller
 
     public function getLicense()
     {
-        $license = Customer::getLicenseData();
+        $policy = Policy::first();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'license' => $license,
+            'license' => $policy,
         ]);
     }
 
