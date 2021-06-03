@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\User;
+use App\Models\Policy;
 
 class HomeController extends Controller
 {
@@ -49,5 +50,11 @@ class HomeController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function terms_of_use()
+    {
+        $policy = Policy::first();
+        return $policy->policy;
     }
 }

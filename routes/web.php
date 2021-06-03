@@ -25,6 +25,7 @@ Route::get('/login', function() {
 });
 Route::post('/do_login', 'HomeController@do_login');
 Route::post('/do_signup', 'HomeController@do_signup');
+Route::get('/terms_of_use', 'HomeController@terms_of_use');
 
 Route::group(['middleware'=>'auth'], function() {
     Route::any('/logout', 'HomeController@logout');
