@@ -28,7 +28,7 @@ class Manager extends Model
     {
         return Manager::where('name', $name)
                     ->where('password', sha1($password))
-                    ->where('device_id', $device_id)
+                    // ->where('device_id', $device_id)
                     ->first();
     }
 

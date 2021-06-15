@@ -69,7 +69,7 @@ class Customer extends Model
     {
         return Customer::where('member_no', $id)
                     ->where('password', $password)
-                    ->where('device_id', $deviceID)
+                    // ->where('device_id', $deviceID)
                     ->first();
     }
 
