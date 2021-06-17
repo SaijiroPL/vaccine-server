@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
-@section('title', __('施工マニュアル一覧'))
-@section('page_title', __('施工マニュアル一覧'))
+@if ($type == 0)
+  @section('title', __('施工マニュアル一覧'))
+  @section('page_title', __('施工マニュアル一覧'))
+@else
+  @section('title', __('提案ツール一覧'))
+  @section('page_title', __('提案ツール一覧'))
+@endif
+
 
 @section('content')
 <div class="m-portlet">
@@ -25,8 +31,8 @@
                             <i class="la la-warning"></i>
                         </div>
                         <div class="m-alert__text">
-                            <h5>登録された施工マニュアルがないです.</h5>
-                            施工マニュアルを登録してください.
+                            <h5>登録された{{$type == 0 ? '施工マニュアル' : '提案ツール' }}がないです.</h5>
+                            {{$type == 0 ? '施工マニュアル' : '提案ツール' }}を登録してください.
                         </div>
                     </div>
                 </div>
@@ -52,6 +58,7 @@
                     <form class="m-form m-form--fit m-form--label-align-right"
                         action="{{ url('/manual/add') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="type" value="{{ $type }}">
                         <div class="form-group m-form__group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFile"

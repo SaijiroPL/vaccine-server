@@ -20,23 +20,47 @@ class CarryingManualController extends Controller
         return view('carrying_manual', ['data' => $data]);
     }
 
+    public function manuals()
+    {
+        $data = CarryingManual::where('type', 0)->orderBy('id', 'DESC')->get();
+        return view('carrying_manual', ['data' => $data, 'type' => 0]);
+    }
+
+    public function suggest_tools()
+    {
+        $data = CarryingManual::where('type', 1)->orderBy('id', 'DESC')->get();
+        return view('carrying_manual', ['data' => $data, 'type' => 1]);
+    }
+
     public function add(Request $request)
     {
         $data = new CarryingManual;
+        $data->type = $request->type;
         $data->display_name = $request->file('file')->getClientOriginalName();
         $data->filename = time().'.'.$request->file('file')->getClientOriginalExtension();
-        $data->url = asset(Storage::url('manual/').$data->filename);
-        $request->file('file')->storeAs('public/manual/', $data->filename);
+        if ($data->type == 0) {
+            $data->url = asset(Storage::url('manual/').$data->filename);
+            $request->file('file')->storeAs('public/manual/', $data->filename);
+        } else {
+            $data->url = asset(Storage::url('tools/').$data->filename);
+            $request->file('file')->storeAs('public/tools/', $data->filename);
+        }
+
         $data->save();
 
-        return redirect('/manual');
+        return $data->type == 0 ? redirect('/manual') : redirect('/suggest_tools');
     }
 
     public function delete($id)
     {
         $data = CarryingManual::find($id);
-        Storage::delete('public/manual/'.$data->filename);
+        $type = $data->type;
+        if ($type == 0) {
+            Storage::delete('public/manual/'.$data->filename);
+        } else {
+            Storage::delete('public/tools/'.$data->filename);
+        }
         $data->delete();
-        return redirect('/manual');
+        return $type == 0 ? redirect('/manual') : redirect('/suggest_tools');
     }
 }

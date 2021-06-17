@@ -13,6 +13,7 @@
                         <tr>
                             <td>No</td>
                             <td>店舗</td>
+                            <td>端末識別番号</td>
                             <td>ID</td>
                             <td>パスワード</td>
                             <td>許可状態</td>
@@ -26,6 +27,7 @@
                             <td>
                                 {{ $u->shop_name }}
                             </td>
+                            <td>{{ $u->device_id }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->real_password }}</td>
                             <td>
@@ -63,11 +65,11 @@
 @section('script')
 <script>
     function manager_allow(id){
-      swal({title:"Are you sure?",
-          text:"You won't be able to revert this!",
+      swal({title:"本当に削除しますか？",
+          text:"削除すると元に戻せません",
           showCancelButton:!0,
-          confirmButtonText:"Yes, delete it!",
-          cancelButtonText:"No, cancel!",
+          confirmButtonText:"はい",
+          cancelButtonText:"キャンセル",
       })
       .then(function(e){
           if (e.value == 1)

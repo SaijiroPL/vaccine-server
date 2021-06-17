@@ -92,11 +92,11 @@
 <script>
         function agree_confirm(agree_no){
 
-            swal({title:"Are you sure?",
-                    text:"You won't be able to revert this!",
+            swal({title:"本当に削除しますか？",
+                    text:"削除すると元に戻せません",
                     showCancelButton:!0,
                     confirmButtonText:"Yes, agree it!",
-                    cancelButtonText:"No, cancel!",
+                    cancelButtonText:"キャンセル",
                 })
                 .then(function(e){
                     if (e.value == 1)

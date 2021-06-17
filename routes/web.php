@@ -25,6 +25,7 @@ Route::get('/login', function() {
 });
 Route::post('/do_login', 'HomeController@do_login');
 Route::post('/do_signup', 'HomeController@do_signup');
+
 Route::get('/terms_of_use', 'HomeController@terms_of_use');
 
 Route::group(['middleware'=>'auth'], function() {
@@ -61,7 +62,8 @@ Route::group(['middleware'=>'auth'], function() {
     Route::any('/tossup', 'TossupController@index');
     Route::any('/tossup/tossup', 'TossupController@tossup');
 
-    Route::any('/manual', 'CarryingManualController@index');
+    Route::any('/manual', 'CarryingManualController@manuals');
+    Route::any('/suggest_tools', 'CarryingManualController@suggest_tools');
     Route::get('/manual/delete/{id}', 'CarryingManualController@delete');
     Route::post('/manual/add', 'CarryingManualController@add');
 

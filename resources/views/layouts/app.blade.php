@@ -169,6 +169,14 @@
               </li>
               <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_ITEM) echo 'm-menu__item--active';?>"
                 aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="{{ url('/suggest_tools') }}" class="m-menu__link m-menu__toggle">
+                <span class="m-menu__item-here"></span>
+                <i class="m-menu__link-icon fa fa-list-alt"></i>
+                <span class="m-menu__link-text">提案ツール</span>
+                </a>
+              </li>
+              <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_ITEM) echo 'm-menu__item--active';?>"
+                aria-haspopup="true" m-menu-submenu-toggle="hover">
               <a href="{{ url('/manager') }}" class="m-menu__link m-menu__toggle">
                 <span class="m-menu__item-here"></span>
                 <i class="m-menu__link-icon fa fa-id-card"></i>

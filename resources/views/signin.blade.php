@@ -38,9 +38,7 @@
         <div class="m-grid__item m-grid__item--fluid  m-login__wrapper">
           <div class="m-login__container">
             <div class="m-login__logo">
-              <a href="#">
-                <img src="{{ asset('assets/app/media/img/logos/logo-1.png') }}">
-              </a>
+              <img src="{{ asset('images/harutob-L.jpg') }}" style="width: 100%">
             </div>
             <div class="m-login__signin">
               <div class="m-login__head">
@@ -61,40 +59,6 @@
                           class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">ログイン</button>
                 </div>
               </form>
-            </div>
-            <div class="m-login__signup">
-              <div class="m-login__head">
-                <h3 class="m-login__title">勘定登録</h3>
-                <div class="m-login__desc">勘定情報を入力してください.</div>
-              </div>
-              <form class="m-login__form m-form" action="{{ url('/do_signup') }}" method="POST" data-toggle="validator">
-                {{ csrf_field() }}
-                <div class="form-group m-form__group">
-                  <input class="form-control m-input" type="text" placeholder="性名" name="fullname" required
-                         data-msg-required="名前を入力してください.">
-                </div>
-                <div class="form-group m-form__group">
-                  <input class="form-control m-input" type="text" placeholder="メールアドレス" name="email" required
-                         data-msg-required="メールアドレスを入力してください.">
-                </div>
-                <div class="form-group m-form__group">
-                  <input class="form-control m-input" type="password" placeholder="パスワード" name="password" required
-                         id="passwd" data-msg-required="パスワードを入力してください.">
-                </div>
-                <div class="form-group m-form__group">
-                  <input class="form-control m-input m-login__form-input--last" type="password"
-                         placeholder="パスワード(再度入力)" name="rpassword"
-                         equalTo="#passwd" data-msg-equalto="パスワードをまた確認してください." required>
-                </div>
-                <div class="m-login__form-action">
-                  <button type="submit"  onclick="$(this).closest('form').submit()"
-                          class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">勘定登録</button>&nbsp;&nbsp;
-                  <button id="m_login_signup_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom  m-login__btn">キャンセル</button>
-                </div>
-              </form>
-            </div>
-            <div class="m-login__account">
-              <a href="javascript:;" id="m_login_signup" class="m-link m-link--light m-login__account-link">勘定登録</a>
             </div>
           </div>
         </div>

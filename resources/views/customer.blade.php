@@ -29,24 +29,23 @@
                     <thead>
                         <tr>
                         <td>ID</td>
-                        <td>ユーザー名</td>
-                        <td>ふりがな</td>
-                        <td>電話番号</td>
-                        <td>メールアドレス</td>
-                        <td>生年月日</td>
-                        <td>郵便番号</td>
+                        <td>ユーザーID</td>
+                        <td>パスワード</td>
+                        <td>お気に入り店舗</td>
                         </tr>
                     </thead>
                     <tbody>
                     @forelse ($customers as $ind => $u)
+                        @php
+                          $shop = App\Models\MyShop::get_my_shop($u->id);
+                          $shopName = $shop ? $shop->name : '';
+                        @endphp
                         <tr class="row-{{ (($customers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                        <td>{{ ($customers->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                        <td>{{ $u->name }}</td>
-                        <td>{{ $u->name_japan }}</td>
-                        <td>{{ $u->tel_no }}</td>
-                        <td>{{ $u->email }}</td>
-                        <td>{{ $u->birthday }}</td>
-                        <td>{{ $u->fax }}</td>
+                        {{-- <td>{{ ($customers->currentPage() - 1) * $per_page + $ind + 1 }}</td> --}}
+                        <td>{{ $u->id }}</td>
+                        <td>{{ $u->member_no }}</td>
+                        <td>{{ $u->password }}</td>
+                        <td>{{ $shopName }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>
