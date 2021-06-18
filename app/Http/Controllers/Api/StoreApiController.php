@@ -28,6 +28,7 @@ use App\Models\ShopImage;
 use Config;
 use App\Http\Controllers\Api\CommonApi;
 use App\Models\Area;
+use App\Models\CarryingGoodsDetail;
 
 class StoreApiController extends Controller
 {
@@ -418,11 +419,11 @@ class StoreApiController extends Controller
     public function index_carrying(Request $request)
     {
         $account = $request->account;
-        //$memberid = $request->input('memberid');
+        $details = CarryingGoodsDetail::get();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            //'bottleRemain' => Bottle::get_remain($memberid, $account->store),
             'goods' => CommonApi::get_goods_list(),
+            'details' => $details,
         ]);
     }
 

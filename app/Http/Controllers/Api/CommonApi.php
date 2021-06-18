@@ -11,7 +11,6 @@ use App\Models\Atec;
 use App\Models\Coupon;
 use App\Models\Notice;
 use App\Models\CarryingGoods;
-use App\Models\CarryingGoodsDetail;
 
 class CommonApi
 {
@@ -90,7 +89,7 @@ class CommonApi
 
     public static function get_goods_list()
     {
-        return CarryingGoods::with(CarryingGoodsDetail::class)->get();
+        return CarryingGoods::select()->get();
     }
 
     public static function generate_member_unique_id($prefix_no)
