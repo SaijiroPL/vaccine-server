@@ -77,6 +77,10 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/master/carrying_goods/delete', 'CarryingGoodsController@delete');
     Route::post('/master/carrying_goods/update', 'CarryingGoodsController@update');
 
+    Route::get('/master/carrying_goods/detail/{id}', 'CarryingGoodsController@detail');
+    Route::post('/master/carrying_goods/detail/{id}', 'CarryingGoodsController@detail_post');
+    Route::get('/master/carrying_goods/detail/delete/{id}', 'CarryingGoodsController@delete_detail');
+
     Route::any('/manager', 'ManagerController@index');
     Route::get('/manager/allow/{id}', 'ManagerController@allow');
 });

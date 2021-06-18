@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use App\Models\CarryingGoodsDetail;
+
 class CarryingGoodsController extends Controller
 {
     /**
@@ -33,12 +35,11 @@ class CarryingGoodsController extends Controller
 
     public function edit($no=NULL)
     {
-
         $goods_model = new CarryingGoods();
         $image_url = Storage::url('goods_image/');
 
         if (isset($no))
-            $goods = $goods_model->get_goods($no);
+            $goods = CarryingGoods::find($no);
         else
             $goods = NULL;
         return view('goods_edit', [
@@ -68,6 +69,27 @@ class CarryingGoodsController extends Controller
         $goods->save();
 
         return redirect("/master/carrying_goods");
+    }
+
+    public function detail($id) {
+        $goods = CarryingGoods::find($id);
+        return view('goods_detail', ['goods' => $goods]);
+    }
+
+    public function detail_post($id) {
+        CarryingGoodsDetail::create([
+            'goods_id' => $id,
+            'name' => request('name'),
+            'price' => request('price'),
+        ]);
+        return redirect("/master/carrying_goods/detail/".$id);
+    }
+
+    public function delete_detail($id) {
+        $detail = CarryingGoodsDetail::find($id);
+        $goods_id = $detail->goods_id;
+        $detail->delete();
+        return redirect("/master/carrying_goods/detail/".$goods_id);
     }
 
 }

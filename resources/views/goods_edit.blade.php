@@ -10,7 +10,7 @@
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($goods) ?  $goods->id : '' }}" />
         <div class="m-portlet__body">
-            <div class="form-group m-form__group row">
+            <div class="form-group m-form__group row" style="display: none">
                 <label for="exampleSelect1" class="col-2 col-form-label">種類</label>
                 <div class="col-6">
                     <select class="form-control m-input" name="type">
@@ -35,7 +35,7 @@
                 <label for="example-text-input" class="col-2 col-form-label">価格</label>
                 <div class="col-6">
                     <input class="form-control m-input" type="number" name="price" value="{{ isset($goods) ? $goods->price : '' }}"
-                    required data-msg-required="価格を選択してください." data-msg-number='数を入力してください'>
+                    data-msg-required="価格を選択してください." data-msg-number='数を入力してください'>
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -62,6 +62,31 @@
                     </div>
                 </div>
             </div>
+            @if (isset($goods))
+            <div class="form-group row">
+              <div class="col-md-1 offset-1">
+                <button type="button" class="btn btn-success btn-block" onclick="goToDetails()">サイズ追加</button>
+              </div>
+              <div class="col-md-6">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <td>サイズ</td>
+                      <td>価格</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($goods->details as $d)
+                      <tr>
+                        <td>{{ $d->name }}</td>
+                        <td>{{ $d->price }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            @endif
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions">
@@ -105,6 +130,8 @@
             $('#path_dsp').val($(this).val());
         });
     })
-
+    function goToDetails() {
+      location.href = "/master/carrying_goods/detail/" + "{{ isset($goods) ?  $goods->id : '' }}";
+    }
 </script>
 @endsection

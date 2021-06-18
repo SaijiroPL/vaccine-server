@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\CarryingGoodsDetail;
 use Illuminate\Database\Eloquent\Model;
 
 use DB;
@@ -15,9 +16,7 @@ class CarryingGoods extends Model
     ];
 
     public static function get_data() {
-        $goods =  DB::table('t_carrying_goods')
-                    ->latest()
-                    ->paginate(10);
+        $goods =  CarryingGoods::latest()->paginate(10);
         return $goods;
     }
 
@@ -34,4 +33,7 @@ class CarryingGoods extends Model
                     ->get();
     }
 
+    public function details() {
+        return $this->hasMany(CarryingGoodsDetail::class, 'goods_id', 'id');
+    }
 }

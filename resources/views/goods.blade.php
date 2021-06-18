@@ -23,7 +23,6 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>種類</td>
                             <td>商品名</td>
                             <td>価格</td>
                             <td>画像</td>
@@ -34,15 +33,17 @@
                     @forelse ($goods as $ind => $u)
                         <tr class="row-{{ (($goods->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($goods->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                            <td>
-                              @if ($u->type == 0)
-                                そのた
-                              @else
-                                フォン
-                              @endif
-                          </td>
                             <td>{{ $u->name }}</td>
-                            <td>{{ $u->price }}</td>
+                            <td>
+                              @if ($u->price)
+                                {{ number_format($u->price) }}¥
+                              @else
+                                @foreach ($u->details as $d)
+                                  {{ number_format($d->price) }}¥
+                                  <br />
+                                @endforeach
+                              @endif
+                            </td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
                             </td>
