@@ -37,7 +37,7 @@ class CarryingManualController extends Controller
         $data = new CarryingManual;
         $data->type = $request->type;
         $data->display_name = $request->file('file')->getClientOriginalName();
-        $data->filename = time().'.'.$request->file('file')->getClientOriginalExtension();
+        $data->filename = $request->file('file')->getClientOriginalName();
         if ($data->type == 0) {
             $data->url = asset(Storage::url('manual/').$data->filename);
             $request->file('file')->storeAs('public/manual/', $data->filename);
