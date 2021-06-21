@@ -495,7 +495,7 @@ class StoreApiController extends Controller
     {
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'goodsData' => CarryingGoods::get_goods_list(),
+            'goodsData' => CarryingGoods::get(),
         ]);
     }
 
