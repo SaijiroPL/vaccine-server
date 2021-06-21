@@ -423,6 +423,7 @@ class StoreApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'goods' => CommonApi::get_goods_list(),
+            'serial' => Carrying::max('id') + 1,
             'details' => $details,
         ]);
     }
