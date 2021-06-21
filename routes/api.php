@@ -59,6 +59,7 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/calcualtion_get_goods', 'Api\StoreApiController@calcualtion_get_goods');
     Route::any('/store/get_new_counts', 'Api\StoreApiController@get_new_counts');
     Route::any('/store/get_manuals', 'Api\StoreApiController@get_manuals');
+    Route::any('/store/get_tools', 'Api\StoreApiController@get_tools');
     Route::any('/store/change_shop_time', 'Api\StoreApiController@change_shop_time');
     Route::any('/store/get_shop_images', 'Api\StoreApiController@get_shop_images');
     Route::any('/store/update_shop_image', 'Api\StoreApiController@update_shop_image');
