@@ -18,17 +18,17 @@ class Carrying extends Model
         if (!isset($date))
         {
             $carries =  DB::table('t_carrying')
-                    ->select('t_carrying.*', 't_shop.name')
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $goods)
+                    ->select('t_carrying.*', 't_shop.name')
                     ->latest()
                     ->paginate(10);
         } else
             $carries =  DB::table('t_carrying')
-                    ->select('t_carrying.*, t_shop.name')
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $goods)
                     ->where('t_carrying.date', '=', $date)
+                    ->select('t_carrying.*', 't_shop.name')
                     ->latest()
                     ->paginate(10);
 

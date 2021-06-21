@@ -29,9 +29,8 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>お問い合わせ店舗</td>
+                            <td>お問い合わせ先</td>
                             <td>お問い合わせ内容</td>
-                            <td>顧客名</td>
                             <td>日付</td>
                             <td>送信者</td>
                         </tr>
@@ -42,7 +41,6 @@
                             <td>{{ ($inquiries->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->shop_name }}</td>
                             <td>{{ $u->content }}</td>
-                            <td>{{ $u->customer_name }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>{{ $u->sender_name }}</td>
                         </tr>

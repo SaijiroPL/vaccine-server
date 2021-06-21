@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-<form class="m-form m-form--fit m-form--label-align-right" action="/coupon/update" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" action="/coupon/update" method="POST" enctype="multipart/form-data" id="theform">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($coupon) ?  $coupon->id : '' }}" />
         <div class="m-portlet__body">
@@ -137,7 +137,7 @@
             <input type="file" name="thumbnail" id="path" style="display: none;" accept="image/*">
             <div class="form-group m-form__group row">
                 <div class="offset-2 col-md-9">
-                    <div id="div_img" onclick="$(this).html('');$(this).removeClass('img');$('#path_dsp, #path').val('');">
+                    <div id="div_img">
                         @if (isset($coupon))
                             <img src="{{ asset( $image_url.$coupon->image ) }}" height="100%">
                         @endif
@@ -149,10 +149,10 @@
             <div class="m-form__actions">
                 <div class="row">
                     <div class="col-2 offset-2">
-                        <button type="submit" class="btn btn-success btn-block">OK</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="onSubmit()">OK</button>
                     </div>
                     <div class="col-2">
-                            <a href="{{ url('/coupon') }}" class="btn btn-secondary btn-block">Cancel</a>
+                        <a href="{{ url('/coupon') }}" class="btn btn-secondary btn-block">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -197,6 +197,18 @@
             $('#path_dsp').val($(this).val());
         });
     })
+
+    function onSubmit() {
+      if ($('#from_date').val() > $('#to_date').val()) {
+        swal({title:"警告",
+          text:"完了日を開始日以降に設定してください。",
+          showCancelButton: false,
+          confirmButtonText:"はい",
+        });
+        return;
+      }
+      $('#theform').submit();
+    }
 
 </script>
 @endsection

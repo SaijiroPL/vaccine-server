@@ -73,7 +73,7 @@
             <input type="file" name="thumbnail" id="path" style="display: none;" accept="image/*">
             <div class="form-group m-form__group row">
                 <div class="offset-3 col-md-9">
-                    <div id="div_img" onclick="$(this).html('');$(this).removeClass('img');$('#path_dsp, #path').val('');">
+                    <div id="div_img">
                         @if (isset($shop))
                             <img src="{{ asset( $image_url.$shop->image ) }}" height="100%">
                         @endif
@@ -174,13 +174,13 @@
 
     window.map = undefined;
     let marker;
-    let lat = {{ isset($shop) ? $shop->latitude : 0 }};
-    let lng = {{ isset($shop) ? $shop->longitude : 0 }};
+    let lat = {{ isset($shop) ? $shop->latitude : 35.6684415 }};
+    let lng = {{ isset($shop) ? $shop->longitude : 139.6007843 }};
 
     function myMap() {
       var mapProp= {
         center: new google.maps.LatLng(lat, lng),
-        zoom: 11,
+        zoom: 6,
       };
       window.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
       if (lat != 0 && lng != 0) {
@@ -199,5 +199,5 @@
       $('#theform').submit();
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTD8_DBxzt1CZh0Agh_kCowzXsw9BhsZY&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoU17c9-vWEDM5VH2-WtilFTJgtUhHvhg&callback=myMap"></script>
 @endsection
