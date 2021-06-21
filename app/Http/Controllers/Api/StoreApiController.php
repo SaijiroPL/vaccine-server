@@ -28,7 +28,6 @@ use App\Models\ShopImage;
 use Config;
 use App\Http\Controllers\Api\CommonApi;
 use App\Models\Area;
-use App\Models\CarryingGoodsDetail;
 
 class StoreApiController extends Controller
 {
@@ -419,12 +418,11 @@ class StoreApiController extends Controller
     public function index_carrying(Request $request)
     {
         $account = $request->account;
-        $details = CarryingGoodsDetail::get();
+        //$memberid = $request->input('memberid');
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
+            //'bottleRemain' => Bottle::get_remain($memberid, $account->store),
             'goods' => CommonApi::get_goods_list(),
-            'serial' => Carrying::max('id') + 1,
-            'details' => $details,
         ]);
     }
 
@@ -659,10 +657,18 @@ class StoreApiController extends Controller
     public function get_manuals(Request $request)
     {
         $account = $request->account;
-        $new_atec_count = Atec::get_new_atecs($account->store);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'manuals' => CarryingManual::orderBy('id', 'DESC')->get(),
+            'manuals' => CarryingManual::where('type', 0)->orderBy('id', 'DESC')->get(),
+        ]);
+    }
+
+    public function get_tools(Request $request)
+    {
+        $account = $request->account;
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'manuals' => CarryingManual::where('type', 1)->orderBy('id', 'DESC')->get(),
         ]);
     }
 
