@@ -556,14 +556,14 @@ class StoreApiController extends Controller
                     ->where('f_rest_time', 0)
                     ->forceDelete();
         }
-        else {
-            $uploaded = $request->input('dates');
-            foreach($uploaded as $dt) {
-                $rest = new ShopRestDate;
-                $rest->f_shop_id = $dt['shopId'];
-                $rest->f_rest_date = $dt['rest_date'];
-                $rest->save();
-            }
+
+        $shopId = $request->input('shopId');
+        $uploaded = $request->input('dates');
+        foreach($uploaded as $dt) {
+            $rest = new ShopRestDate;
+            $rest->f_shop_id = $shopId;
+            $rest->f_rest_date = $dt;
+            $rest->save();
         }
 
         return response()->json([
