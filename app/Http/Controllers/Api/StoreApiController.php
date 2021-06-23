@@ -456,6 +456,7 @@ class StoreApiController extends Controller
         $carrying->c6 = $request->input('c6');
         $carrying->c7 = $request->input('c7');
         $carrying->c8 = $request->input('c8');
+        $carrying->goods_subs = $request->input('goods_subs');
 
         if ($request->file('_file') != NULL)
         {
