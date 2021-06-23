@@ -546,15 +546,9 @@ class StoreApiController extends Controller
 
     public function restDate_register(Request $request)
     {
-        $count = ShopRestDate::where('f_shop_id', $request->input('shopId'))
-                    ->where('f_rest_date', $request->input('rest_date'))
-                    ->where('f_rest_time', 0)
-                    ->count();
+        $count = ShopRestDate::where('f_shop_id', $request->input('shopId'))->count();
         if ($count > 0) {
-            ShopRestDate::where('f_shop_id', $request->input('shopId'))
-                    ->where('f_rest_date', $request->input('rest_date'))
-                    ->where('f_rest_time', 0)
-                    ->forceDelete();
+            ShopRestDate::where('f_shop_id', $request->input('shopId'))->forceDelete();
         }
 
         $shopId = $request->input('shopId');
