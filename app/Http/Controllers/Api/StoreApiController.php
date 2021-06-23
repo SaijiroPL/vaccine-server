@@ -19,6 +19,7 @@ use App\Models\MyShop;
 use App\Models\CarryingGoods;
 use App\Models\ShopReserve;
 use App\Models\ShopRestDate;
+use App\Models\ShopDocomoDate;
 use App\Models\Calculation;
 use App\Models\CalculationGoods;
 use App\Models\Inquiry;
@@ -539,6 +540,7 @@ class StoreApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'restDateList' => ShopReserve::get_rest_date($shopID),
+            'restDocomoList' => ShopDocomoDate::where('f_shop_id', $shopID)->get(),
             'reservedData' => ShopReserve::get_reserved_data($shopID),
             'timeList' => ShopReserve::get_time_list(),
         ]);
@@ -563,6 +565,28 @@ class StoreApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'restDateList' => ShopReserve::get_rest_date($shopId),
+        ]);
+    }
+
+    public function restDate_docomo_register(Request $request)
+    {
+        $count = ShopDocomoDate::where('f_shop_id', $request->input('shopId'))->count();
+        if ($count > 0) {
+            ShopDocomoDate::where('f_shop_id', $request->input('shopId'))->forceDelete();
+        }
+
+        $shopId = $request->input('shopId');
+        $uploaded = $request->input('dates');
+        foreach($uploaded as $dt) {
+            $rest = new ShopDocomoDate;
+            $rest->f_shop_id = $shopId;
+            $rest->f_rest_date = $dt;
+            $rest->save();
+        }
+
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'restDocomoList' => ShopDocomoDate::where('f_shop_id', $shopId)->get(),
         ]);
     }
 
