@@ -543,6 +543,7 @@ class StoreApiController extends Controller
             'restDocomoList' => ShopDocomoDate::where('f_shop_id', $shopID)->get(),
             'reservedData' => ShopReserve::get_reserved_data($shopID),
             'timeList' => ShopReserve::get_time_list(),
+            'docomo' => Shop::find($shopID)->docomo,
         ]);
     }
 
