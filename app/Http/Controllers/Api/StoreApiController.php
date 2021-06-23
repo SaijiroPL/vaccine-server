@@ -562,7 +562,7 @@ class StoreApiController extends Controller
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'restDateList' => ShopReserve::get_rest_date($shopID),
+            'restDateList' => ShopReserve::get_rest_date($shopId),
         ]);
     }
 
