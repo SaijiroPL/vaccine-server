@@ -24,7 +24,6 @@ class ShopReserve extends Model
     {
         return DB::table('t_shop_rest_date')
             ->where('f_shop_id', $shopID)
-            ->where('f_rest_date', '>=', date('Y-m-d', time()-60*60*24))
             ->get();
     }
     public static function get_reserved_data($shopID)
