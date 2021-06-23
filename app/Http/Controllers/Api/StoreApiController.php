@@ -526,6 +526,14 @@ class StoreApiController extends Controller
         ]);
     }
 
+    public function get_carryings_subgoodsname(Request $request)
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => Carrying::find($request->id)->goods_subs,
+        ]);
+    }
+
     public function get_carrying_image_history(Request $request)
     {
         $account = $request->account;
