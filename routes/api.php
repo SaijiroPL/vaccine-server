@@ -74,6 +74,7 @@ Route::post('/client/confirmVerifyNumber', 'Api\ClientApiController@confirmVerif
 Route::post('/client/signup', 'Api\ClientApiController@signup');
 Route::post('/client/createAccount', 'Api\ClientApiController@createAccount');
 Route::post('/client/getLicense', 'Api\ClientApiController@getLicense');
+Route::post('/client/getFaq', 'Api\ClientApiController@getFaq');
 Route::get('/client/resetPassword', 'Api\ClientApiController@resetPassword');
 Route::post('/client/doResetPassword', 'Api\ClientApiController@doResetPassword');
 Route::any('/client/getProvinceList', 'Api\ClientApiController@getProvinceList');
