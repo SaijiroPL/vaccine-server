@@ -335,6 +335,7 @@ class ClientApiController extends Controller
                 'myShop' => $myShop,
                 'myShopImage' => MyShop::get_my_shop_image($myShop->f_shop_id),
                 'businessHours' => [$shopModel->start_time, $shopModel->end_time],
+                'restDocomoList' => ShopDocomoDate::where('f_shop_id', $myShop->f_shop_id)->get(),
             ]);
         } else {
             return response()->json([
