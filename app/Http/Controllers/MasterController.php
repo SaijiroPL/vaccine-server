@@ -117,4 +117,21 @@ class MasterController extends Controller
 
         return redirect('/master/policy');
     }
+
+    public function save_faq(Request $request)
+    {
+        $policy = $request->input('policy');
+        $privacy = $request->input('privacy');
+
+        $data = Policy::skip(1)->first();
+        if (!isset($data))
+            $data = new Policy;
+        if (isset($policy))
+            $data->policy = $policy;
+        if (isset($privacy))
+            $data->privacy = $privacy;
+        $data->save();
+
+        return redirect('/master/faq');
+    }
 }

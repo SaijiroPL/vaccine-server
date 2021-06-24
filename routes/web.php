@@ -72,6 +72,8 @@ Route::group(['middleware'=>'auth'], function() {
     Route::any('/master/inquiry','MasterController@show_inquiry');
     Route::any('/master/policy','MasterController@policy');
     Route::post('/master/save_policy','MasterController@save_policy');
+    Route::any('/master/faq','MasterController@faq');
+    Route::post('/master/save_faq','MasterController@save_faq');
     Route::any('/master/carrying_goods','CarryingGoodsController@index');
     Route::any('/master/carrying_goods/edit/{id?}', 'CarryingGoodsController@edit');
     Route::post('/master/carrying_goods/delete', 'CarryingGoodsController@delete');
