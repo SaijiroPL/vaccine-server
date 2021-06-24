@@ -20,6 +20,7 @@ use App\Models\CouponCustomer;
 use App\Models\CustomerVerifyNumber;
 use App\Models\Policy;
 use App\Models\ShopRestDate;
+use App\Models\ShopDocomoDate;
 use Config;
 
 class ClientApiController extends Controller
@@ -528,6 +529,15 @@ class ClientApiController extends Controller
         Customer::set_transfer_code($customerID, $transferCode);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
+        ]);
+    }
+
+    public function getMyShopDocomoDays(Request $request)
+    {
+        $shopID = $request->input('shop');
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'restDocomoList' => ShopDocomoDate::where('f_shop_id', $shopID)->get(),
         ]);
     }
 }
