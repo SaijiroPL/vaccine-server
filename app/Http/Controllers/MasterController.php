@@ -89,6 +89,18 @@ class MasterController extends Controller
         return view('policy', ['data' => $data]);
     }
 
+    public function faq()
+    {
+        $data = Policy::skip(1)->first();
+        if ($data == null) {
+            $data = Policy::create([
+                'policy' => '',
+                'privacy' => '',
+            ]);
+        }
+        return view('faq', ['data' => $data]);
+    }
+
     public function save_policy(Request $request)
     {
         $policy = $request->input('policy');
