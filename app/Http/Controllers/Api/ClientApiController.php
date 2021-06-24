@@ -62,6 +62,15 @@ class ClientApiController extends Controller
         ]);
     }
 
+    public function getFaq()
+    {
+        $policy = Policy::skip(1)->first();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'faq' => $policy,
+        ]);
+    }
+
     public function createAccount(Request $request)
     {
         $shopID = $request->input('shop');
