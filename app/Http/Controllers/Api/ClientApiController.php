@@ -317,12 +317,14 @@ class ClientApiController extends Controller
     {
         $customerID = $request->input('customerID');
         $myShop = MyShop::get_my_shop($customerID);
+        $shopModel = Shop::find($myShop->f_shop_id);
         if(isset($myShop)) {
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'restType' => ShopRestDate::check_rest($myShop->f_shop_id),
                 'myShop' => $myShop,
                 'myShopImage' => MyShop::get_my_shop_image($myShop->f_shop_id),
+                'businessHours' => [$shopModel->start_time, $shopModel->end_time],
             ]);
         } else {
             return response()->json([
