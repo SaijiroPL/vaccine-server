@@ -65,6 +65,7 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/change_shop_time', 'Api\StoreApiController@change_shop_time');
     Route::any('/store/get_shop_images', 'Api\StoreApiController@get_shop_images');
     Route::any('/store/update_shop_image', 'Api\StoreApiController@update_shop_image');
+    Route::any('/store/delete_shop_image', 'Api\StoreApiController@delete_shop_image');
 });
 
 Route::any('/client/test', 'Api\ClientApiController@test');
@@ -102,5 +103,4 @@ Route::group(['middleware'=>'token:client'], function() {
     Route::any('/client/setInquiryRead', 'Api\ClientApiController@setInquiryRead');
     Route::any('/client/getShopByProvince', 'Api\ClientApiController@getShopByProvince');
     Route::any('/client/generateTransferCode', 'Api\ClientApiController@generateTransferCode');
-    Route::any('/client/getMyShopDocomoDays', 'Api\ClientApiController@generateTransferCode');
 });

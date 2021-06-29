@@ -354,7 +354,6 @@ class StoreApiController extends Controller
         }
         else {
             $notice = Notice::find($request->input('id'));
-
         }
         $notice->kind = $request->input('kind');
         $notice->title = $request->input('title');
@@ -783,6 +782,21 @@ class StoreApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shopImages' => $imageList,
+        ]);
+    }
+
+    public function delete_shop_image(Request $request)
+    {
+        $account = $request->account;
+        $id = $request->input('id');
+        $shopImage = ShopImage::find($id);
+        if (!is_null($shopImage)) {
+            $org_file = 'storage/shop_image/'.$shopImage->filename;
+            if (file_exists($org_file)) unlink($org_file);
+            $shopImage->delete();
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK')
         ]);
     }
 
