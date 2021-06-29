@@ -31,12 +31,11 @@ class MasterController extends Controller
      */
     public function show_customer(Request $request)
     {
-        $name = $request->input('name');
-        $old['name'] = $name;
+        $name = $request->input('member_no');
+        $old['member_no'] = $name;
         $name = "%".$name."%";
 
-        $customer_model = new Customer();
-        $customers = $customer_model->get_data($name);
+        $customers = Customer::where('member_no', 'like', $name)->latest()->paginate(10);
 
         return view('customer', [
             'customers' => $customers,
