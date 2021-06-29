@@ -11,7 +11,7 @@
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/customer') }}">
                     <div class="form-group m-form__group pull-right" style="width: 25%">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="member_no" value="{{ $old['member_no'] }}" placeholder="名前">
+                            <input type="text" class="form-control" name="member_no" value="{{ $old['member_no'] }}" placeholder="ユーザーID">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                         <span>
@@ -54,7 +54,7 @@
                 </table>
             </div>
             <div class="col-md-12">
-                <div class="pull-right">{{ $customers->appends(['name' => $old['name']])->links() }}</div>
+                <div class="pull-right">{{ $customers->appends(['member_no' => $old['member_no']])->links() }}</div>
             </div>
         </div>
     </div>
