@@ -64,7 +64,7 @@
             </div>
             @if (isset($goods))
             <div class="form-group row">
-              <div class="col-md-2 offset-1">
+              <div class="col-md-2 col-sm-6 offset-2">
                 <button type="button" class="btn btn-success btn-block" onclick="goToDetails()">サイズ追加</button>
               </div>
             </div>
