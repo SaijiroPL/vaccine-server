@@ -13,7 +13,20 @@ class Customer extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 'name_japan', 'tel_no', 'email', 'birthday', 'fax', 'password', 'first_name', 'last_name', 'first_huri', 'last_huri', 'device_id', 'access_token', 'member_no',
+        'name',
+        'name_japan',
+        'tel_no', 'email',
+        'birthday',
+        'fax',
+        'password',
+        'first_name',
+        'last_name',
+        'first_huri',
+        'last_huri',
+        'device_id',
+        'access_token',
+        'member_no',
+        'fcm_token'
     ];
 
     public static function generate_access_token($deviceID, $email)

@@ -91,12 +91,11 @@
 @section('script')
 <script>
         function agree_confirm(agree_no){
-
-            swal({title:"本当に削除しますか？",
-                    text:"削除すると元に戻せません",
+            swal({title:"承認しますか？",
+                    text:"承認するとクーポンが発行されます",
                     showCancelButton:!0,
-                    confirmButtonText:"Yes, agree it!",
-                    cancelButtonText:"キャンセル",
+                    confirmButtonText:"はい",
+                    cancelButtonText:"いいえ",
                 })
                 .then(function(e){
                     if (e.value == 1)

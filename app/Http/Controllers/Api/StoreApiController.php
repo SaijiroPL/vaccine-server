@@ -57,12 +57,15 @@ class StoreApiController extends Controller
                 'accessToken' => null,
                 'shopData' => null,
             ]);
-        else
+        else {
+            $account->fcm_token = $request->input('fcmToken');
+            $account->save();
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'accessToken' => $account->access_token,
                 'shopData' => Shop::get_shop($account->store),
             ]);
+        }
     }
 
     public function signup(Request $request)
