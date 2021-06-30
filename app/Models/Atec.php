@@ -11,7 +11,7 @@ class Atec extends Model
     protected $table = 't_atec';
 
     protected $fillable = [
-        'kind', 'title', 'content',
+        'kind', 'title', 'content','shop_id'
     ];
 
     public static function get_data() {

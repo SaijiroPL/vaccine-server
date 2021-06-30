@@ -43,9 +43,9 @@ class AtecController extends Controller
      */
     public function edit($no=NULL)
     {
-
         $atec_model = new Atec();
-
+        $shop_model = new Shop();
+        $shops = $shop_model->get_shops();
         $image_url = Storage::url('atec_image/');
 
         if (isset($no))
@@ -55,6 +55,7 @@ class AtecController extends Controller
 
         return view('atec_edit', [
             'atec' => $atec,
+            'shops' => $shops,
             'image_url' => $image_url
         ]);
     }
@@ -72,11 +73,22 @@ class AtecController extends Controller
         else
         {
             $atec = new Atec;
+            // $client = new GuzzleHttp\Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
+            // $client->request('POST', 'send', [
+            //     'headers' => [
+            //         'Content-Type' => 'application/json',
+            //         'Authorization' => 'Bearer AAAAI-LPm24:APA91bFfHq8Kp1Gmuo3hiSdoQY6YgAVUVVYPXKENMLLj6Os2nbQ0gL06-YoLOZd9fo2HBMLUVRcKMtO6FcoeT_wGr6B5bTpOrk89jK6IYXaJ9WdTSs7npIiyWjc8xz9NOx2175OTNVhK',
+            //     ],
+            //     'body' => [
+            //         'to' =>
+            //     ]
+            // ]);
         }
 
         $atec->kind = $request->input('kind');
         $atec->title = $request->input('title');
         $atec->content = $request->input('content');
+        $atec->shop_id = $request->input('shop');
         if ($request->file('thumbnail') != NULL)
         {
             $atec->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
