@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tossup;
 use App\Models\Shop;
 use App\Models\Inquiry;
+use App\Models\Atec;
 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -40,11 +41,12 @@ class TossupController extends Controller
         $shop = $request->input('shop');
         $tossup = Tossup::find($id);
 
-        $inquiry = new Inquiry;
-        $inquiry->shop = $shop;
-        $inquiry->content = $tossup->content;
-        $inquiry->sender = $tossup->shop;
-        $inquiry->save();
+        $atec = new Atec;
+        $atec->kind = 'トスアップ';
+        $atec->title = 'トスアップ';
+        $atec->content = $tossup->content;
+        $atec->shop = $tossup->shop;
+        $atec->save();
 
         $tossup->tossed = 1;
         $tossup->save();
