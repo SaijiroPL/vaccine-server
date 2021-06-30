@@ -79,11 +79,11 @@
 <script>
         function agree_confirm(agree_no){
 
-            swal({title:"本当に削除しますか？",
-                    text:"削除すると元に戻せません",
+            swal({title:"承認しますか？",
+                    text:"承認時に通知が送信されます。",
                     showCancelButton:!0,
-                    confirmButtonText:"Yes, agree it!",
-                    cancelButtonText:"キャンセル",
+                    confirmButtonText:"はい",
+                    cancelButtonText:"いいえ",
                 })
                 .then(function(e){
                     if (e.value == 1)

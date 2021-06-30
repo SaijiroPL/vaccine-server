@@ -89,13 +89,13 @@ class NoticeController extends Controller
         else
         {
             $notice = new Notice;
+            $notice->agree = 1;
         }
 
         $notice->kind = $request->input('kind');
         $notice->title = $request->input('title');
         $notice->content = $request->input('content');
         $notice->shop_id = $request->input('shop');
-        $notice->agree = 1;
         $notice->created_by = "admin";
         if ($request->file('thumbnail') != NULL)
         {
