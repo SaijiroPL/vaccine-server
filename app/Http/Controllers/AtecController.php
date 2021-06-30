@@ -89,7 +89,7 @@ class AtecController extends Controller
         $atec->kind = $request->input('kind');
         $atec->title = $request->input('title');
         $atec->content = $request->input('content');
-        $atec->shop_id = $request->input('shop');
+        $atec->shop = $request->input('shop');
         if ($request->file('thumbnail') != NULL)
         {
             $atec->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();

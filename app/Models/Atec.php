@@ -11,7 +11,7 @@ class Atec extends Model
     protected $table = 't_atec';
 
     protected $fillable = [
-        'kind', 'title', 'content','shop_id'
+        'kind', 'title', 'content','shop'
     ];
 
     public static function get_data() {
@@ -22,14 +22,10 @@ class Atec extends Model
     }
 
     public static function get_atecs($shop) {
-        // $query='select *, DATE_FORMAT(t_atec.created_at,"%Y-%m-%d") as date from t_atec
-        //         left JOIN (select shop_id, atec_id from t_atec_confirm where shop_id='.$shop.') A on t_atec.id=A.atec_id
-        //         where shop_id is NULL';
-        // $atecs =  DB::select($query);
-        $atecs = Atec::where('shop_id', null)
-            ->orWhere('shop_id', 0)
-            ->orWhere('shop_id', $shop)
-            ->get();
+        $query='SELECT *, DATE_FORMAT(t_atec.created_at,"%Y-%m-%d") as date FROM t_atec
+                left JOIN (SELECT shop_id, atec_id FROM t_atec_confirm WHERE shop_id='.$shop.') A ON t_atec.id=A.atec_id
+                WHERE (shop='.$shop.' OR shop=0) AND shop_id is NULL';
+        $atecs =  DB::select($query);
         return $atecs;
     }
 

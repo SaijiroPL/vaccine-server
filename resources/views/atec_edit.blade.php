@@ -35,13 +35,13 @@
               <label for="exampleSelect1" class="col-2 col-form-label">対象ショップ</label>
               <div class="col-6">
                   <select class="form-control m-input" name="shop">
-                      @if (isset($atec) && $atec->shop_id == 0)
+                      @if (isset($atec) && $atec->shop == 0)
                           <option value="0" selected>全員</option>
                       @else
                           <option value="0">全員</option>
                       @endif
                       @foreach ($shops as $ind => $shop)
-                          @if (isset($atec) && $shop->id == $atec->shop_id)
+                          @if (isset($atec) && $shop->id == $atec->shop)
                               <option value="{{ $shop->id }}" selected>{{ $shop->name }}</option>
                           @else
                               <option value="{{ $shop->id }}">{{ $shop->name }}</option>
