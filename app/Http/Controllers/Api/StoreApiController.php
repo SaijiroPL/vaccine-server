@@ -362,7 +362,7 @@ class StoreApiController extends Controller
         $notice->title = $request->input('title');
         $notice->content = $request->input('content');
         $notice->shop_id = $account->store;
-        $notice->agree = 1;
+        $notice->agree = 0;
         $notice->created_by = $account->email;
         if ($request->file('_file') != NULL)
         {
