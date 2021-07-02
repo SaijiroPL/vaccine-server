@@ -151,11 +151,14 @@
         $('input[name="docomo"]').on('change', function() {
           if (this.checked)
             $('input[name="link"]').parents('div.form-group').show();
+            $('input[name="class_link"]').parents('div.form-group').show();
           else
             $('input[name="link"]').parents('div.form-group').hide();
+            $('input[name="class_link"]').parents('div.form-group').hide();
         });
 @if (!isset($shop) || $shop->docomo != 1)
         $('input[name="link"]').parents('div.form-group').hide();
+        $('input[name="class_link"]').parents('div.form-group').hide();
 @endif
         $('input[name="postal"]').inputmask({mask: '9{0,7}'});
     });
