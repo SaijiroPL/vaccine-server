@@ -71,34 +71,18 @@ class AtecController extends Controller
      */
     public function update(Request $request)
     {
+        $is_New = false;
         if ( $request->input('no') != '')
             $atec = Atec::find($request->input('no'));
         else
         {
             $atec = new Atec;
             $shop = $request->input('shop');
+            $is_New = true;
 
             $managers = Manager::where('store', $shop)->where('allow', 1)->get();
             if ($shop == 0) {
                 $managers = Manager::where('allow', 1)->get();
-            }
-            foreach($managers as $m) {
-                if ($m->fcm_token != null) {
-                    $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
-                    $client->request('POST', 'send', [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'Authorization' => 'Bearer AAAAI-LPm24:APA91bFfHq8Kp1Gmuo3hiSdoQY6YgAVUVVYPXKENMLLj6Os2nbQ0gL06-YoLOZd9fo2HBMLUVRcKMtO6FcoeT_wGr6B5bTpOrk89jK6IYXaJ9WdTSs7npIiyWjc8xz9NOx2175OTNVhK',
-                        ],
-                        'json' => [
-                            'to' => $m->fcm_token,
-                            'notification' => [
-                                'body' => $request->input('title'),
-                                'title' => $request->input('content'),
-                            ]
-                        ],
-                    ]);
-                }
             }
         }
 
@@ -113,6 +97,31 @@ class AtecController extends Controller
             $request->file('thumbnail')->storeAs('public/atec_image/',$atec->image);
         }
         $atec->save();
+
+        if ($is_New) {
+            foreach($managers as $m) {
+                if ($m->fcm_token != null) {
+                    $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
+                    $client->request('POST', 'send', [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Authorization' => 'Bearer AAAAI-LPm24:APA91bFfHq8Kp1Gmuo3hiSdoQY6YgAVUVVYPXKENMLLj6Os2nbQ0gL06-YoLOZd9fo2HBMLUVRcKMtO6FcoeT_wGr6B5bTpOrk89jK6IYXaJ9WdTSs7npIiyWjc8xz9NOx2175OTNVhK',
+                        ],
+                        'json' => [
+                            'to' => $m->fcm_token,
+                            'data' => [
+                                'type' => 'atec',
+                                'notify' => $atec->id,
+                            ],
+                            'notification' => [
+                                'body' => $request->input('title'),
+                                'title' => $request->input('content'),
+                            ]
+                        ],
+                    ]);
+                }
+            }
+        }
 
         return redirect("/atec");
     }
