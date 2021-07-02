@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atec;
 use App\Models\Shop;
+use App\Models\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
