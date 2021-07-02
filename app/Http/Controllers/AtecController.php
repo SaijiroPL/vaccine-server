@@ -9,6 +9,7 @@ use App\Models\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 class AtecController extends Controller
 {
@@ -83,7 +84,7 @@ class AtecController extends Controller
             }
             foreach($managers as $m) {
                 if ($m->fcm_token != null) {
-                    $client = new GuzzleHttp\Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
+                    $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
                     $client->request('POST', 'send', [
                         'headers' => [
                             'Content-Type' => 'application/json',
