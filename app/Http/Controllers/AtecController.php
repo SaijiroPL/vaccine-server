@@ -90,7 +90,7 @@ class AtecController extends Controller
                             'Content-Type' => 'application/json',
                             'Authorization' => 'Bearer AAAAI-LPm24:APA91bFfHq8Kp1Gmuo3hiSdoQY6YgAVUVVYPXKENMLLj6Os2nbQ0gL06-YoLOZd9fo2HBMLUVRcKMtO6FcoeT_wGr6B5bTpOrk89jK6IYXaJ9WdTSs7npIiyWjc8xz9NOx2175OTNVhK',
                         ],
-                        'form_params' => [
+                        'json' => [
                             'to' => $m->fcm_token,
                             'notification' => [
                                 'body' => $request->input('title'),
