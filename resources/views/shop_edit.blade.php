@@ -18,6 +18,13 @@
                 </div>
             </div>
             <div class="form-group m-form__group row">
+              <label for="example-text-input" class="col-3 col-form-label">代理店名</label>
+              <div class="col-5">
+                  <input class="form-control m-input" type="text" name="brand" value="{{ isset($shop) ? $shop->brand : '' }}"
+                  required data-msg-required="ショップ名を選択してください.">
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
               <label for="example-text-input" class="col-3 col-form-label">郵便番号</label>
               <div class="col-5">
                   <input id="zipcode" class="form-control m-input" type="text" name="postal" value="{{ isset($shop) ? $shop->postal : '' }}"
@@ -32,6 +39,13 @@
               <label for="example-text-input" class="col-3 col-form-label">住所</label>
               <div class="col-5">
                   <input id="address" class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}" required data-msg-required="住所を選択してください.">
+                  <br />
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <label for="example-text-input" class="col-3 col-form-label">代理店メールアドレス</label>
+              <div class="col-5">
+                  <input id="email" class="form-control m-input" type="text" name="email" value="{{ isset($shop) ? $shop->email : '' }}" required data-msg-required="住所を選択してください.">
                   <br />
               </div>
             </div>
@@ -54,6 +68,12 @@
               <label for="example-text-input" class="col-3 col-form-label">予約ページ URL</label>
               <div class="col-5">
                   <input class="form-control m-input" type="text" name="link" value="{{ isset($shop) ? $shop->link : '' }}">
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <label for="example-text-input" class="col-3 col-form-label">スマホ教室URL</label>
+              <div class="col-5">
+                  <input class="form-control m-input" type="text" name="class_link" value="{{ isset($shop) ? $shop->class_link : '' }}">
               </div>
             </div>
             <div class="form-group m-form__group row">
