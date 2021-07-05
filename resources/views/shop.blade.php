@@ -16,7 +16,7 @@
                 </a>
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/customer') }}">
                   <div class="form-group m-form__group pull-right" style="width: 40%">
-                    <div cl ass="input-group">
+                    <div class="input-group">
                       <input type="text" class="form-control" name="shop" placeholder="店舗">
                       <input type="text" class="form-control" name="member_no" placeholder="ユーザーID">
                       <div class="input-group-append">
