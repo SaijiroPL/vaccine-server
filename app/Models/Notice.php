@@ -15,7 +15,7 @@ class Notice extends Model
     ];
 
     public static function get_data() {
-        $notices =  DB::table('v_notice')->latest()
+        $notices =  self::latest()
                     ->paginate(10);
         return $notices;
     }
@@ -43,5 +43,9 @@ class Notice extends Model
 
     public static function get_all_data() {
         return Notice::orderBy('updated_at')->get();
+    }
+
+    public function shop() {
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 }

@@ -27,6 +27,9 @@
                             <td>おしらせタイトル</td>
                             <td>おしらせ詳細</td>
                             <td>対象ショップ</td>
+                            <td>ショップエリア</td>
+                            <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>日付</td>
                             <td>画像</td>
                             <td>動作</td>
@@ -41,10 +44,25 @@
                             <td>{{ $u->content }}</td>
                             <td>
                                 @if ($u->shop_id != 0)
-                                    {{ $u->shop_name }}
+                                    {{ $u->shop->name }}
                                 @else
                                     全員
                                 @endif
+                            </td>
+                            <td>
+                              @if ($u->shop_id != 0)
+                                {{ $u->shop->area->name_p }}
+                              @endif
+                            </td>
+                            <td>
+                              @if ($u->shop_id != 0)
+                                {{ $u->shop->area->name_c }}
+                              @endif
+                            </td>
+                            <td>
+                              @if ($u->shop_id != 0)
+                                {{ $u->shop->brand }}
+                              @endif
                             </td>
                             <td>{{ $u->created_at }}</td>
                             <td>

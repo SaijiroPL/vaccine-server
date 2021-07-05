@@ -24,9 +24,9 @@
                             <td>クーポン内容</td>
                             <td>有効期限</td>
                             <td>ショップ</td>
-                            <td>代理店名</td>
                             <td>ショップエリア</td>
                             <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>再使用</td>
                             <td>画像</td>
                             <td>動作</td>
@@ -55,17 +55,17 @@
                             </td>
                             <td>
                               @if ($u->shop_id != 0)
-                                {{ $u->shop->brand }}
-                              @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
                                 {{ $u->shop->area->name_p }}
                               @endif
                             </td>
                             <td>
                               @if ($u->shop_id != 0)
                                 {{ $u->shop->area->name_c }}
+                              @endif
+                            </td>
+                            <td>
+                              @if ($u->shop_id != 0)
+                                {{ $u->shop->brand }}
                               @endif
                             </td>
                             <td>

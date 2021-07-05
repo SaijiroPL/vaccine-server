@@ -36,9 +36,9 @@
                         <tr>
                             <td>ID</td>
                             <td>ショップ名</td>
-                            <td>代理店名</td>
                             <td>ショップエリア</td>
                             <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>住所</td>
                             <td>郵便番号</td>
                             <td>電話番号</td>
@@ -51,9 +51,9 @@
                         <tr class="row-{{ (($shops->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($shops->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
-                            <td>{{ $u->brand }}</td>
                             <td>{{ $u->area->name_p }}</td>
                             <td>{{ $u->area->name_c }}</td>
+                            <td>{{ $u->brand }}</td>
                             <td>{{ $u->address }}</td>
                             <td>{{ $u->postal }}</td>
                             <td>{{ $u->tel_no }}</td>
