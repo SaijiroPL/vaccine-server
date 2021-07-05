@@ -41,9 +41,9 @@ class MasterController extends Controller
         $shop = "%".$shop."%";
 
         $customers = Customer::with('shop')
-            ->whereHas(['shop' => function ($query) use ($shop) {
+            ->whereHas('shop', function ($query) use ($shop) {
                 $query->where('name', 'like', $shop);
-            }])
+            })
             ->where('member_no', 'like', $name)->latest()->paginate(10);
 
         return view('customer', [
