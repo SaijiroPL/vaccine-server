@@ -14,19 +14,21 @@ class Carrying extends Model
         'shop_id', 'date', 'goods',
     ];
 
-    public static function get_data($date, $goods) {
+    public static function get_data($date, $filter) {
         if (!isset($date))
         {
             $carries =  DB::table('t_carrying')
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
-                    ->where('t_carrying.goods', 'like', $goods)
+                    ->where('t_carrying.goods', 'like', $filter['goods'])
+                    ->where('t_carrying.customer_id', 'like', $filter['customer'])
                     ->select('t_carrying.*', 't_shop.name')
                     ->latest()
                     ->paginate(10);
         } else
             $carries =  DB::table('t_carrying')
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
-                    ->where('t_carrying.goods', 'like', $goods)
+                    ->where('t_carrying.goods', 'like', $filter['goods'])
+                    ->where('t_carrying.customer_id', 'like', $filter['customer'])
                     ->where('t_carrying.date', '=', $date)
                     ->select('t_carrying.*', 't_shop.name')
                     ->latest()
