@@ -15,7 +15,7 @@ class Shop extends Model
 
     public static function get_data($area) {
         $shops = DB::table('v_shop')
-                ->where('name_p', '%'.$area.'%')
+                ->where('name_p', 'like' , '%'.$area.'%')
                 ->latest()
                 ->paginate(10);
         return $shops;
