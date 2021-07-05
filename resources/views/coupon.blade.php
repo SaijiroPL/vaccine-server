@@ -4,9 +4,6 @@
 @section('page_title', __('クーポン一覧'))
 
 @section('content')
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/coupon/delete" method="POST" enctype="multipart/form-data">
-    {{ csrf_field() }}
-    <input type=hidden id="del_no" name="del_no" />
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
         <div class="row">
@@ -24,6 +21,7 @@
                         <tr>
                             <td>ID</td>
                             <td>クーポン名</td>
+                            <td>代理店名</td>
                             <td>クーポン内容</td>
                             <td>有効期限</td>
                             <td>ショップ</td>
@@ -54,6 +52,11 @@
                                 @endif
                             </td>
                             <td>
+                              @if ($u->shop_id != 0)
+                                {{ $u->shop->brand }}
+                              @endif
+                            </td>
+                            <td>
                                 @if ($u->reuse == 0)
                                   一回きり
                                 @else
@@ -82,6 +85,9 @@
         </div>
     </div>
 </div>
+<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/coupon/delete" method="POST" enctype="multipart/form-data">
+  {{ csrf_field() }}
+  <input type=hidden id="del_no" name="del_no" />
 </form>
 @endsection
 
