@@ -32,9 +32,10 @@ class Manager extends Model
                     ->first();
     }
 
-    public static function get_managers()
+    public static function get_managers($query)
     {
         $managers = DB::table('v_manager')
+                ->where('shop_name', 'like', $query['shop_name'])
                 ->latest()
                 ->paginate(10);
         return $managers;

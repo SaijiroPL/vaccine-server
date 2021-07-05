@@ -15,13 +15,19 @@ class ManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $managers = Manager::get_managers();
+        $shop = $request->input('shop');
+        $old = ['shop' => $shop];
+        $query = [
+            'shop_name' => '%'.$shop.'%'
+        ];
+        $managers = Manager::get_managers($query);
 
         return view('manager', [
             'managers' => $managers,
             'per_page' => 10,
+            'old' => $old,
         ]);
     }
 

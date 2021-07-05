@@ -6,6 +6,25 @@
 @section('content')
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="navbar-form navbar-right" role="search" action="{{ url('/manager') }}">
+            <div class="form-group m-form__group pull-right" style="width: 30%">
+              <div class="input-group">
+                <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="店舗">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <span>
+                      <i class="fa fa-search"></i>
+                      <span>&nbsp;&nbsp;検 索&nbsp;&nbsp;</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
         <div class="row">
             <div class="col-md-12">
                 <table width="100%" class="table table-striped table-bordered table-advance table-hover">
