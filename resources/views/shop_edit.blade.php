@@ -149,12 +149,14 @@
         });
 
         $('input[name="docomo"]').on('change', function() {
-          if (this.checked)
+          if (this.checked) {
             $('input[name="link"]').parents('div.form-group').show();
             $('input[name="class_link"]').parents('div.form-group').show();
-          else
+          }
+          else {
             $('input[name="link"]').parents('div.form-group').hide();
             $('input[name="class_link"]').parents('div.form-group').hide();
+          }
         });
 @if (!isset($shop) || $shop->docomo != 1)
         $('input[name="link"]').parents('div.form-group').hide();
