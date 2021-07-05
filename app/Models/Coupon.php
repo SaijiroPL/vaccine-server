@@ -22,8 +22,7 @@ class Coupon extends Model
     }
 
     public static function get_agree_data() {
-        $coupons =  DB::table('v_coupon')
-                    ->with('shop')
+        $coupons =  self::with('shop')
                     ->where('agree','=',1)
                     ->latest()
                     ->paginate(10);
