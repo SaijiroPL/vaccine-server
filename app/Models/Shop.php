@@ -14,9 +14,11 @@ class Shop extends Model
     ];
 
     public static function get_data($area) {
-        $shops = DB::table('v_shop')
-                ->where('name_p', 'like' , '%'.$area.'%')
-                ->latest()
+        // $shops = DB::table('v_shop')
+        //         ->where('name_p', 'like' , '%'.$area.'%')
+        //         ->latest()
+        //         ->paginate(10);
+        return self::latest()
                 ->paginate(10);
         return $shops;
     }
@@ -98,5 +100,10 @@ class Shop extends Model
             $shopByCity[$shop->name_c][] = $shop;
         }
         return $shopByCity;
+    }
+
+    public function area()
+    {
+        return $this->hasOne(Area::class, 'postal', 'postal');
     }
 }
