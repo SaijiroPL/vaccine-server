@@ -125,6 +125,6 @@ class Customer extends Model
 
     public function shop()
     {
-        $this->belongsToMany(Shop::class, MyShop::class, 'f_customer_id', 'f_shop_id');
+        return $this->belongsToMany(Shop::class, MyShop::class, 'f_customer_id', 'f_shop_id');
     }
 }
