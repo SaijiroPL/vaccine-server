@@ -32,10 +32,17 @@ class MasterController extends Controller
     public function show_customer(Request $request)
     {
         $name = $request->input('member_no');
-        $old['member_no'] = $name;
+        $shop = $request->input('shop');
+        $old = [
+            'member_no' => $name,
+            'shop' => $shop,
+        ];
         $name = "%".$name."%";
+        $shop = "%".$shop."%";
 
-        $customers = Customer::where('member_no', 'like', $name)->latest()->paginate(10);
+        $customers = Customer::where('member_no', 'like', $name)->latest()->paginate(10)->first();
+
+        dd($customers->shop);
 
         return view('customer', [
             'customers' => $customers,

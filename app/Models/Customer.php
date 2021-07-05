@@ -122,4 +122,9 @@ class Customer extends Model
         Customer::where('id', $customerID)
             ->update(['transferCode' => $transferCode, 'transferCode_date' => date('Y-m-d H:i:s')]);
     }
+
+    public function shop()
+    {
+        $this->belongsToMany(Shop::class, MyShop::class, 'f_customer_id', 'f_shop_id');
+    }
 }
