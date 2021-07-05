@@ -46,7 +46,7 @@
                             <td>{{ $u->from_date }} ~ {{ $u->to_date }}</td>
                             <td>
                                 @if ($u->shop_id != 0)
-                                    {{ $u->shop_name }}
+                                    {{ $u->shop->shop_name }}
                                 @else
                                     共通
                                 @endif
