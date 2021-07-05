@@ -15,15 +15,13 @@ class Notice extends Model
     ];
 
     public static function get_data() {
-        $notices =  self::latest()
+        $notices = DB::table('v_notice')->latest()
                     ->paginate(10);
         return $notices;
     }
 
     public static function get_agree_data() {
-        $notices =  DB::table('v_notice')
-                    ->where('agree','=',1)->latest()
-                    ->paginate(10);
+        $notices = self::where('agree','=',1)->latest()->paginate(10);
         return $notices;
     }
 
