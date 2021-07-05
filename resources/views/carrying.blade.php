@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/carrying') }}">
-                    <div class="form-group m-form__group pull-right" style="width: 25%">
+                    <div class="form-group m-form__group pull-right" style="width: 40%">
                         <div class="input-group">
                             <input type="text" class="form-control" name="date" value="{{ $old['date'] }}" id="carry_date" placeholder="施工日">
                             <input type="text" class="form-control" name="goods" value="{{ $old['goods'] }}" placeholder="商品名">
