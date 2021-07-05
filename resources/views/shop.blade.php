@@ -20,8 +20,8 @@
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/customer') }}">
                   <div class="form-group m-form__group pull-right" style="width: 40%">
                     <div cl ass="input-group">
-                      <input type="text" class="form-control" name="shop" value="{{  }}" placeholder="店舗">
-                      <input type="text" class="form-control" name="member_no" value="{{  }}" placeholder="ユーザーID">
+                      <input type="text" class="form-control" name="shop" placeholder="店舗">
+                      <input type="text" class="form-control" name="member_no" placeholder="ユーザーID">
                       <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                           <span>
