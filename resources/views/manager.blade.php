@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('代理店マスタ管理'))
-@section('page_title', __('代理店マスタ管理'))
+@section('title', __('デバイス許可管理'))
+@section('page_title', __('デバイス許可管理'))
 
 @section('content')
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
