@@ -52,8 +52,8 @@
                             <td>{{ ($shops->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->brand }}</td>
-                            <td>{{ $u->name_p }}</td>
-                            <td>{{ $u->name_c }}</td>
+                            <td>{{ $u->area->name_p }}</td>
+                            <td>{{ $u->area->name_c }}</td>
                             <td>{{ $u->address }}</td>
                             <td>{{ $u->postal }}</td>
                             <td>{{ $u->tel_no }}</td>
