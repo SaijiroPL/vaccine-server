@@ -40,7 +40,7 @@ class MasterController extends Controller
         $name = "%".$name."%";
         $shop = "%".$shop."%";
 
-        $customers = Customer::with(['shop' => function ($query) {
+        $customers = Customer::with(['shop' => function ($query) use ($shop) {
             $query->where('name', 'like', $shop);
         }])->where('member_no', 'like', $name)->latest()->paginate(10);
 
