@@ -68,6 +68,9 @@ class ShopController extends Controller
         $shop->link = $request->input('link');
         $shop->latitude = $request->input('latitude');
         $shop->longitude = $request->input('longitude');
+        $shop->brand = $request->input('brand');
+        $shop->email = $request->input('email');
+        $shop->class_link = $request->input('class_link');
         if ($request->file('thumbnail') != NULL)
         {
             $shop->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
