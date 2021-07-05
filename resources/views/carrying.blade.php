@@ -31,6 +31,7 @@
                     <thead>
                         <tr>
                             <td>施工番号</td>
+                            <td>ユーザーID</td>
                             <td>施工店舗</td>
                             <td>施工日</td>
                             <td>施工商品</td>
@@ -39,7 +40,8 @@
                     <tbody>
                     @forelse ($carries as $ind => $u)
                         <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                            <td>{{ ($carries->currentPage() - 1) * $per_page + $ind + 1 }}</td>
+                            <td>{{ $u->serial_no }}</td>
+                            <td>{{ $u->customer_id }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->date }}</td>
                             <td>{{ $u->goods }}</td>
