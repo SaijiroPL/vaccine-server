@@ -13,6 +13,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" name="date" value="{{ $old['date'] }}" id="carry_date" placeholder="施工日">
                             <input type="text" class="form-control" name="goods" value="{{ $old['goods'] }}" placeholder="商品名">
+                            <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="施工店舗">
                             <input type="text" class="form-control" name="customer" value="{{ $old['customer'] }}" placeholder="ユーザーID">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">

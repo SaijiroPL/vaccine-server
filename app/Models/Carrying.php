@@ -21,6 +21,7 @@ class Carrying extends Model
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $filter['goods'])
                     ->where('t_carrying.customer_id', 'like', $filter['customer'])
+                    ->where('t_shop.name', 'like', $filter['shop'])
                     ->select('t_carrying.*', 't_shop.name')
                     ->latest()
                     ->paginate(10);
@@ -29,6 +30,7 @@ class Carrying extends Model
                     ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
                     ->where('t_carrying.goods', 'like', $filter['goods'])
                     ->where('t_carrying.customer_id', 'like', $filter['customer'])
+                    ->where('t_shop.name', 'like', $filter['shop'])
                     ->where('t_carrying.date', '=', $date)
                     ->select('t_carrying.*', 't_shop.name')
                     ->latest()
