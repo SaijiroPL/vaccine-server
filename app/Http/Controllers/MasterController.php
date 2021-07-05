@@ -42,7 +42,7 @@ class MasterController extends Controller
 
         $customers = Customer::where('member_no', 'like', $name)->latest()->paginate(10)->first();
 
-        dd($customers->shop);
+        dd($customers->shop->first());
 
         return view('customer', [
             'customers' => $customers,
