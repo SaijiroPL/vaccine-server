@@ -9,12 +9,12 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/carrying') }}">
-                    <div class="form-group m-form__group pull-right" style="width: 40%">
+                    <div class="form-group m-form__group pull-right" style="width: 50%">
                         <div class="input-group">
+                            <input type="text" class="form-control" name="customer" value="{{ $old['customer'] }}" placeholder="ユーザーID">
+                            <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="施工店舗">
                             <input type="text" class="form-control" name="date" value="{{ $old['date'] }}" id="carry_date" placeholder="施工日">
                             <input type="text" class="form-control" name="goods" value="{{ $old['goods'] }}" placeholder="商品名">
-                            <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="施工店舗">
-                            <input type="text" class="form-control" name="customer" value="{{ $old['customer'] }}" placeholder="ユーザーID">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                         <span>
