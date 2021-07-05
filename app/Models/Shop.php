@@ -13,8 +13,9 @@ class Shop extends Model
         'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link', 'latitude', 'longitude', 'brand', 'email', 'class_link'
     ];
 
-    public static function get_data() {
+    public static function get_data($area) {
         $shops = DB::table('v_shop')
+                ->where('name_p', '%'.$area.'%')
                 ->latest()
                 ->paginate(10);
         return $shops;

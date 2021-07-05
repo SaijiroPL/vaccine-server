@@ -18,7 +18,7 @@ class ShopController extends Controller
     {
         $area = $request->input('area');
         $old = ['area' => $area];
-        $shops = Shop::get_data();
+        $shops = Shop::get_data($area);
         $image_url = Storage::url('shop_image/');
         return view('shop', [
             'shops' => $shops,
