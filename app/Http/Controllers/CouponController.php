@@ -21,7 +21,6 @@ class CouponController extends Controller
 
         $coupon_model = new Coupon();
         $coupons = $coupon_model->get_agree_data();
-        dd($coupons->first()->shop);
         $image_url = Storage::url('coupon_image/');
         return view('coupon', [
             'coupons' => $coupons,
