@@ -42,7 +42,6 @@
                           $shopName = $shop ? $shop->name : '';
                         @endphp
                         <tr class="row-{{ (($customers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                        {{-- <td>{{ ($customers->currentPage() - 1) * $per_page + $ind + 1 }}</td> --}}
                         <td>{{ $u->id }}</td>
                         <td>{{ $u->member_no }}</td>
                         <td>{{ $u->password }}</td>
