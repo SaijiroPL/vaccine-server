@@ -4,9 +4,6 @@
 @section('page_title', __('ショップ一覧'))
 
 @section('content')
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/shop/delete" method="POST" enctype="multipart/form-data">
-    {{ csrf_field() }}
-    <input type=hidden id="del_id" name="del_no" />
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
         <div class="row">
@@ -81,6 +78,9 @@
         </div>
     </div>
 </div>
+<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/shop/delete" method="POST" enctype="multipart/form-data">
+  {{ csrf_field() }}
+  <input type=hidden id="del_id" name="del_no" />
 </form>
 @endsection
 
