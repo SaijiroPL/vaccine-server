@@ -14,11 +14,10 @@
                       <span>&nbsp;&nbsp;ショップ追加&nbsp;&nbsp;</span>
                   </span>
                 </a>
-                <form class="navbar-form navbar-right" role="search" action="{{ url('/master/customer') }}">
-                  <div class="form-group m-form__group pull-right" style="width: 40%">
+                <form class="navbar-form navbar-right" role="search" action="{{ url('/shop') }}">
+                  <div class="form-group m-form__group pull-right" style="width: 30%">
                     <div class="input-group">
-                      <input type="text" class="form-control" name="shop" placeholder="店舗">
-                      <input type="text" class="form-control" name="member_no" placeholder="ユーザーID">
+                      <input type="text" class="form-control" name="area" value="{{ $old['area'] }}" placeholder="ショップエリア">
                       <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                           <span>

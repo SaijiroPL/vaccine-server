@@ -14,14 +14,17 @@ class ShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $area = $request->input('area');
+        $old = ['area' => $area];
         $shops = Shop::get_data();
         $image_url = Storage::url('shop_image/');
         return view('shop', [
             'shops' => $shops,
             'per_page' => 10,
-            'image_url' => $image_url
+            'image_url' => $image_url,
+            'old' => $old,
         ]);
     }
 
