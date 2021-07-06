@@ -21,7 +21,7 @@
               <label for="example-text-input" class="col-3 col-form-label">代理店名</label>
               <div class="col-5">
                   <input class="form-control m-input" type="text" name="brand" value="{{ isset($shop) ? $shop->brand : '' }}"
-                  required data-msg-required="ショップ名を選択してください.">
+                  required data-msg-required="代理店名を選択してください.">
               </div>
             </div>
             <div class="form-group m-form__group row">

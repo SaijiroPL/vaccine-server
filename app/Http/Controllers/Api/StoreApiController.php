@@ -821,4 +821,26 @@ class StoreApiController extends Controller
             'location' => $data,
         ]);
     }
+
+    public function register(Request $request) {
+        $shop = new Shop();
+        $shop->name = $request->input('name');
+        $shop->address = $request->input('address');
+        $shop->postal = $request->input('postal');
+        $shop->tel_no = $request->input('tel_no');
+        $shop->docomo = (NULL !== $request->input('docomo'));
+        $shop->link = $request->input('link');
+        $shop->latitude = $request->input('latitude');
+        $shop->longitude = $request->input('longitude');
+        $shop->brand = $request->input('brand');
+        $shop->email = $request->input('email');
+        $shop->class_link = $request->input('class_link');
+        if ($request->file('_file') != NULL)
+        {
+            $shop->image = time().'_'.$request->file( '_file')->getClientOriginalName();
+            $shop->image_path = asset(Storage::url('shop_image/').$shop->image);
+            $request->file('_file')->storeAs('public/shop_image/',$shop->image);
+        }
+        $shop->save();
+    }
 }
