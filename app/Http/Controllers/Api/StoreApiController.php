@@ -842,5 +842,9 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/shop_image/',$shop->image);
         }
         $shop->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shop' => $shop->id,
+        ]);
     }
 }
