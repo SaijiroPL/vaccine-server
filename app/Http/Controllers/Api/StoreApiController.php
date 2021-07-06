@@ -873,8 +873,7 @@ class StoreApiController extends Controller
         $shop = Shop::authenticate($request->input('name'), $request->input('password'));
         if (!$shop) {
             return response()->json([
-                'result' => Config::get('constants.errno.E_NO_MY_SHOP'),
-                'shop' => $shop->id,
+                'result' => Config::get('constants.errno.E_NO_MY_SHOP')
             ]);
         }
         $exist = Manager::where('device_id', $request->input('deviceID'))->first();
