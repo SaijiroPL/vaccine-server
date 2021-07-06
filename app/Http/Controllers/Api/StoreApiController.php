@@ -68,6 +68,31 @@ class StoreApiController extends Controller
         }
     }
 
+    public function auto_login(Request $request)
+    {
+        $device_id = $request->input('deviceID');
+        $manager = Manager::where('device_id', $device_id)->first();
+        if (!$manager) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_LOGIN'),
+                'accessToken' => null,
+                'shopData' => null,
+            ]);
+        }
+        if ($manager->allow == 0) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_MANAGER_DISABLED'),
+                'accessToken' => null,
+                'shopData' => null,
+            ]);
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'accessToken' => $manager->access_token,
+            'shopData' => Shop::get_shop($manager->store),
+        ]);
+    }
+
     public function signup(Request $request)
     {
         $device_id = $request->input('deviceId');
