@@ -859,9 +859,6 @@ class StoreApiController extends Controller
 
         $account->save();
 
-        $account->name = CommonApi::generate_shop_unique_id($account->id);
-        $account->save();
-
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shop' => $shop->id,
