@@ -843,10 +843,16 @@ class StoreApiController extends Controller
         }
         $shop->save();
 
+        $shop->login_id = CommonApi::generate_shop_unique_id($shop->id);
+        $shop->login_password = CommonApi::generate_password();
+
+        $shop->save();
+
         $account = new Manager;
         $account->device_id = $request->input('deviceID');
+        $account->name = $shop->login_id;
         $account->store = $shop->id;
-        $account->real_password = CommonApi::generate_password();
+        $account->real_password = $shop->login_password;
         $account->password = sha1($account->real_password);
         $account->allow = 0;
         $account->access_token = Manager::generate_access_token($account);
