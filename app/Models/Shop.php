@@ -13,6 +13,13 @@ class Shop extends Model
         'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link', 'latitude', 'longitude', 'brand', 'email', 'class_link', 'login_id', 'login_password'
     ];
 
+    public static function authenticate($name, $password)
+    {
+        return self::where('login_id', $name)
+            ->where('login_password', sha1($password))
+            ->first();
+    }
+
     public static function get_data($area) {
         // $shops = DB::table('v_shop')
         //         ->where('name_p', 'like' , '%'.$area.'%')

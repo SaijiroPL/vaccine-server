@@ -867,4 +867,27 @@ class StoreApiController extends Controller
             'shop' => $shop->id,
         ]);
     }
+
+    public function register_device(Request $request)
+    {
+        $shop = Shop::authenticate($request->input('name'), $request->input('password'));
+        if (!$shop) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_NO_MY_SHOP'),
+                'shop' => $shop->id,
+            ]);
+        }
+        $account = new Manager;
+        $account->device_id = $request->input('deviceID');
+        $account->name = $shop->login_id;
+        $account->store = $shop->id;
+        $account->real_password = $shop->login_password;
+        $account->password = sha1($account->real_password);
+        $account->allow = 0;
+        $account->access_token = Manager::generate_access_token($account);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shop' => $account->id,
+        ]);
+    }
 }
