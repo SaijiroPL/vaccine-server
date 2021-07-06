@@ -16,7 +16,7 @@ class Shop extends Model
     public static function authenticate($name, $password)
     {
         return self::where('login_id', $name)
-            ->where('login_password', sha1($password))
+            ->where('login_password', $password)
             ->first();
     }
 
