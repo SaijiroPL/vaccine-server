@@ -887,6 +887,7 @@ class StoreApiController extends Controller
         $account->password = sha1($account->real_password);
         $account->allow = 0;
         $account->access_token = Manager::generate_access_token($account);
+        $account->save();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shop' => $account->id,
