@@ -842,6 +842,20 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/shop_image/',$shop->image);
         }
         $shop->save();
+
+        $account = new Manager;
+        $account->device_id = $request->input('deviceID');
+        $account->store = $shop->id;
+        $account->real_password = CommonApi::generate_password();
+        $account->password = sha1($account->real_password);
+        $account->allow = 0;
+        $account->access_token = Manager::generate_access_token($account);
+
+        $account->save();
+
+        $account->name = CommonApi::generate_shop_unique_id($account->id);
+        $account->save();
+
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shop' => $shop->id,

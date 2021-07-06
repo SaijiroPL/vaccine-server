@@ -135,15 +135,9 @@ class CommonApi
 
     public static function sendSMS($phoneNumber, $data)
     {
-        /**
-         * TODO: 해당전화번호로 SMS전송코드작성
-         */
     }
 
     public static function sendEmail($email, $data)
     {
-        /**
-         * TODO: 해당주소로 email전송코드작성
-         */
     }
 }
