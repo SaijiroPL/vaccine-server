@@ -246,6 +246,15 @@ class ClientApiController extends Controller
         }
     }
 
+    public function searchShops(Request $request)
+    {
+        $shops = Shop::filter_shop_by_address($request->input('address'));
+        return response() -> json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'shopList' => $shops,
+        ]);
+    }
+
     public function sendQuestion(Request $request)
     {
         $inquiry = new Inquiry;

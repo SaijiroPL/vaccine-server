@@ -91,6 +91,7 @@ Route::group(['middleware'=>'token:client'], function() {
     Route::any('/client/getShopList', 'Api\ClientApiController@getShopList');
     Route::any('/client/sendQuestion', 'Api\ClientApiController@sendQuestion');
     Route::any('/client/getShopByArea', 'Api\ClientApiController@getShopByArea');
+    Route::any('/client/searchShops', 'Api\ClientApiController@searchShops');
     Route::any('/client/getMyShop', 'Api\ClientApiController@getMyShop');
     Route::any('/client/getShopImage', 'Api\ClientApiController@getShopImage');
     Route::any('/client/registerMyShop', 'Api\ClientApiController@registerMyShop');
