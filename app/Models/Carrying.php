@@ -94,10 +94,11 @@ class Carrying extends Model
         return $carrying;
     }
 
-    public static function get_sigong_by_customer($customerID, $sortMode)
+    public static function get_sigong_by_customer($customerID, $sortMode, $type)
     {
         return DB::table('v_carrying')
             ->where('customer_id', $customerID)
+            ->where('carrying_kind', $type)
             ->orderBy('created_at', $sortMode)
             ->get();
     }

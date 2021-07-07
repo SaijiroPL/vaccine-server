@@ -434,9 +434,10 @@ class ClientApiController extends Controller
     {
         $customerID = $request->input('customerID');
         $sortMode = $request->input('sortMode');
+        $carryingType = $request->input('type');
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'sigongList' => Carrying::get_sigong_by_customer($customerID, $sortMode),
+            'sigongList' => Carrying::get_sigong_by_customer($customerID, $sortMode, $carryingType),
         ]);
     }
 
