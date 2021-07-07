@@ -106,7 +106,7 @@ class Carrying extends Model
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
-    public function goods() {
+    public function good() {
         return $this->belongsTo(CarryingGoods::class, 'goods_id');
     }
 }
