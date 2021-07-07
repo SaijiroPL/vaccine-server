@@ -96,7 +96,7 @@ class Carrying extends Model
 
     public static function get_sigong_by_customer($customerID, $sortMode, $type)
     {
-        return self::with(['shop', 'good'])->where('customer_id', $customerID)
+        return self::with(['shop', 'good', 'himages'])->where('customer_id', $customerID)
             ->where('carrying_kind', $type)
             ->orderBy('created_at', $sortMode)
             ->get();
@@ -108,5 +108,9 @@ class Carrying extends Model
 
     public function good() {
         return $this->belongsTo(CarryingGoods::class, 'goods_id');
+    }
+
+    public function himages() {
+        return $this->hasMany(CarryingHistoryImage::class, 'carrying_id', 'id');
     }
 }
