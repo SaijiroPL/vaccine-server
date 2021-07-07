@@ -96,7 +96,7 @@ class Carrying extends Model
 
     public static function get_sigong_by_customer($customerID, $sortMode, $type)
     {
-        return self::with(['shop', 'goods'])->where('customer_id', $customerID)
+        return self::with(['shop', 'good'])->where('customer_id', $customerID)
             ->where('carrying_kind', $type)
             ->orderBy('created_at', $sortMode)
             ->get();
