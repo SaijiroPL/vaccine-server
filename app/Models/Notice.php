@@ -40,7 +40,7 @@ class Notice extends Model
     }
 
     public static function get_all_data() {
-        return Notice::orderBy('updated_at', 'DESC')->get();
+        return Notice::where('agree', 1)->orderBy('updated_at', 'DESC')->get();
     }
 
     public function shop() {
