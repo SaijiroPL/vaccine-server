@@ -12,7 +12,7 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/ctop/create') }}" class="btn btn-primary pull-right">
+                <a href="{{ url('/topic/create') }}" class="btn btn-primary pull-right">
                     <span>
                         <i class="fa flaticon-add-circular-button"></i>
                         <span>&nbsp;&nbsp;トピック追加&nbsp;&nbsp;</span>
@@ -43,7 +43,7 @@
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div class="p-action">
-                                    <a href="/ctop/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                    <a href="/topic/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
                                     <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                                 </div>
                             </td>

@@ -6,48 +6,22 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-    <form class="m-form m-form--fit m-form--label-align-right" action="/notice/update" method="POST" enctype="multipart/form-data">
+    <form class="m-form m-form--fit m-form--label-align-right" action="/ctop/update" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="no" value="{{ isset($notice) ?  $notice->id : '' }}" />
+        <input type="hidden" name="no" value="{{ isset($topic) ?  $topic->id : '' }}" />
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
-                <label for="example-text-input" class="col-2 col-form-label">おしらせジャンル</label>
+                <label for="example-text-input" class="col-2 col-form-label">トピック</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="kind" value="{{ isset($notice) ? $notice->kind : '' }}"
-                    required data-msg-required="おしらせジャンルを選択してください.">
+                    <input class="form-control m-input" type="text" name="title" value="{{ isset($topic) ? $topic->title : '' }}"
+                    required data-msg-required="トピックを選択してください.">
                 </div>
             </div>
             <div class="form-group m-form__group row">
-                <label for="example-text-input" class="col-2 col-form-label">おしらせタイトル</label>
-                <div class="col-6">
-                    <input class="form-control m-input" type="text" name="title" value="{{ isset($notice) ? $notice->title : '' }}"
-                    required data-msg-required="おしらせタイトルを選択してください.">
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label for="example-text-input" class="col-2 col-form-label">おしらせ詳細</label>
+                <label for="example-text-input" class="col-2 col-form-label">トピック詳細</label>
                 <div class="col-6">
                     <textarea class="form-control m-input m-input--air" name="content" required
-                    data-msg-required="おしらせ詳細を選択してください." rows="3">{{ isset($notice) ? $notice->content : '' }}</textarea>
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label for="exampleSelect1" class="col-2 col-form-label">対象ショップ</label>
-                <div class="col-6">
-                    <select class="form-control m-input" name="shop">
-                        @if (isset($notice) && $notice->shop_id == 0)
-                            <option value="0" selected>全員</option>
-                        @else
-                            <option value="0">全員</option>
-                        @endif
-                        @foreach ($shops as $ind => $shop)
-                            @if (isset($notice) && $shop->id == $notice->shop_id)
-                                <option value="{{ $shop->id }}" selected>{{ $shop->name }}</option>
-                            @else
-                                <option value="{{ $shop->id }}">{{ $shop->name }}</option>
-                            @endif
-                        @endforeach
-                    </select>
+                    data-msg-required="トピック詳細を選択してください." rows="3">{{ isset($topic) ? $topic->content : '' }}</textarea>
                 </div>
             </div>
             <div class="form-group m-form__group row">
@@ -55,7 +29,7 @@
                 <div class="col-6">
                     <div class="input-group">
                         <input type="text" class="form-control m-input" name="thumb" id="path_dsp"
-                            value="{{ isset($notice) ? $notice->image : '' }}" required
+                            value="{{ isset($topic) ? $topic->image : '' }}" required
                             placeholder="画像を選択してください." data-msg-required="画像を選択してください." readonly>
 
                         <div class="input-group-append">
@@ -82,7 +56,7 @@
                         <button type="submit" class="btn btn-success btn-block">OK</button>
                     </div>
                     <div class="col-2">
-                            <a href="{{ url('/notice') }}" class="btn btn-secondary btn-block">Cancel</a>
+                            <a href="{{ url('/topic') }}" class="btn btn-secondary btn-block">Cancel</a>
                     </div>
                 </div>
             </div>

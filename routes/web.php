@@ -45,11 +45,11 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/notice/update', 'NoticeController@update');
     Route::post('/notice/delete', 'NoticeController@delete');
 
-    Route::any('/ctop', 'CustomerTopController@index');
-    Route::any('/ctop/create', 'CustomerTopController@create');
-    Route::any('/ctop/edit/{id?}', 'CustomerTopController@edit');
-    Route::post('/ctop/update', 'CustomerTopController@update');
-    Route::post('/ctop/delete', 'CustomerTopController@delete');
+    Route::any('/topic', 'CustomerTopController@index');
+    Route::any('/topic/create', 'CustomerTopController@create');
+    Route::any('/topic/edit/{id?}', 'CustomerTopController@edit');
+    Route::post('/topic/update', 'CustomerTopController@update');
+    Route::post('/topic/delete', 'CustomerTopController@delete');
 
     Route::any('/notice_application', 'NoticeApplicationController@index');
     Route::any('/notice_application/agree', 'NoticeApplicationController@update');
