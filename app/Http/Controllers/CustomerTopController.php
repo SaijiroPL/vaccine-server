@@ -44,7 +44,7 @@ class CustomerTopController extends Controller
     public function delete(Request $request)
     {
         Notice::find($request->input('del_no'))->forceDelete();
-        return redirect("/notice");
+        return redirect("/topic");
     }
 
     /**
@@ -64,24 +64,14 @@ class CustomerTopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($no=NULL)
+    public function edit($no)
     {
         //$no = $request->input('edit_no');
 
-        $notice_model = new Notice();
-        $shop_model = new Shop();
-
-        $shops = $shop_model->get_shops();
-        $image_url = Storage::url('notice_image/');
-
-        if (isset($no))
-            $notice = $notice_model->get_notice($no);
-        else
-            $notice = NULL;
-        return view('notice_edit', [
-            'notice' => $notice,
-            'shops' => $shops,
-            'image_url' => $image_url
+        $topic = Topic::find($no);
+        return view('topic.form', [
+            'topic' => $topic,
+            'image_url' => $this->image_url
         ]);
     }
 

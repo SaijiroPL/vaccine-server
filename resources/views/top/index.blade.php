@@ -36,7 +36,7 @@
                         <tr class="row-{{ (($topics->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ $u->id }}</td>
                             <td>{{ $u->title }}</td>
-                            <td>{{ $u->content }}</td>
+                            <td>{{ strlen($u->content) > 51 ? substr($u->content, 48).'...' : $u->content }}</td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
                             </td>
