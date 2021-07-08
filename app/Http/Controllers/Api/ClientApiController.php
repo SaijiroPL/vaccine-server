@@ -21,6 +21,7 @@ use App\Models\CustomerVerifyNumber;
 use App\Models\Policy;
 use App\Models\ShopRestDate;
 use App\Models\ShopDocomoDate;
+use App\Models\CustomerTop;
 use Config;
 
 class ClientApiController extends Controller
@@ -550,6 +551,14 @@ class ClientApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'restDocomoList' => ShopDocomoDate::where('f_shop_id', $shopID)->get(),
+        ]);
+    }
+
+    public function getTopicList(Request $request)
+    {
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'topics' => CustomerTop::orderBy('created_at', 'DESC')->get(),
         ]);
     }
 }

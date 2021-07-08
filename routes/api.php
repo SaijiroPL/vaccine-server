@@ -85,6 +85,7 @@ Route::any('/client/getProvinceList', 'Api\ClientApiController@getProvinceList')
 Route::any('/client/getCityListByProvince', 'Api\ClientApiController@getCityListByProvince');
 Route::any('/client/getShopListByCity', 'Api\ClientApiController@getShopListByCity');
 Route::any('/client/getMapCoordinate', 'Api\ClientApiController@getMapCoordinate');
+Route::any('/client/getTopicList', 'Api\ClientApiController@getTopicList');
 Route::group(['middleware'=>'token:client'], function() {
     Route::any('/logout', 'Api\ClientApiController@logout');
     Route::any('/client/getNotice', 'Api\ClientApiController@getNotice');
