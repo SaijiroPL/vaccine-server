@@ -13,8 +13,8 @@
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">トピック</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="title" value="{{ isset($topic) ? $topic->title : '' }}"
-                    required data-msg-required="トピックを選択してください.">
+                    <textarea class="form-control m-input m-input--air" name="title"
+                    required data-msg-required="トピックを選択してください.">{{ isset($topic) ? $topic->title : '' }}</textarea>
                 </div>
             </div>
             <div class="form-group m-form__group row">
