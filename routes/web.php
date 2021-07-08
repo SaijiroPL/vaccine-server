@@ -46,6 +46,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/notice/delete', 'NoticeController@delete');
 
     Route::any('/ctop', 'CustomerTopController@index');
+    Route::any('/ctop/create', 'CustomerTopController@create');
     Route::any('/ctop/edit/{id?}', 'CustomerTopController@edit');
     Route::post('/ctop/update', 'CustomerTopController@update');
     Route::post('/ctop/delete', 'CustomerTopController@delete');

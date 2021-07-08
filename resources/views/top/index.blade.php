@@ -12,7 +12,7 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/topics/edit') }}" class="btn btn-primary pull-right">
+                <a href="{{ url('/ctop/create') }}" class="btn btn-primary pull-right">
                     <span>
                         <i class="fa flaticon-add-circular-button"></i>
                         <span>&nbsp;&nbsp;トピック追加&nbsp;&nbsp;</span>

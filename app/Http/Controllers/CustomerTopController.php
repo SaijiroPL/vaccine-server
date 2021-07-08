@@ -10,14 +10,28 @@ use Illuminate\Http\Request;
 
 class CustomerTopController extends Controller
 {
+    protected $image_url;
+
+    function __construct()
+    {
+        $this->image_url = Storage::url('topic_image/');
+    }
+
     public function index()
     {
         $topics = CustomerTop::latest()->paginate(10);
-        $image_url = Storage::url('topic_image/');
         return view('top.index', [
             'topics' => $topics,
             'per_page' => 10,
-            'image_url' => $image_url
+            'image_url' => $this->image_url
+        ]);
+    }
+
+    public function create()
+    {
+        return view('top.form', [
+            'topic' => NULL,
+            'image_url' => $this->image_url
         ]);
     }
 
