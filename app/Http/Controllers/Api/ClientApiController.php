@@ -37,6 +37,7 @@ class ClientApiController extends Controller
         $password = $request->input('password');
         $device_id = $request->input('deviceId');
         $transferCode = $request->input('transferCode');
+        $fcm_token = $request->input('fcmToken');
         if ($transferCode) {
             $account = Customer::authenticate_transferCode($transferCode);
         } else {
@@ -47,12 +48,15 @@ class ClientApiController extends Controller
                 'result' => Config::get('constants.errno.E_LOGIN'),
                 'access_token' => null
             ]);
-        else
+        else{
+            $account->fcm_token = $fcm_token;
+            $account->save();
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'account' => $account,
                 'accessToken' => $account->access_token
             ]);
+        }
     }
 
     public function getLicense()
