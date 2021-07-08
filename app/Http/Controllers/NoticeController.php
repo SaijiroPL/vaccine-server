@@ -7,6 +7,7 @@ use App\Models\Shop;
 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -108,8 +109,11 @@ class NoticeController extends Controller
         $notice->save();
 
         if ($isNew) {
-            $shop = Shop::find($notice->shop_id);
-            $customers = $shop->customers;
+            $customers = Customer::get();
+            if ($notice->shop_id != 0) {
+                $shop = Shop::find($notice->shop_id);
+                $customers = $shop->customers;
+            }
             foreach($customers as $m) {
                 if ($m->fcm_token != null) {
                     $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
