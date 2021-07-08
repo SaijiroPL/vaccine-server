@@ -18,7 +18,7 @@ class CustomerTopController extends Controller
         $notice_model = new Notice();
         $notices = $notice_model->get_agree_data();
         $image_url = Storage::url('notice_image/');
-        return view('notice', [
+        return view('top.index', [
             'notices' => $notices,
             'per_page' => 10,
             'image_url' => $image_url
