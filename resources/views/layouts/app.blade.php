@@ -180,7 +180,7 @@
               <a href="{{ url('/manager') }}" class="m-menu__link m-menu__toggle">
                 <span class="m-menu__item-here"></span>
                 <i class="m-menu__link-icon fa fa-id-card"></i>
-                <span class="m-menu__link-text">デバイス許可管理</span>
+                <span class="m-menu__link-text">代理店デバイス管理</span>
               </a>
             </li>
               <li class="m-menu__section ">
