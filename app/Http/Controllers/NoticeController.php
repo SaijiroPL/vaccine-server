@@ -8,7 +8,7 @@ use App\Models\Shop;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use GuzzleHttp\Client;
 
 
 class NoticeController extends Controller
@@ -84,12 +84,14 @@ class NoticeController extends Controller
      */
     public function update(Request $request)
     {
+        $isNew = false;
         if ( $request->input('no') != '')
             $notice = Notice::find($request->input('no'));
         else
         {
             $notice = new Notice;
             $notice->agree = 1;
+            $isNew = true;
         }
 
         $notice->kind = $request->input('kind');
@@ -104,6 +106,33 @@ class NoticeController extends Controller
             $request->file('thumbnail')->storeAs('public/notice_image/',$notice->image);
         }
         $notice->save();
+
+        if ($isNew) {
+            $shop = Shop::find($notice->shop_id);
+            $customers = $shop->customers;
+            foreach($customers as $m) {
+                if ($m->fcm_token != null) {
+                    $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
+                    $client->request('POST', 'send', [
+                        'headers' => [
+                            'Content-Type' => 'application/json',
+                            'Authorization' => 'Bearer AAAAI-LPm24:APA91bFfHq8Kp1Gmuo3hiSdoQY6YgAVUVVYPXKENMLLj6Os2nbQ0gL06-YoLOZd9fo2HBMLUVRcKMtO6FcoeT_wGr6B5bTpOrk89jK6IYXaJ9WdTSs7npIiyWjc8xz9NOx2175OTNVhK',
+                        ],
+                        'json' => [
+                            'to' => $m->fcm_token,
+                            'data' => [
+                                'type' => 'notify',
+                                'notify' => $notice->id,
+                            ],
+                            'notification' => [
+                                'body' => $request->input('title'),
+                                'title' => $request->input('content'),
+                            ]
+                        ],
+                    ]);
+                }
+            }
+        }
 
         return redirect("/notice");
     }

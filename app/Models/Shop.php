@@ -118,4 +118,9 @@ class Shop extends Model
     {
         return $this->hasOne(Area::class, 'postal', 'postal');
     }
+
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class, MyShop::class, 'f_shop_id', 'f_customer_id');
+    }
 }
