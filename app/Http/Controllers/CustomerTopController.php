@@ -96,7 +96,7 @@ class CustomerTopController extends Controller
         {
             $topic->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
             $topic->image_link = asset(Storage::url('topic_image/').$topic->image);
-            $request->file('thumbnail')->storeAs('public/notice_image/',$topic->image);
+            $request->file('thumbnail')->storeAs('public/topic_image/',$topic->image);
         }
         $topic->save();
 
