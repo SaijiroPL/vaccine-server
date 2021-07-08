@@ -42,8 +42,8 @@
             <div class="form-group m-form__group row">
                 <div class="offset-2 col-md-9">
                     <div id="div_img">
-                        @if (isset($notice))
-                            <img src="{{ asset( $image_url.$notice->image ) }}" height="100%">
+                        @if (isset($topic))
+                            <img src="{{ asset( $image_url.$topic->image ) }}" height="100%">
                         @endif
                     </div>
                 </div>
