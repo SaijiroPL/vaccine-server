@@ -94,26 +94,22 @@ class CustomerTopController extends Controller
     public function update(Request $request)
     {
         if ( $request->input('no') != '')
-            $notice = Notice::find($request->input('no'));
+            $topic = CustomerTop::find($request->input('no'));
         else
         {
-            $notice = new Notice;
-            $notice->agree = 1;
+            $topic = new CustomerTop;
         }
 
-        $notice->kind = $request->input('kind');
-        $notice->title = $request->input('title');
-        $notice->content = $request->input('content');
-        $notice->shop_id = $request->input('shop');
-        $notice->created_by = "admin";
+        $topic->title = $request->input('title');
+        $topic->content = $request->input('content');
         if ($request->file('thumbnail') != NULL)
         {
-            $notice->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
-            $notice->image_path = asset(Storage::url('notice_image/').$notice->image);
-            $request->file('thumbnail')->storeAs('public/notice_image/',$notice->image);
+            $topic->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $topic->image_link = asset(Storage::url('topic_image/').$topic->image);
+            $request->file('thumbnail')->storeAs('public/notice_image/',$topic->image);
         }
-        $notice->save();
+        $topic->save();
 
-        return redirect("/notice");
+        return redirect("/topic");
     }
 }
