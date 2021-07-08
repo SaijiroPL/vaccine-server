@@ -78,7 +78,7 @@
                 </table>
             </div>
             <div class="col-md-12">
-                <div class="pull-right">{{ $topcis->links() }}</div>
+                <div class="pull-right">{{ $topics->links() }}</div>
             </div>
         </div>
     </div>
