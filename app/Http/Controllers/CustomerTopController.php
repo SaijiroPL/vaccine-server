@@ -69,7 +69,7 @@ class CustomerTopController extends Controller
         //$no = $request->input('edit_no');
 
         $topic = CustomerTop::find($no);
-        return view('topic.form', [
+        return view('top.form', [
             'topic' => $topic,
             'image_url' => $this->image_url
         ]);
