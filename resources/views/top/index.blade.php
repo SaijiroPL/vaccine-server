@@ -4,7 +4,7 @@
 @section('page_title', __('トピック'))
 
 @section('content')
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/topics/delete" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/topic/delete" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type=hidden id="del_no" name="del_no" />
 </form>
