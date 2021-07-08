@@ -43,7 +43,7 @@ class CustomerTopController extends Controller
      */
     public function delete(Request $request)
     {
-        Notice::find($request->input('del_no'))->forceDelete();
+        CustomerTop::find($request->input('del_no'))->forceDelete();
         return redirect("/topic");
     }
 
