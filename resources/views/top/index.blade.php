@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('お知らせ一覧'))
-@section('page_title', __('お知らせ一覧'))
+@section('title', __('トピック'))
+@section('page_title', __('トピック'))
 
 @section('content')
 <form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/topics/delete" method="POST" enctype="multipart/form-data">
@@ -26,8 +26,8 @@
                             <td>ID</td>
                             <td>トピック</td>
                             <td>トピック詳細</td>
-                            <td>日付</td>
                             <td>画像</td>
+                            <td>日付</td>
                             <td>動作</td>
                         </tr>
                     </thead>
@@ -35,41 +35,18 @@
                     @forelse ($topics as $ind => $u)
                         <tr class="row-{{ (($topics->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ $u->id }}</td>
-                            <td>{{ $u->kind }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
                             <td>
-                                @if ($u->shop_id != 0)
-                                    {{ $u->shop->name }}
-                                @else
-                                    全員
-                                @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->area->name_p }}
-                              @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->area->name_c }}
-                              @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->brand }}
-                              @endif
+                                <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
                             </td>
                             <td>{{ $u->created_at }}</td>
                             <td>
-                                <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
+                                <div class="p-action">
+                                    <a href="/ctop/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                    <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
+                                </div>
                             </td>
-                        <td>
-                            <div class="p-action">
-                                <a href="/notice/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
-                                <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
-                            </div>
-                        </td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>

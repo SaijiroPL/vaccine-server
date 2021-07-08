@@ -120,7 +120,7 @@
                 <a href="{{ url('/ctop') }}" class="m-menu__link m-menu__toggle">
                     <span class="m-menu__item-here"></span>
                     <i class="m-menu__link-icon fa fa-list-ul"></i>
-                    <span class="m-menu__link-text">ユーザートップページ</span>
+                    <span class="m-menu__link-text">トピック</span>
                 </a>
               </li>
               <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_ITEM) echo 'm-menu__item--active';?>"
