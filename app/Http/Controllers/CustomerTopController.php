@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Notice;
-use App\Models\Shop;
+use App\Models\CustomerTop;
 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
-
 class CustomerTopController extends Controller
 {
     public function index()
     {
-        $notice_model = new Notice();
-        $notices = $notice_model->get_agree_data();
-        $image_url = Storage::url('notice_image/');
+        $topics = CustomerTop::latest()->paginate(10);
+        $image_url = Storage::url('topic_image/');
         return view('top.index', [
-            'notices' => $notices,
+            'topics' => $topics,
             'per_page' => 10,
             'image_url' => $image_url
         ]);

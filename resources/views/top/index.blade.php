@@ -4,18 +4,19 @@
 @section('page_title', __('お知らせ一覧'))
 
 @section('content')
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/notice/delete" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/topics/delete" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type=hidden id="del_no" name="del_no" />
+</form>
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/notice/edit') }}" class="btn btn-primary pull-right">
-                        <span>
-                            <i class="fa flaticon-add-circular-button"></i>
-                            <span>&nbsp;&nbsp;おしらせ追加&nbsp;&nbsp;</span>
-                        </span>
+                <a href="{{ url('/topics/edit') }}" class="btn btn-primary pull-right">
+                    <span>
+                        <i class="fa flaticon-add-circular-button"></i>
+                        <span>&nbsp;&nbsp;トピック追加&nbsp;&nbsp;</span>
+                    </span>
                 </a>
             </div>
             <div class="col-md-12">
@@ -23,22 +24,17 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>おしらせジャンル</td>
-                            <td>おしらせタイトル</td>
-                            <td>おしらせ詳細</td>
-                            <td>対象ショップ</td>
-                            <td>ショップエリア</td>
-                            <td>ショップエリア詳細</td>
-                            <td>代理店名</td>
+                            <td>トピック</td>
+                            <td>トピック詳細</td>
                             <td>日付</td>
                             <td>画像</td>
                             <td>動作</td>
                         </tr>
                     </thead>
                     <tbody>
-                    @forelse ($notices as $ind => $u)
-                        <tr class="row-{{ (($notices->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                            <td>{{ ($notices->currentPage() - 1) * $per_page + $ind + 1 }}</td>
+                    @forelse ($topics as $ind => $u)
+                        <tr class="row-{{ (($topics->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
+                            <td>{{ $u->id }}</td>
                             <td>{{ $u->kind }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
@@ -82,12 +78,11 @@
                 </table>
             </div>
             <div class="col-md-12">
-                <div class="pull-right">{{ $notices->links() }}</div>
+                <div class="pull-right">{{ $topcis->links() }}</div>
             </div>
         </div>
     </div>
 </div>
-</form>
 @endsection
 
 @section('script')
