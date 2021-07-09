@@ -895,7 +895,7 @@ class StoreApiController extends Controller
 
         $account->save();
 
-        Mail::to('pclienth@hotmail.com')->send(new RegisterShopEmail($shop, $shop->email));
+        Mail::to('s.hirose@oaklay.net')->send(new RegisterShopEmail($shop, $shop->email));
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
