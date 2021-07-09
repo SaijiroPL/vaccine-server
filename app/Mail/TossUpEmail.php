@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TerminalApproveEmail extends Mailable
+class TossUpEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -24,10 +24,10 @@ class TerminalApproveEmail extends Mailable
     public function build()
     {
         $address = $this->address;
-        $subject = '端末'.($this->data['allow'] == 1 ? '許可' : '禁止') ;
-        $name = 'アテック管理チーム';
+        $subject = 'トスアップ申請';
+        $name = $this->data['shop_name'];
 
-        return $this->view('emails.terminal')
+        return $this->view('emails.tossup')
                     ->from($address, $name)
                     ->cc($address, $name)
                     ->bcc($address, $name)

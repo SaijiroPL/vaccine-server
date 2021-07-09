@@ -28,7 +28,10 @@ use App\Models\ShopImage;
 use App\Models\CarryingGoodsDetail;
 
 use Config;
+use Mail;
+
 use App\Http\Controllers\Api\CommonApi;
+use App\Mail\TossUpEmail;
 use App\Models\Area;
 
 class StoreApiController extends Controller
@@ -133,6 +136,13 @@ class StoreApiController extends Controller
         $account = $request->account;
         $content = $request->input('content');
         CommonApi::add_tossup($account->store, $content);
+
+        $data = [
+            'shop_name' => $account->shop->name,
+            'message' => $content
+        ];
+        Mail::to('pclienth@hotmail.com')->send(new TossUpEmail($data, $account->shop->email));
+
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'data' => CommonApi::get_tossup($account->store),
