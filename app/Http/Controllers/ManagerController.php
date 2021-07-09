@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TerminalApproveEmail;
+
 use App\Models\Manager;
 use App\Models\Shop;
 
@@ -41,6 +43,11 @@ class ManagerController extends Controller
             $manager->allow = 0;
 
         $manager->save();
+
+        $data = ['message' => 'This is a test!'];
+        Mail::to('john@example.com')->send(new TerminalApproveEmail($data));
+
+        $shop = $manager->shop;
         return redirect("/manager");
     }
 }

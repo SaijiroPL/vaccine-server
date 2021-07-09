@@ -41,4 +41,9 @@ class Manager extends Model
                 ->paginate(10);
         return $managers;
     }
+
+    public function shop()
+    {
+        $this->hasOne(Shop::class, 'store');
+    }
 }
