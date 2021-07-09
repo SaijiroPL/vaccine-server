@@ -44,6 +44,6 @@ class Manager extends Model
 
     public function shop()
     {
-        $this->hasOne(Shop::class, 'store');
+        return $this->hasOne(Shop::class, 'store');
     }
 }

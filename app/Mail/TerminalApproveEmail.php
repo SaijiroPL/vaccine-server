@@ -13,14 +13,17 @@ class TerminalApproveEmail extends Mailable
 
     public $data;
 
-    public function __construct($data)
+    public $address;
+
+    public function __construct($data, $address)
     {
         $this->data = $data;
+        $this->address = $address;
     }
 
     public function build()
     {
-        $address = 'janeexampexample@example.com';
+        $address = $this->address;
         $subject = 'This is a demo!';
         $name = 'Jane Doe';
 
