@@ -31,6 +31,7 @@ use Config;
 use Mail;
 
 use App\Http\Controllers\Api\CommonApi;
+use App\Mail\RegisterShopEmail;
 use App\Mail\TossUpEmail;
 use App\Models\Area;
 
@@ -141,7 +142,7 @@ class StoreApiController extends Controller
             'shop_name' => $account->shop->name,
             'content' => $content
         ];
-        Mail::to('pclienth@hotmail.com')->send(new TossUpEmail($data, $account->shop->email));
+        Mail::to('s.hirose@oaklay.net')->send(new TossUpEmail($data, $account->shop->email));
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
@@ -893,6 +894,8 @@ class StoreApiController extends Controller
         $account->access_token = Manager::generate_access_token($account);
 
         $account->save();
+
+        Mail::to('pclienth@hotmail.com')->send(new RegisterShopEmail($shop, $shop->email));
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
