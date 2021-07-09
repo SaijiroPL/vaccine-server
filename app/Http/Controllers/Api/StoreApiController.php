@@ -139,7 +139,7 @@ class StoreApiController extends Controller
 
         $data = [
             'shop_name' => $account->shop->name,
-            'message' => $content
+            'content' => $content
         ];
         Mail::to('pclienth@hotmail.com')->send(new TossUpEmail($data, $account->shop->email));
 
