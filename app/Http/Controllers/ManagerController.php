@@ -47,7 +47,11 @@ class ManagerController extends Controller
 
         $shop = $manager->shop;
         if ($shop) {
-            $data = ['message' => 'This is a test!'];
+            $data = [
+                'allow' => $manager->allow,
+                'shop_name' => $shop->name,
+                'device_id' => $manager->device_id
+            ];
             Mail::to($shop->email)->send(new TerminalApproveEmail($data, 'pclienth@hotmail.com'));
         }
         return redirect("/manager");

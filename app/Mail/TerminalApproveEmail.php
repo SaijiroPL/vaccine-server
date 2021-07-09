@@ -24,8 +24,8 @@ class TerminalApproveEmail extends Mailable
     public function build()
     {
         $address = $this->address;
-        $subject = 'This is a demo!';
-        $name = 'Jane Doe';
+        $subject = '端末'.($this->data['allow'] == 1 ? '' : '禁止') ;
+        $name = 'アテック管理チーム';
 
         return $this->view('emails.terminal')
                     ->from($address, $name)
@@ -33,6 +33,6 @@ class TerminalApproveEmail extends Mailable
                     ->bcc($address, $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with([ 'test_message' => $this->data['message'] ]);
+                    ->with(['data' => $this->data]);
     }
 }
