@@ -45,7 +45,7 @@ class ManagerController extends Controller
         $manager->save();
 
         $data = ['message' => 'This is a test!'];
-        Mail::to('john@example.com')->send(new TerminalApproveEmail($data));
+        Mail::to('hokelucpy@gmail.com')->send(new TerminalApproveEmail($data));
 
         $shop = $manager->shop;
         return redirect("/manager");
