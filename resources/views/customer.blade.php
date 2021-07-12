@@ -29,29 +29,25 @@
                 <table width="100%" class="table table-striped table-bordered table-advance table-hover">
                     <thead>
                         <tr>
-                        <td>ID</td>
-                        <td>ユーザーID</td>
-                        <td>パスワード</td>
-                        <td>お気に入り店舗</td>
-                        <td>ショップエリア</td>
-                        <td>ショップエリア詳細</td>
-                        <td>代理店名</td>
+                          <td>ID</td>
+                          <td>ユーザーID</td>
+                          <td>パスワード</td>
+                          <td>お気に入り店舗</td>
+                          <td>ショップエリア</td>
+                          <td>ショップエリア詳細</td>
+                          <td>代理店名</td>
                         </tr>
                     </thead>
                     <tbody>
                     @forelse ($customers as $ind => $u)
-                        @php
-                          $shop = App\Models\MyShop::get_my_shop($u->id);
-                          $shopName = $shop ? $shop->name : '';
-                        @endphp
                         <tr class="row-{{ (($customers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                        <td>{{ $u->id }}</td>
-                        <td>{{ $u->member_no }}</td>
-                        <td>{{ $u->password }}</td>
-                        <td>{{ $shop->name }}</td>
-                        <td>{{ $shop->area->name_p }}</td>
-                        <td>{{ $shop->area->name_c }}</td>
-                        <td>{{ $shop->brand }}</td>
+                          <td>{{ $u->id }}</td>
+                          <td>{{ $u->member_no }}</td>
+                          <td>{{ $u->password }}</td>
+                          <td>{{ $u->shop->name }}</td>
+                          <td>{{ $u->shop->area->name_p }}</td>
+                          <td>{{ $u->shop->area->name_c }}</td>
+                          <td>{{ $u->shop->brand }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>
