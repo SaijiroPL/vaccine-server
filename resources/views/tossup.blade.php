@@ -31,7 +31,7 @@
                             <td>{{ $u->shopO->name }}</td>
                             <td>{{ $u->shopO->area->name_p }}</td>
                             <td>{{ $u->shopO->area->name_c }}</td>
-                            <td>{{ $u->brand }}</td>
+                            <td>{{ $u->shop->brand }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div class="p-action">
