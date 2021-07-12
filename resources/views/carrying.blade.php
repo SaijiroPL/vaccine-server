@@ -34,6 +34,9 @@
                             <td>施工番号</td>
                             <td>ユーザーID</td>
                             <td>施工店舗</td>
+                            <td>ショップエリア</td>
+                            <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>施工日</td>
                             <td>施工商品</td>
                         </tr>
@@ -43,7 +46,10 @@
                         <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ $u->serial_no }}</td>
                             <td>{{ $u->customer_id }}</td>
-                            <td>{{ $u->name }}</td>
+                            <td>{{ $u->shop->name }}</td>
+                            <td>{{ $u->shop->area->name_p }}</td>
+                            <td>{{ $u->shop->area->name_c }}</td>
+                            <td>{{ $u->shop->brand }}</td>
                             <td>{{ $u->date }}</td>
                             <td>{{ $u->goods }}</td>
                         </tr>

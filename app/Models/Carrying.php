@@ -17,25 +17,18 @@ class Carrying extends Model
     public static function get_data($date, $filter) {
         if (!isset($date))
         {
-            $carries =  DB::table('t_carrying')
-                    ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
-                    ->where('t_carrying.goods', 'like', $filter['goods'])
-                    ->where('t_carrying.customer_id', 'like', $filter['customer'])
-                    ->where('t_shop.name', 'like', $filter['shop'])
-                    ->select('t_carrying.*', 't_shop.name')
-                    ->latest()
-                    ->paginate(10);
+            $carries = self::where('goods', 'like', $filter['goods'])
+                ->where('customer_id', 'like', $filter['customer'])
+                ->whereHas('shop', function ($query) use ($filter) {
+                    $query->where('name', 'like', $filter['shop']);
+                })->latest()->paginate(10);
         } else
-            $carries =  DB::table('t_carrying')
-                    ->join('t_shop', 't_carrying.shop_id', '=', 't_shop.id')
-                    ->where('t_carrying.goods', 'like', $filter['goods'])
-                    ->where('t_carrying.customer_id', 'like', $filter['customer'])
-                    ->where('t_shop.name', 'like', $filter['shop'])
-                    ->where('t_carrying.date', '=', $date)
-                    ->select('t_carrying.*', 't_shop.name')
-                    ->latest()
-                    ->paginate(10);
-
+            $carries = self::where('goods', 'like', $filter['goods'])
+                ->where('customer_id', 'like', $filter['customer'])
+                ->where('date', '=', $date)
+                ->whereHas('shop', function ($query) use ($filter) {
+                    $query->where('name', 'like', $filter['shop']);
+                })->latest()->paginate(10);
         return $carries;
     }
 
