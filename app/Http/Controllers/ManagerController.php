@@ -22,10 +22,7 @@ class ManagerController extends Controller
     {
         $shop = $request->input('shop');
         $old = ['shop' => $shop];
-        $query = [
-            'shop_name' => '%'.$shop.'%'
-        ];
-        $managers = Manager::get_managers($query);
+        $managers = Manager::get_managers('%'.$shop.'%');
 
         return view('manager', [
             'managers' => $managers,
