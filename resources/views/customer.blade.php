@@ -44,10 +44,17 @@
                           <td>{{ $u->id }}</td>
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
-                          <td>{{ $u->shop->name }}</td>
-                          <td>{{ $u->shop->area->name_p }}</td>
-                          <td>{{ $u->shop->area->name_c }}</td>
-                          <td>{{ $u->shop->brand }}</td>
+                          @if ($u->shop)
+                            <td>{{ $u->shop->name }}</td>
+                            <td>{{ $u->shop->area->name_p }}</td>
+                            <td>{{ $u->shop->area->name_c }}</td>
+                            <td>{{ $u->shop->brand }}</td>
+                          @else
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          @endif
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>
