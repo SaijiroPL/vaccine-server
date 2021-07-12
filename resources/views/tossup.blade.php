@@ -14,6 +14,9 @@
                             <td>ID</td>
                             <td>申請内容</td>
                             <td>申請店舗</td>
+                            <td>ショップエリア</td>
+                            <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>日付</td>
                             <td>動作</td>
                         </tr>
@@ -26,6 +29,9 @@
                                 {{ $u->content }}
                             </td>
                             <td>{{ $u->shopO->name }}</td>
+                            <td>{{ $u->shopO->area->name_p }}</td>
+                            <td>{{ $u->shopO->area->name_c }}</td>
+                            <td>{{ $u->brand }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div class="p-action">
