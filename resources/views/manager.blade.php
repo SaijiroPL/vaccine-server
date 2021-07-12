@@ -32,6 +32,9 @@
                         <tr>
                             <td>No</td>
                             <td>店舗</td>
+                            <td>ショップエリア</td>
+                            <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>端末識別番号</td>
                             <td>ID</td>
                             <td>パスワード</td>
@@ -43,9 +46,10 @@
                     @forelse ($managers as $ind => $u)
                         <tr class="row-{{ (($managers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($managers->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                            <td>
-                                {{ $u->shop_name }}
-                            </td>
+                            <td>{{ $u->shop->name }}</td>
+                            <td>{{ $u->shopO->area->name_p }}</td>
+                            <td>{{ $u->shopO->area->name_c }}</td>
+                            <td>{{ $u->brand }}</td>
                             <td>{{ $u->device_id }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->real_password }}</td>
