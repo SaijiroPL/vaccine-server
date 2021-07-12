@@ -35,11 +35,10 @@ class Manager extends Model
 
     public static function get_managers($query)
     {
-        $managers = DB::table('v_manager')
-                ->where('shop_name', 'like', $query['shop_name'])
-                ->latest()
-                ->paginate(10);
-        return $managers;
+        return self::with('shop')
+            ->whereHas('shop', function ($query) use ($query) {
+                $query->where('name', 'like', $query['shop_name']);
+            });
     }
 
     public function shop()
