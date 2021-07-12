@@ -36,7 +36,7 @@ class Tossup extends Model
             ->get();
     }
 
-    public function shop()
+    public function shopO()
     {
         return $this->belongsTo(Shop::class, 'shop');
     }
