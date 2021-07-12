@@ -25,7 +25,7 @@
                             <td>
                                 {{ $u->content }}
                             </td>
-                            <td>{{ $u->shop_name }}</td>
+                            <td>{{ $u->shop->name }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div class="p-action">

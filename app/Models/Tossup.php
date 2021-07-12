@@ -35,4 +35,9 @@ class Tossup extends Model
             ->latest()
             ->get();
     }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop');
+    }
 }

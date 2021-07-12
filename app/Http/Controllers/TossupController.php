@@ -17,7 +17,7 @@ class TossupController extends Controller
     {
 
         $tossup_model = new Tossup();
-        $tossups = $tossup_model->get_untossed_tossup();
+        $tossups = Tossup::where('tossed', '=', 0)->latest()->paginate(10);
         $shop_model = new Shop();
 
         $shops = $shop_model->get_shops();
