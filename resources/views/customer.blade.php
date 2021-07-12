@@ -33,6 +33,9 @@
                         <td>ユーザーID</td>
                         <td>パスワード</td>
                         <td>お気に入り店舗</td>
+                        <td>ショップエリア</td>
+                        <td>ショップエリア詳細</td>
+                        <td>代理店名</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +48,10 @@
                         <td>{{ $u->id }}</td>
                         <td>{{ $u->member_no }}</td>
                         <td>{{ $u->password }}</td>
-                        <td>{{ $shopName }}</td>
+                        <td>{{ $shop->name }}</td>
+                        <td>{{ $shop->area->name_p }}</td>
+                        <td>{{ $shop->area->name_c }}</td>
+                        <td>{{ $shop->brand }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>
