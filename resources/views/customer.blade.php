@@ -45,10 +45,10 @@
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
                           @if ($u->shop)
-                            <td>{{ $u->shop->name }}</td>
-                            <td>{{ $u->shop->area->name_p }}</td>
-                            <td>{{ $u->shop->area->name_c }}</td>
-                            <td>{{ $u->shop->brand }}</td>
+                            <td>{{ $u->shop[0]->name }}</td>
+                            <td>{{ $u->shop[0]->area->name_p }}</td>
+                            <td>{{ $u->shop[0]->area->name_c }}</td>
+                            <td>{{ $u->shop[0]->brand }}</td>
                           @else
                             <td></td>
                             <td></td>
