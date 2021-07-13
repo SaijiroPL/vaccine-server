@@ -714,7 +714,8 @@ class StoreApiController extends Controller
     public function get_new_counts(Request $request)
     {
         $account = $request->account;
-        $new_atec_count = Atec::get_new_atecs($account->store);
+        // $new_atec_count = Atec::get_new_atecs($account->store);
+        $new_atec_count = $account->shop->unreadAtec();
         $new_inquiry_count = Inquiry::get_new_inqueries($account->store);
         $new_reserve_count = ShopReserve::get_new_reserve($account->store);
         return response()->json([

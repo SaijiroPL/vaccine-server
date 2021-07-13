@@ -123,4 +123,21 @@ class Shop extends Model
     {
         return $this->belongsToMany(Customer::class, MyShop::class, 'f_shop_id', 'f_customer_id');
     }
+
+    public function atecs()
+    {
+        return $this->hasMany(Atec::class, 'shop');
+    }
+
+    public function atecConfirms()
+    {
+        return $this->hasMany(AtecConfirm::class, 'shop_id');
+    }
+
+    public function unreadAtec()
+    {
+        $total = Atec::where('shop', 0)->count() + count($this->atecs);
+        $read = count($this->atecConfirms);
+        return max($total - $read, 0);
+    }
 }
