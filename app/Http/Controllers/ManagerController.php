@@ -49,7 +49,7 @@ class ManagerController extends Controller
                 'shop_name' => $shop->name,
                 'device_id' => $manager->device_id
             ];
-            Mail::to($shop->email)->send(new TerminalApproveEmail($data, 'pclienth@hotmail.com'));
+            Mail::to($shop->email)->send(new TerminalApproveEmail($data, 's.hirose@oaklay.net'));
         }
         return redirect("/manager");
     }
