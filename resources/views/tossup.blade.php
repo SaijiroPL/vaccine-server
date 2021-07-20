@@ -29,8 +29,8 @@
                                 {{ $u->content }}
                             </td>
                             <td>{{ $u->shopO->name }}</td>
-                            <td>{{ $u->shopO->area && $u->shopO->area->name_p }}</td>
-                            <td>{{ $u->shopO->area && $u->shopO->area->name_c }}</td>
+                            <td>{{ $u->shopO->area ? $u->shopO->area->name_p : '' }}</td>
+                            <td>{{ $u->shopO->area ? $u->shopO->area->name_c : '' }}</td>
                             <td>{{ $u->shopO->brand }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>
