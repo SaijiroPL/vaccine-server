@@ -51,8 +51,8 @@
                         <tr class="row-{{ (($shops->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($shops->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
-                            <td>{{ $u->area->name_p }}</td>
-                            <td>{{ $u->area->name_c }}</td>
+                            <td>{{ $u->area && $u->area->name_p }}</td>
+                            <td>{{ $u->area && $u->area->name_c }}</td>
                             <td>{{ $u->brand }}</td>
                             <td>{{ $u->address }}</td>
                             <td>{{ $u->postal }}</td>

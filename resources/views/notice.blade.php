@@ -51,12 +51,12 @@
                             </td>
                             <td>
                               @if ($u->shop_id != 0)
-                                {{ $u->shop->area->name_p }}
+                                {{ $u->shop->area && $u->shop->area->name_p }}
                               @endif
                             </td>
                             <td>
                               @if ($u->shop_id != 0)
-                                {{ $u->shop->area->name_c }}
+                                {{ $u->shop->area && $u->shop->area->name_c }}
                               @endif
                             </td>
                             <td>

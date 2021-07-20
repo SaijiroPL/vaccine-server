@@ -40,21 +40,18 @@
                     </thead>
                     <tbody>
                     @forelse ($customers as $ind => $u)
+                        @php
+                          $shop = $u->shop[0];
+                          $area = $shop ? $shop->area : null;
+                        @endphp
                         <tr class="row-{{ (($customers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                           <td>{{ $u->id }}</td>
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
-                          @if ($u->shop)
-                            <td>{{ $u->shop[0]->name }}</td>
-                            <td>{{ $u->shop[0]->area->name_p }}</td>
-                            <td>{{ $u->shop[0]->area->name_c }}</td>
-                            <td>{{ $u->shop[0]->brand }}</td>
-                          @else
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          @endif
+                          <td>{{ $shop ? $shop->name : '' }}</td>
+                          <td>{{ $area ? $shop->name_p : '' }}</td>
+                          <td>{{ $area ? $shop->name_c : '' }}</td>
+                          <td>{{ $shop ? $shop->brand : '' }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="100" class="no-items">検索結果がないです.</td></tr>
