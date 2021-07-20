@@ -45,19 +45,15 @@
                     <tbody>
                     @forelse ($managers as $ind => $u)
                         @php
-                          $area = $u->shop->area;
+                          $shop = $u->shop;
+                          $area = $shop ? $shop->area : null;
                         @endphp
                         <tr class="row-{{ (($managers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($managers->currentPage() - 1) * $per_page + $ind + 1 }}</td>
-                            <td>{{ $u->shop->name }}</td>
-                            @if ($area)
-                            <td>{{ $u->shop->area->name_p }}</td>
-                            <td>{{ $u->shop->area->name_c }}</td>
-                            @else
-                            <td></td>
-                            <td></td>
-                            @endif
-                            <td>{{ $u->shop->brand }}</td>
+                            <td>{{ $shop ? $shop->name : '' }}</td>
+                            <td>{{ $area ? $area->name_p : '' }}</td>
+                            <td>{{ $area ? $area->name_c : '' }}</td>
+                            <td>{{ $shop ? $shop->brand : '' }}</td>
                             <td>{{ $u->device_id }}</td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->real_password }}</td>

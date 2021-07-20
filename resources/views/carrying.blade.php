@@ -43,13 +43,17 @@
                     </thead>
                     <tbody>
                     @forelse ($carries as $ind => $u)
+                        @php
+                          $shop = $u->shop;
+                          $area = $shop ? $shop->area : null;
+                        @endphp
                         <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ $u->serial_no }}</td>
                             <td>{{ $u->customer_id }}</td>
-                            <td>{{ $u->shop->name }}</td>
-                            <td>{{ $u->shop->area->name_p }}</td>
-                            <td>{{ $u->shop->area->name_c }}</td>
-                            <td>{{ $u->shop->brand }}</td>
+                            <td>{{ $shop ? $shop->name : '' }}</td>
+                            <td>{{ $area ? $area->name_p : '' }}</td>
+                            <td>{{ $area ? $area->name_c : '' }}</td>
+                            <td>{{ $shop ? $shop->brand : '' }}</td>
                             <td>{{ $u->date }}</td>
                             <td>{{ $u->goods }}</td>
                         </tr>
