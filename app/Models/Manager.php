@@ -51,10 +51,10 @@ class Manager extends Model
         DB::table('t_manager')
             ->leftJoin('t_shop', 't_manager.store', '=', 't_shop.id')
             ->leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
-            ->where('name', 'like', '%'.$filter['shop'].'%')
-            ->where('brand', 'like', '%'.$filter['brand'].'%')
-            ->where('name_p', 'like', '%'.$filter['province'].'%')
-            ->where('name_c', 'like', '%'.$filter['county'].'%')
+            ->where('t_shop.name', 'like', '%'.$filter['shop'].'%')
+            ->where('t_shop.brand', 'like', '%'.$filter['brand'].'%')
+            ->where('t_area.name_p', 'like', '%'.$filter['province'].'%')
+            ->where('t_area.name_c', 'like', '%'.$filter['county'].'%')
             ->latest()
             ->paginate(10);
     }
