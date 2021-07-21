@@ -33,16 +33,19 @@ class MasterController extends Controller
     {
         $name = $request->input('member_no');
         $shop = $request->input('shop');
+        $brand = $request->input('brand');
         $old = [
             'member_no' => $name,
             'shop' => $shop,
+            'brand' => $brand,
         ];
         $name = "%".$name."%";
         $shop = "%".$shop."%";
+        $brand = "%".$brand."%";
 
         $customers = Customer::with('shop')
-            ->whereHas('shop', function ($query) use ($shop) {
-                $query->where('name', 'like', $shop);
+            ->whereHas('shop', function ($query) use ($shop, $brand) {
+                $query->where('name', 'like', $shop)->where('brand', 'like', $brand);
             })
             ->where('member_no', 'like', $name)->latest()->paginate(10);
 
