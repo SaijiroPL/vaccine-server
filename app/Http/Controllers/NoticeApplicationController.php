@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 use App\Models\Notice;
 use App\Models\Shop;
