@@ -30,7 +30,7 @@ class ManagerController extends Controller
             'province' => $province,
             'county' => $county,
         ];
-        $managers = Manager::get_managers('%'.$shop.'%', '%'.$brand.'%');
+        $managers = Manager::filter($old);
 
         return view('manager', [
             'managers' => $managers,
