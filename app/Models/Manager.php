@@ -36,8 +36,10 @@ class Manager extends Model
     public static function get_managers($filter)
     {
         return self::with('shop')
-            ->whereHas('shop', function ($query) use ($filter) {
-                $query->where('name', 'like', $filter['shop'])->orWhere('brand', 'like', $filter['brand']);
+            ->orWhereHas('shop', function ($query) use ($filter) {
+                $query->where('name', 'like', $filter['shop']);
+            })->orWhereHas('shop', function ($query) use ($filter) {
+                $query->where('brand', 'like', $filter['brand']);
             })->latest()->paginate(10);;
     }
 
