@@ -21,7 +21,11 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $shop = $request->input('shop');
-        $old = ['shop' => $shop];
+        $brand = $request->input('brand');
+        $old = [
+            'shop' => $shop,
+            'brand' => $brand,
+        ];
         $managers = Manager::get_managers('%'.$shop.'%');
 
         return view('manager', [
