@@ -26,7 +26,7 @@ class ManagerController extends Controller
             'shop' => $shop,
             'brand' => $brand,
         ];
-        $managers = Manager::get_managers($old);
+        $managers = Manager::get_managers($shop);
 
         return view('manager', [
             'managers' => $managers,

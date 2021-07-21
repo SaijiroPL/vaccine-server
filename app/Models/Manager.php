@@ -33,12 +33,12 @@ class Manager extends Model
                     ->first();
     }
 
-    public static function get_managers($filter)
+    public static function get_managers($shop)
     {
         return self::with('shop')
-            ->whereHas('shop', function ($q) use ($filter) {
-                $q->where('name', 'like', $filter['shop']);
-            })->latest()->paginate(10);
+            ->whereHas('shop', function ($query) use ($shop) {
+                $query->where('name', 'like', $shop);
+            })->latest()->paginate(10);;
     }
 
     public function shop()
