@@ -57,6 +57,6 @@ class Manager extends Model
             ->where('t_area.name_c', 'like', '%'.$filter['county'].'%')
             ->select('t_manager.id')
             ->orderBy('t_shop.created_at', 'DESC')
-            ->paginate(10);
+            ->get();
     }
 }
