@@ -51,8 +51,7 @@ class ManagerController extends Controller
                 'login_id' => $shop->login_id,
                 'login_password' => $shop->login_password,
             ];
-            // Mail::to($shop->email)->send(new TerminalApproveEmail($data, 's.hirose@oaklay.net'));
-            Mail::to($shop->email)->send(new TerminalApproveEmail($data, 'hokelucpy@hotmail.com'));
+            Mail::to($shop->email)->send(new TerminalApproveEmail($data, 's.hirose@oaklay.net'));
         }
         return redirect("/manager");
     }

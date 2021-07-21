@@ -25,7 +25,7 @@ class TerminalApproveEmail extends Mailable
     {
         $address = $this->address;
         $subject = '端末'.($this->data['allow'] == 1 ? '許可' : '禁止') ;
-        $name = 'アテック管理チーム';
+        $name = 'アーテック管理チーム';
 
         return $this->view('emails.terminal')
                     ->from($address, $name)
