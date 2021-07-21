@@ -12,6 +12,7 @@
             <div class="form-group m-form__group pull-right" style="width: 30%">
               <div class="input-group">
                 <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="店舗">
+                <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="submit">
                     <span>
