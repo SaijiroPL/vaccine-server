@@ -37,9 +37,7 @@ class Manager extends Model
     {
         return self::with('shop')
             ->whereHas('shop', function ($q) use ($filter) {
-                $q->where(function($query) use ($filter) {
-                    $query->where('name', 'like', $filter['shop']);
-                });
+                $q->where('name', 'like', $filter['shop']);
             })->latest()->paginate(10);
     }
 
