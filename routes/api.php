@@ -18,10 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function (Request $request) {
-    dd(\App\Http\Controllers\Api\CommonApi::generate_password());
-});
-
 Route::any('/store/test', 'Api\StoreApiController@test');
 Route::post('/store/login', 'Api\StoreApiController@login');
 Route::post('/store/signup', 'Api\StoreApiController@signup');
