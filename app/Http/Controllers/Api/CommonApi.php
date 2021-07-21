@@ -117,11 +117,10 @@ class CommonApi
     {
         $text="";
         $length=8;
-        $startAscii=48;
-        $endAscii=122;
+        $pattern = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         for($count = 0; $count < $length; $count++) {
-            $text=$text.chr(mt_rand($startAscii, $endAscii));
+            $text .= $pattern[mt_rand(0, strlen($pattern) - 1)];
         }
         return $text;
     }
