@@ -22,9 +22,13 @@ class ManagerController extends Controller
     {
         $shop = $request->input('shop');
         $brand = $request->input('brand');
+        $province = $request->input('province');
+        $county = $request->input('county');
         $old = [
             'shop' => $shop,
             'brand' => $brand,
+            'province' => $province,
+            'county' => $county,
         ];
         $managers = Manager::get_managers('%'.$shop.'%', '%'.$brand.'%');
 
