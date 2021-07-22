@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Mail;
 
 use App\Models\Notice;
 use App\Models\Shop;
+use App\Mail\ApproveNoticeEmail;
 
 class NoticeApplicationController extends Controller
 {
@@ -33,6 +35,14 @@ class NoticeApplicationController extends Controller
 
         $shop = Shop::find($notice->shop_id);
         $customers = $shop->customers;
+
+        if ($shop && $shop->email) {
+            $data = [
+                'kind' => $notice->kind,
+                'title' => $notice->title,
+            ];
+            Mail::to($shop->email)->send(new ApproveNoticeEmail($data, 'pclienth@hotmail.com'));
+        }
 
         foreach($customers as $m) {
             if ($m->fcm_token != null) {
