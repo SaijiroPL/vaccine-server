@@ -25,7 +25,7 @@ class ApproveNoticeEmail extends Mailable
     {
         $address = $this->address;
         $subject = 'お知らせを承認';
-        $name = $this->data->name;
+        $name = 'アーテック管理チーム';
 
         return $this->view('emails.approve_notice')
                     ->from($address, $name)
