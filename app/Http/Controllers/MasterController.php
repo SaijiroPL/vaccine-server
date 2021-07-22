@@ -68,20 +68,24 @@ class MasterController extends Controller
         $goods = $request->input('goods');
         $customer = $request->input('customer');
         $shop = $request->input('shop');
+        $performer = $request->input('performer');
         $old = [
             'date' => $date,
             'goods' => $goods,
             'customer' => $customer,
             'shop' => $shop,
+            'performer' => $performer,
         ];
         $goods = "%".$goods."%";
         $customer = "%".$customer."%";
         $shop = "%".$shop."%";
+        $performer = "%".$performer."%";
 
         $carries = Carrying::get_data($date, [
             'goods' => $goods,
             'customer' => $customer,
             'shop' => $shop,
+            'performer' => $performer,
         ]);
 
         return view('carrying', [

@@ -19,12 +19,14 @@ class Carrying extends Model
         {
             $carries = self::where('goods', 'like', $filter['goods'])
                 ->where('customer_id', 'like', $filter['customer'])
+                ->where('performer', 'like', $filter['performer'])
                 ->whereHas('shop', function ($query) use ($filter) {
                     $query->where('name', 'like', $filter['shop']);
                 })->latest()->paginate(10);
         } else
             $carries = self::where('goods', 'like', $filter['goods'])
                 ->where('customer_id', 'like', $filter['customer'])
+                ->where('performer', 'like', $filter['performer'])
                 ->where('date', '=', $date)
                 ->whereHas('shop', function ($query) use ($filter) {
                     $query->where('name', 'like', $filter['shop']);
