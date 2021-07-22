@@ -31,7 +31,6 @@ class ManagerController extends Controller
             'county' => $county,
         ];
         $managers = Manager::filter($old);
-        dd($managers);
 
         return view('manager', [
             'managers' => $managers,

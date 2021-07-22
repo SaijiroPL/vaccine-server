@@ -48,15 +48,14 @@ class Manager extends Model
 
     public static function filter($filter)
     {
-        DB::table('t_manager')
+        return DB::table('t_manager')
             ->leftJoin('t_shop', 't_manager.store', '=', 't_shop.id')
             ->leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
             ->where('t_shop.name', 'like', '%'.$filter['shop'].'%')
             ->where('t_shop.brand', 'like', '%'.$filter['brand'].'%')
             ->where('t_area.name_p', 'like', '%'.$filter['province'].'%')
             ->where('t_area.name_c', 'like', '%'.$filter['county'].'%')
-            ->select('t_manager.id')
             ->orderBy('t_shop.created_at', 'DESC')
-            ->get();
+            ->paginate(10);
     }
 }
