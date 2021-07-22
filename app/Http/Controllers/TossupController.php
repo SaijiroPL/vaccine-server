@@ -6,9 +6,11 @@ use App\Models\Tossup;
 use App\Models\Shop;
 use App\Models\Inquiry;
 use App\Models\Atec;
+use Mail;
 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Mail\StaticEmail;
 use Illuminate\Http\Request;
 
 class TossupController extends Controller
@@ -45,11 +47,20 @@ class TossupController extends Controller
         $atec->kind = 'トスアップ';
         $atec->title = 'トスアップ';
         $atec->content = $tossup->content;
-        $atec->shop = $tossup->shop;
+        $atec->shop = $shop;
         $atec->save();
 
         $tossup->tossed = 1;
         $tossup->save();
+
+        $shop_dest = Shop::find($shop);
+        if ($shop_dest && $shop_dest->email) {
+            $data = [
+                'subject' => 'トスアップを受信しました。',
+                'message' => '店舗アプリから内容を確認してください。'
+            ];
+            Mail::to($shop_dest->email)->send(new StaticEmail($data, 's.hirose@oaklay.net'));
+        }
 
         return redirect("/tossup");
     }
