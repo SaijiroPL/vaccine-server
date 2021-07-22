@@ -13,8 +13,8 @@
               <div class="input-group">
                 <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="店舗">
                 <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
-                <input type="text" class="form-control" name="province" value="{{ $old['brand'] }}" placeholder="ショップエリア">
-                <input type="text" class="form-control" name="county" value="{{ $old['brand'] }}" placeholder="ショップエリア詳細">
+                <input type="text" class="form-control" name="province" value="{{ $old['province'] }}" placeholder="ショップエリア">
+                <input type="text" class="form-control" name="county" value="{{ $old['county'] }}" placeholder="ショップエリア詳細">
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="submit">
                     <span>
