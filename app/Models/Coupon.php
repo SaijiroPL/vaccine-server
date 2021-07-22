@@ -30,10 +30,7 @@ class Coupon extends Model
     }
 
     public static function get_application_data() {
-        $coupons =  DB::table('v_coupon')
-                    ->where('agree','=',0)
-                    ->latest()
-                    ->paginate(10);
+        $coupons =  self::where('agree','=',0)->latest()->paginate(10);
         return $coupons;
     }
 

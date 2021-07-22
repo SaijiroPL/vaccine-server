@@ -30,7 +30,10 @@
                             <td>クーポン名</td>
                             <td>クーポン内容</td>
                             <td>有効期限</td>
-                            <td>ショップ</td>
+                            <td>ショップ名</td>
+                            <td>ショップエリア</td>
+                            <td>ショップエリア詳細</td>
+                            <td>代理店名</td>
                             <td>再使用</td>
                             <td>画像</td>
                             <td>動作</td>
@@ -50,13 +53,17 @@
                               @endif
                             </td>
                             <td>{{ $u->from_date }} ~ {{ $u->to_date }}</td>
-                            <td>
-                                @if ($u->shop_id != 0)
-                                    {{ $u->shop_name }}
-                                @else
-                                    共通
-                                @endif
-                            </td>
+                            @if ($u->shop_id != 0)
+                                <td>{{ $u->shop->name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            @else
+                                <td>共通</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            @endif
                             <td>
                                 @if ($u->reuse == 0)
                                   一回きり
