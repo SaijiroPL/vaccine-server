@@ -95,7 +95,7 @@
                 <div class="offset-3 col-md-9">
                     <div id="div_img">
                         @if (isset($shop))
-                            <img src="{{ asset( $image_url.$shop->image ) }}" height="100%">
+                            <img src="{{ asset( $image_url.$shop->image ) }}" style="width: 480px;height:320px">
                         @endif
                     </div>
                 </div>

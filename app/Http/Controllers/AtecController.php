@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Atec;
 use App\Models\Shop;
 use App\Models\Manager;
+use Mail;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
+use App\Mail\StaticEmail;
 
 class AtecController extends Controller
 {
@@ -119,6 +121,28 @@ class AtecController extends Controller
                             ]
                         ],
                     ]);
+                }
+            }
+            $shop = $request->input('shop');
+            if ($shop != 0) {
+                $shop_dest = Shop::find($shop);
+                if ($shop_dest && $shop_dest->email) {
+                    $data = [
+                        'subject' => 'アーテック通信を受信しました。',
+                        'message' => '店舗アプリから内容を確認してください。'
+                    ];
+                    Mail::to($shop_dest->email)->send(new StaticEmail($data, 's.hirose@oaklay.net'));
+                }
+            } else {
+                $shops = Shop::get();
+                foreach($shops as $sh) {
+                    if ($sh && $sh->email) {
+                        $data = [
+                            'subject' => 'アーテック通信を受信しました。',
+                            'message' => '店舗アプリから内容を確認してください。'
+                        ];
+                        Mail::to($sh->email)->send(new StaticEmail($data, 's.hirose@oaklay.net'));
+                    }
                 }
             }
         }
