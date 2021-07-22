@@ -55,7 +55,7 @@
                             <td>{{ $area ? $area->name_p : '' }}</td>
                             <td>{{ $area ? $area->name_c : '' }}</td>
                             <td>{{ $shop ? $shop->brand : '' }}</td>
-                            <td></td>
+                            <td>{{ $u->performer }}</td>
                             <td>{{ $u->date }}</td>
                             <td>{{ $u->goods }}</td>
                         </tr>
