@@ -41,7 +41,7 @@ class NoticeApplicationController extends Controller
                 'kind' => $notice->kind,
                 'title' => $notice->title,
             ];
-            Mail::to($shop->email)->send(new ApproveNoticeEmail($data, 'pclienth@hotmail.com'));
+            Mail::to($shop->email)->send(new ApproveNoticeEmail($data, 's.hirose@oaklay.net'));
         }
 
         foreach($customers as $m) {
