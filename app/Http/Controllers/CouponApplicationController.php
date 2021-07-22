@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Mail;
 
 use App\Models\Coupon;
 use App\Models\Shop;
+use App\Mail\ApproveCouponEmail;
 
 class CouponApplicationController extends Controller
 {
@@ -29,6 +31,14 @@ class CouponApplicationController extends Controller
         $coupon = Coupon::find($request->input('agree_no'));
         $coupon->agree = 1;
         $coupon->save();
+
+        $shop = $coupon->shop;
+        if ($shop && $shop->email) {
+            $data = [
+                'coupon_name' => $coupon->title,
+            ];
+            Mail::to($shop->email)->send(new ApproveCouponEmail($data, 's.hirose@oaklay.net'));
+        }
 
         return redirect("/coupon_application");
     }
