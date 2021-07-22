@@ -29,10 +29,10 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>お問い合わせ先</td>
-                            <td>お問い合わせ内容</td>
+                            <td>トスアップ先</td>
+                            <td>送信内容</td>
                             <td>日付</td>
-                            <td>送信者</td>
+                            <td>トスアップ元</td>
                         </tr>
                     </thead>
                     <tbody>
