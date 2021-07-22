@@ -57,7 +57,7 @@
         <div class="m-demo__preview m-demo__preview--btn">
             <a href = "{{ url('/master/customer') }}" class="btn btn-outline-brand btn-lg">顧客一覧</a>
             <a href = "{{ url('/master/carrying') }}" class="btn btn-outline-success btn-lg">施工履歴一覧</a>
-            <a href = "{{ url('/master/inquiry') }}" class="btn btn-outline-info btn-lg">お問い合わせ一覧</a>
+            <a href = "{{ url('/master/inquiry') }}" class="btn btn-outline-info btn-lg">業務連絡一覧確認</a>
         </div>
     </div>
 </div>

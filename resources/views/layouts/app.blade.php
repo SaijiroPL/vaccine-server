@@ -216,7 +216,7 @@
                 <a href="{{ url('/master/inquiry') }}" class="m-menu__link m-menu__toggle">
                 <span class="m-menu__item-here"></span>
                 <i class="m-menu__link-icon fa fa-comments"></i>
-                  <span class="m-menu__link-text">お問い合わせ一覧</span>
+                  <span class="m-menu__link-text">業務連絡一覧確認</span>
                 </a>
               </li>
               <li class="m-menu__item m-menu__item--submenu <?php if (isset($main) && $main == MAIN_PRIVACY) echo 'm-menu__item--active';?>"

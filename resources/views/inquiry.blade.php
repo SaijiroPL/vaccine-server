@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('お問い合わせ一覧'))
-@section('page_title', __('お問い合わせ一覧'))
+@section('title', __('業務連絡一覧確認'))
+@section('page_title', __('業務連絡一覧確認'))
 
 @section('content')
 <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
