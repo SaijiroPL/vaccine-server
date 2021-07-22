@@ -37,6 +37,7 @@
                             <td>ショップエリア</td>
                             <td>ショップエリア詳細</td>
                             <td>代理店名</td>
+                            <td>施工担当者</td>
                             <td>施工日</td>
                             <td>施工商品</td>
                         </tr>
@@ -54,6 +55,7 @@
                             <td>{{ $area ? $area->name_p : '' }}</td>
                             <td>{{ $area ? $area->name_c : '' }}</td>
                             <td>{{ $shop ? $shop->brand : '' }}</td>
+                            <td></td>
                             <td>{{ $u->date }}</td>
                             <td>{{ $u->goods }}</td>
                         </tr>
