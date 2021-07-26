@@ -58,7 +58,7 @@
                             <td>{{ $u->name_c }}</td>
                             <td>{{ $u->brand }}</td>
                             <td>{{ $u->device_id }}</td>
-                            <td>{{ $u->name }}</td>
+                            <td>{{ $u->lid }}</td>
                             <td>{{ $u->real_password }}</td>
                             <td>
                               @if ($u->allow == 1)
