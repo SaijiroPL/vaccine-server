@@ -28,14 +28,14 @@
               <label for="example-text-input" class="col-2 col-form-label">パスワード</label>
               <div class="col-6">
                   <input class="form-control m-input" type="password" name="password" value=""
-                  required data-msg-required="おしらせタイトルを選択してください.">
+                  data-msg-required="おしらせタイトルを選択してください.">
               </div>
             </div>
             <div class="form-group m-form__group row">
               <label for="example-text-input" class="col-2 col-form-label">パスワード確認</label>
               <div class="col-6">
                   <input class="form-control m-input" type="password" name="password_confirm" value=""
-                  required data-msg-required="おしらせタイトルを選択してください.">
+                  data-msg-required="おしらせタイトルを選択してください.">
               </div>
             </div>
         </div>
