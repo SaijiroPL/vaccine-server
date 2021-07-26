@@ -167,6 +167,6 @@ class MasterController extends Controller
     {
         $admins = User::paginate(10);
         $per_page = 10;
-        return view('admins.list', compact('admins, per_page'));
+        return view('admins.list', compact('admins', 'per_page'));
     }
 }
