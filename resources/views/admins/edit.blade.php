@@ -6,9 +6,10 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-    <form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="PUT" enctype="multipart/form-data">
+    <form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($admin) ?  $admin->id : '' }}" />
+        <input name="_method" type="hidden" value="PUT">
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">名前</label>
