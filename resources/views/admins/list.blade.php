@@ -48,30 +48,28 @@
         </div>
     </div>
 </div>
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/admin/delete" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" name="del_form" id="del_form" action="" method="POST" enctype="multipart/form-data">
   {{ csrf_field() }}
-  <input type=hidden id="del_id" name="del_no" />
+  <input name="_method" type="hidden" value="DELETE">
 </form>
 @endsection
 
 @section('script')
 <script>
         function delete_confirm(del_id){
-
-            swal({title:"本当に削除しますか？",
-                    text:"削除すると元に戻せません",
-                    showCancelButton:!0,
-                    confirmButtonText:"はい",
-                    cancelButtonText:"キャンセル",
-                })
-                .then(function(e){
-                    if (e.value == 1)
-                    {
-                        $('#del_id').val(del_id);
-                        $('#del_form').submit();
-                    }
-                })
-
+          swal({
+            title:"本当に削除しますか？",
+            text:"削除すると元に戻せません",
+            showCancelButton:!0,
+            confirmButtonText:"はい",
+            cancelButtonText:"キャンセル",
+          }).then(function(e){
+            if (e.value == 1)
+            {
+              document.del_form.action = "/master/admins/" + del_id;
+              $('#del_form').submit();
+            }
+          })
         }
 </script>
 @endsection
