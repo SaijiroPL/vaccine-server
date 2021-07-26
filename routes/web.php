@@ -89,7 +89,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/master/carrying_goods/detail/{id}', 'CarryingGoodsController@detail_post');
     Route::get('/master/carrying_goods/detail/delete/{id}', 'CarryingGoodsController@delete_detail');
 
-    Route::get('/master/admins', 'MasterController@admin');
+    Route::get('/master/admins', 'MasterController@admins');
 
     Route::any('/manager', 'ManagerController@index');
     Route::get('/manager/allow/{id}', 'ManagerController@allow');
