@@ -42,6 +42,15 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $account = User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => bcrypt($password)
+        ]);
+        $account->save();
     }
 
     /**
