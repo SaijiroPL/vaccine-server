@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/update" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="PATCH" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($admin) ?  $admin->id : '' }}" />
         <div class="m-portlet__body">
@@ -46,7 +46,7 @@
                         <button type="submit" class="btn btn-success btn-block">OK</button>
                     </div>
                     <div class="col-2">
-                            <a href="{{ url('/master/admins') }}" class="btn btn-secondary btn-block">Cancel</a>
+                        <a href="{{ url('/master/admins') }}" class="btn btn-secondary btn-block">Cancel</a>
                     </div>
                 </div>
             </div>

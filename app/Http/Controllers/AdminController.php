@@ -88,6 +88,14 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $admin = User::find($id);
+        $admin->name = $request->input('name');
+        $admin->email = $request->input('email');
+        if ($request->input('password')) {
+            $admin->password = bcrypt($request->input('password'));
+        }
+        $admin->save();
+        return redirect('/master/admins');
     }
 
     /**
