@@ -20,7 +20,7 @@
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label">メール</label>
                 <div class="col-6">
-                    <input class="form-control m-input" type="text" name="email" value="{{ isset($admin) ? $admin->title : '' }}"
+                    <input class="form-control m-input" type="text" name="email" value="{{ isset($admin) ? $admin->email : '' }}"
                     required data-msg-required="おしらせタイトルを選択してください.">
                 </div>
             </div>
