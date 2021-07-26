@@ -55,7 +55,8 @@ class Manager extends Model
             ->where('t_shop.brand', 'like', '%'.$filter['brand'].'%')
             ->where('t_area.name_p', 'like', '%'.$filter['province'].'%')
             ->where('t_area.name_c', 'like', '%'.$filter['county'].'%')
-            ->select('t_manager.id', 't_shop.name', 't_area.name_p', 't_area.name_c', 't_shop.brand', 't_manager.device_id', 't_manager.name as lid', 't_manager.real_password')
+            ->select('t_manager.id', 't_shop.name', 't_area.name_p', 't_area.name_c', 't_shop.brand',
+                't_manager.device_id', 't_manager.name as lid', 't_manager.real_password', 't_manager.allow')
             ->orderBy('t_shop.created_at', 'DESC')
             ->paginate(10);
     }
