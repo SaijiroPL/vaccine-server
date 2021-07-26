@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-    {{-- <form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="POST" enctype="multipart/form-data">
+    <form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="PUT" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($admin) ?  $admin->id : '' }}" />
         <div class="m-portlet__body">
@@ -51,28 +51,6 @@
                 </div>
             </div>
         </div>
-    </form> --}}
-    {{ HTML::ul($errors->all()) }}
-
-{{ Form::model($shark, array('route' => array('sharks.update', $shark->id), 'method' => 'PUT')) }}
-
-    <div class="form-group">
-        {{ Form::label('name', 'Name') }}
-        {{ Form::text('name', null, array('class' => 'form-control')) }}
-    </div>
-
-    <div class="form-group">
-        {{ Form::label('email', 'Email') }}
-        {{ Form::email('email', null, array('class' => 'form-control')) }}
-    </div>
-
-    <div class="form-group">
-        {{ Form::label('shark_level', 'shark Level') }}
-        {{ Form::select('shark_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), null, array('class' => 'form-control')) }}
-    </div>
-
-    {{ Form::submit('Edit the shark!', array('class' => 'btn btn-primary')) }}
-
-{{ Form::close() }}
+    </form>
 </div>
 @endsection
