@@ -243,6 +243,10 @@
                 <span class="m-menu__link-text">施工商品一覧</span>
                 </a>
               </li>
+              <li class="m-menu__section ">
+                <h4 class="m-menu__section-text">管理者マスター</h4>
+                <i class="m-menu__section-icon flaticon-more-v2"></i>
+              </li>
             </ul>
           </div>
           <!-- END: Aside Menu -->
