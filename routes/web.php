@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,7 +89,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/master/carrying_goods/detail/{id}', 'CarryingGoodsController@detail_post');
     Route::get('/master/carrying_goods/detail/delete/{id}', 'CarryingGoodsController@delete_detail');
 
-    Route::resource('/master/admins', AdminController::class);
+    Route::resource('/master/admins', \App\Http\Controllers\AdminController::class);
 
     Route::any('/manager', 'ManagerController@index');
     Route::get('/manager/allow/{id}', 'ManagerController@allow');
