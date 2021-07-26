@@ -88,7 +88,6 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         //
-        dd($id);
         $admin = User::find($id);
         $admin->name = $request->input('name');
         $admin->email = $request->input('email');
