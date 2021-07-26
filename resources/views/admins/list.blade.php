@@ -8,7 +8,7 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/shop/edit') }}" class="btn btn-primary">
+                <a href="{{ url('/admin/create') }}" class="btn btn-primary">
                   <span>
                       <i class="fa flaticon-add-circular-button"></i>
                       <span>&nbsp;&nbsp;管理者追加&nbsp;&nbsp;</span>
@@ -33,7 +33,7 @@
                             <td>{{ $u->email }}</td>
                             <td>
                                 <div class="p-action">
-                                    <a href="/shop/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                    <a href="/admin/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
                                     <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                                 </div>
                             </td>
@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/shop/delete" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/admin/delete" method="POST" enctype="multipart/form-data">
   {{ csrf_field() }}
   <input type=hidden id="del_id" name="del_no" />
 </form>
