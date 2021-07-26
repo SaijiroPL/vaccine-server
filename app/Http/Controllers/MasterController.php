@@ -162,11 +162,4 @@ class MasterController extends Controller
 
         return redirect('/master/faq');
     }
-
-    public function admins()
-    {
-        $admins = User::paginate(10);
-        $per_page = 10;
-        return view('admins.list', compact('admins', 'per_page'));
-    }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 class AdminController extends Controller
 {
     /**
@@ -14,6 +16,9 @@ class AdminController extends Controller
     public function index()
     {
         //
+        $admins = User::paginate(10);
+        $per_page = 10;
+        return view('admins.list', compact('admins', 'per_page'));
     }
 
     /**
