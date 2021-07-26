@@ -243,6 +243,7 @@
                 <span class="m-menu__link-text">施工商品一覧</span>
                 </a>
               </li>
+              @if(Auth::user()->supervisor == 1)
               <li class="m-menu__section ">
                 <h4 class="m-menu__section-text">管理者</h4>
                 <i class="m-menu__section-icon flaticon-more-v2"></i>
@@ -254,6 +255,7 @@
                 <span class="m-menu__link-text">管理者一覧</span>
                 </a>
               </li>
+              @endif
             </ul>
           </div>
           <!-- END: Aside Menu -->

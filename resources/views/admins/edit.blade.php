@@ -55,3 +55,15 @@
     </form>
 </div>
 @endsection
+@section('script')
+<script>
+  function onSubmit() {
+    var pwd = $('input[name=password]').val();
+    var cpwd = $('input[name=password_confirm]').val();
+    if (pwd != '' &&  pwd != cpwd) {
+      return;
+    }
+    $('#userform').submit();
+  }
+</script>
+@endsection
