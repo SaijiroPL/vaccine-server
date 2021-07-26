@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="PATCH" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins/{{ $admin->id }}" method="PUT" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($admin) ?  $admin->id : '' }}" />
         <div class="m-portlet__body">
