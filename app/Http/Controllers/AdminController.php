@@ -30,7 +30,7 @@ class AdminController extends Controller
     {
         //
         $admin = new User;
-        return view('admins.edit', compact('admin'));
+        return view('admins.create', compact('admin'));
     }
 
     /**
@@ -73,6 +73,8 @@ class AdminController extends Controller
     public function edit($id)
     {
         //
+        $admin = User::find($id);
+        return view('admins.edit', compact('admin'));
     }
 
     /**
