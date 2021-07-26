@@ -6,7 +6,7 @@
 @section('content')
 <div class="m-portlet m-portlet--tab">
     <!--begin::Form-->
-<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins" method="POST" enctype="multipart/form-data">
+<form class="m-form m-form--fit m-form--label-align-right" action="/master/admins" method="POST" enctype="multipart/form-data" id="userform">
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($admin) ?  $admin->id : '' }}" />
         <div class="m-portlet__body">
@@ -43,7 +43,7 @@
             <div class="m-form__actions">
                 <div class="row">
                     <div class="col-2 offset-2">
-                        <button type="submit" class="btn btn-success btn-block">OK</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="onSubmit()">OK</button>
                     </div>
                     <div class="col-2">
                         <a href="{{ url('/master/admins') }}" class="btn btn-secondary btn-block">Cancel</a>
@@ -53,4 +53,15 @@
         </div>
     </form>
 </div>
+@endsection
+@section('script')
+<script>
+  function onSubmit() {
+    var pwd = $('input[name=password]').val();
+    var cpwd = $('input[name=password_confirm]').val();
+    if (pwd != '' &&  pwd == cpwd) {
+      $('#userform').submit();
+    }
+  }
+</script>
 @endsection
