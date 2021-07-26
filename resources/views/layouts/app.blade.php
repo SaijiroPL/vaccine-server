@@ -244,8 +244,15 @@
                 </a>
               </li>
               <li class="m-menu__section ">
-                <h4 class="m-menu__section-text">管理者マスター</h4>
+                <h4 class="m-menu__section-text">管理者</h4>
                 <i class="m-menu__section-icon flaticon-more-v2"></i>
+              </li>
+              <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="{{ url('/master/admins') }}" class="m-menu__link m-menu__toggle">
+                <span class="m-menu__item-here"></span>
+                <i class="m-menu__link-icon fa fa-comments"></i>
+                <span class="m-menu__link-text">管理者一覧</span>
+                </a>
               </li>
             </ul>
           </div>
