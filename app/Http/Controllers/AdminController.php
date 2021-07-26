@@ -51,6 +51,7 @@ class AdminController extends Controller
             'password' => bcrypt($password)
         ]);
         $account->save();
+        return redirect('/master/admins');
     }
 
     /**

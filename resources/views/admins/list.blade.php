@@ -33,7 +33,7 @@
                             <td>{{ $u->email }}</td>
                             <td>
                                 <div class="p-action">
-                                    <a href="/master/admins/edit/{{ $u->id }}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
+                                    <a href="/master/admins/{{ $u->id }}/edit" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-edit"></i></a>
                                     <a href="#" onclick="delete_confirm('{{ $u->id }}');" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only"><i class="fa fa-trash"></i></a>
                                 </div>
                             </td>
