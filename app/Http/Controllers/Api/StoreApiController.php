@@ -915,7 +915,7 @@ class StoreApiController extends Controller
         $exist = Manager::where('device_id', $request->input('deviceID'))->first();
         if ($exist) {
             return response()->json([
-                'result' => Config::get('constants.errno.E_MEMBER_ALREADY_EXIST'),
+                'result' => Config::get('constants.errno.E_SHOP_DEVICE_ALREADY_EXIST'),
             ]);
         }
         $account = new Manager;
