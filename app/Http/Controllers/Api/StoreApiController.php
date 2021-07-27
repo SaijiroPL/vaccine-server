@@ -906,7 +906,7 @@ class StoreApiController extends Controller
 
     public function register_device(Request $request)
     {
-        $shop = Shop::authenticate($request->input('name'), $request->input('password'));
+        $shop = Shop::where('login_id', $request->input('name'))->first();
         if (!$shop) {
             return response()->json([
                 'result' => Config::get('constants.errno.E_NO_MY_SHOP')
