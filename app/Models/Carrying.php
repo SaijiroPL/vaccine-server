@@ -55,7 +55,7 @@ class Carrying extends Model
     {
         $today = date('Y-m-d');
         $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', $today);
-        if ($performer != '') {
+        if ($performer != '' && $performer != -1) {
             $carries = $carries->where('performer', $performer);
         }
         return $carries->latest()->get();
@@ -67,7 +67,7 @@ class Carrying extends Model
         if (!$to) $to='2100/01/01';
 
         $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', '>=', $from)->where('date', '<=', $to);
-        if ($performer != '') {
+        if ($performer != '' && $performer != -1) {
             $carries = $carries->where('performer', $performer);
         }
         return $carries->latest()->get();
