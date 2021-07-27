@@ -549,14 +549,14 @@ class StoreApiController extends Controller
         {
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
-                'data' => Carrying::get_today_data_by_shop($account->store),
+                'data' => Carrying::get_today_data_by_shop($account->store, $request->input('performer')),
             ]);
         }
         if ($request->input('from_date') || $request->input('to_date'))
         {
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
-                'data' => Carrying::get_date_data_by_shop($account->store, $request->input('from_date'), $request->input('to_date')),
+                'data' => Carrying::get_date_data_by_shop($account->store, $request->input('from_date'), $request->input('to_date'), $request->input('performer')),
             ]);
         }
         return response()->json([

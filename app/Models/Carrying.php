@@ -51,29 +51,26 @@ class Carrying extends Model
         return $carries;
     }
 
-    public static function get_today_data_by_shop($shop_id)
+    public static function get_today_data_by_shop($shop_id, $performer)
     {
         $today = date('Y-m-d');
-        $carries = DB::table('v_carrying')
-                    ->where('shop_id', $shop_id)
-                    ->where('date', $today)
-                    ->latest()
-                    ->get();
-        return $carries;
+        $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', $today);
+        if ($performer != '') {
+            $carries = $carries->where('performer', $performer);
+        }
+        return $carries->latest()->get();
     }
 
-    public static function get_date_data_by_shop($shop_id, $from, $to)
+    public static function get_date_data_by_shop($shop_id, $from, $to, $performer)
     {
         if (!$from) $from='';
         if (!$to) $to='2100/01/01';
 
-        $carries = DB::table('v_carrying')
-                    ->where('shop_id', $shop_id)
-                    ->where('date', '>=', $from)
-                    ->where('date', '<=', $to)
-                    ->latest()
-                    ->get();
-        return $carries;
+        $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', '>=', $from)->where('date', '<=', $to);
+        if ($performer != '') {
+            $carries = $carries->where('performer', $performer);
+        }
+        return $carries->latest()->get();
     }
 
     public static function get_last_carrying_date($customer_id, $shop_id)
