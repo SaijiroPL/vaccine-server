@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\CommonApi;
 use App\Mail\RegisterShopEmail;
 use App\Mail\TossUpEmail;
 use App\Models\Area;
+use App\Models\Performer;
 
 class StoreApiController extends Controller
 {
@@ -930,6 +931,38 @@ class StoreApiController extends Controller
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shop' => $account->id,
+        ]);
+    }
+
+    public function get_performers(Request $request)
+    {
+        $shop = $request->input('shop');
+        $performers = Performer::where('shop_id', $shop)->get();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'performers' => $performers,
+        ]);
+    }
+
+    public function add_performer(Request $request)
+    {
+        $name = $request->input('name');
+        $shop = $request->input('shop');
+        Performer::create([
+            'name' => $name,
+            'shop_id' => $shop,
+        ]);
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK')
+        ]);
+    }
+
+    public function delete_performer(Request $request)
+    {
+        $id = $request->input('id');
+        Performer::find($id)->delete();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK')
         ]);
     }
 }
