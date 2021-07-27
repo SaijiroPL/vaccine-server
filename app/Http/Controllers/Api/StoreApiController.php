@@ -499,7 +499,7 @@ class StoreApiController extends Controller
 
         if ($request->file('_file') != NULL)
         {
-            $carrying->sign_image = time().'_'.$request->file( '_file')->getClientOriginalName();
+            $carrying->sign_image = 'carrying'.'_'.time();
             $carrying->sign_image_path = asset(Storage::url('sign_image/').$carrying->sign_image);
             $request->file('_file')->storeAs('public/sign_image/', $carrying->sign_image);
         }
