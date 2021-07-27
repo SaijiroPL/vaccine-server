@@ -952,8 +952,11 @@ class StoreApiController extends Controller
             'name' => $name,
             'shop_id' => $shop,
         ]);
+        $shop = $request->input('shop');
+        $performers = Performer::where('shop_id', $shop)->get();
         return response()->json([
-            'result' => Config::get('constants.errno.E_OK')
+            'result' => Config::get('constants.errno.E_OK'),
+            'performers' => $performers,
         ]);
     }
 
