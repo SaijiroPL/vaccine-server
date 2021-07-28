@@ -24,7 +24,7 @@ class Atec extends Model
     public static function get_atecs($shop) {
         $query='SELECT *, DATE_FORMAT(t_atec.created_at,"%Y-%m-%d") as date FROM t_atec
                 left JOIN (SELECT shop_id, atec_id FROM t_atec_confirm WHERE shop_id='.$shop.') A ON t_atec.id=A.atec_id
-                WHERE (shop='.$shop.' OR shop=0) AND shop_id is NULL';
+                WHERE (shop='.$shop.' OR shop=0)';
         $atecs =  DB::select($query);
         return $atecs;
     }
