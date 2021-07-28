@@ -32,6 +32,7 @@ use Mail;
 
 use App\Http\Controllers\Api\CommonApi;
 use App\Mail\RegisterShopEmail;
+use App\Mail\StaticEmail;
 use App\Mail\TossUpEmail;
 use App\Models\Area;
 use App\Models\Performer;
@@ -408,6 +409,14 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/notice_image/', $notice->image);
         }
         $notice->save();
+        $shop_dest = $account->shop;
+        if ($shop_dest->email) {
+            $data = [
+                'subject' => 'お知らせ申請',
+                'message' => '店からお知らせの申請がありました。'
+            ];
+            Mail::to('pclienth@hotmail.com')->send(new StaticEmail($data, $shop_dest->email));
+        }
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'data' => CommonApi::get_notice_by_shop($account->store),
