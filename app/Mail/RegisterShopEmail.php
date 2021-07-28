@@ -29,9 +29,6 @@ class RegisterShopEmail extends Mailable
 
         return $this->view('emails.register_shop')
                     ->from($address, $name)
-                    ->cc($address, $name)
-                    ->bcc($address, $name)
-                    ->replyTo($address, $name)
                     ->subject($subject)
                     ->with(['data' => $this->data]);
     }

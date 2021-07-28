@@ -29,9 +29,6 @@ class ApproveNoticeEmail extends Mailable
 
         return $this->view('emails.approve_notice')
                     ->from($address, $name)
-                    ->cc($address, $name)
-                    ->bcc($address, $name)
-                    ->replyTo($address, $name)
                     ->subject($subject)
                     ->with(['data' => $this->data]);
     }
