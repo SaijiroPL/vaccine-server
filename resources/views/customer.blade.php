@@ -50,8 +50,8 @@
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
                           <td>{{ $shop ? $shop->name : '' }}</td>
-                          <td>{{ $area ? $shop->name_p : '' }}</td>
-                          <td>{{ $area ? $shop->name_c : '' }}</td>
+                          <td>{{ $area ? $area->name_p : '' }}</td>
+                          <td>{{ $area ? $area->name_c : '' }}</td>
                           <td>{{ $shop ? $shop->brand : '' }}</td>
                         </tr>
                     @empty
