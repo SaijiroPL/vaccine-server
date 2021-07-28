@@ -16,7 +16,7 @@ class Manager extends Model
 
     public static function generate_access_token(Manager $account)
     {
-        return sha1($account->device_id.$account->store);
+        return sha1($account->device_id.$account->real_password);
     }
 
     public static function from_access_token($token)

@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test', function () {
-    dd(sha1('3B964965-A793-443D-BDFE-DEBDD83DB9B936'));
-});
 Route::get('/', function () {
     if (Auth::check())
         return redirect('/dashboard');
