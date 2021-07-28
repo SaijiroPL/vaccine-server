@@ -26,7 +26,8 @@ class Customer extends Model
         'device_id',
         'access_token',
         'member_no',
-        'fcm_token'
+        'fcm_token',
+        'fcm_flag',
     ];
 
     public static function generate_access_token($deviceID, $email)

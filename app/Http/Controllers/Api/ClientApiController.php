@@ -564,4 +564,13 @@ class ClientApiController extends Controller
             'topics' => CustomerTop::orderBy('created_at', 'DESC')->get(),
         ]);
     }
+
+    public function switchNotify(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $fcm_flag = $request->input('fcmFlag');
+        $customer = Customer::find($customerID);
+        $customer->fcm_flag = $fcm_flag;
+        $customer->save();
+    }
 }
