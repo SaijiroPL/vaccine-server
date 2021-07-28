@@ -261,36 +261,36 @@ class StoreApiController extends Controller
         ]);
     }
 
-    public function register_member(Request $request)
-    {
-        if ($request->input('id') == 0)
-        {
-            $account = new Customer;
-        }
-        else
-        {
-            $account = Customer::find($request->input('id'));
-        }
-        $account->email = $request->input('email');
-        $account->password =  sha1($request->input('password'));
-        $account->fax = $request->input('fax');
-        $account->birthday = $request->input('birthday');
-        $account->first_name = $request->input('first_name');
-        $account->last_name = $request->input('last_name');
-        $account->name = $request->input('first_name').' '.$request->input('last_name');
-        $account->first_huri = $request->input('first_huri');
-        $account->last_huri = $request->input('last_huri');
-        $account->name_japan = $request->input('first_huri').' '.$request->input('last_huri');
-        $account->tel_no = $request->input('tel_no');
-        $account->access_token = Customer::generate_access_token($account);
+    // public function register_member(Request $request)
+    // {
+    //     if ($request->input('id') == 0)
+    //     {
+    //         $account = new Customer;
+    //     }
+    //     else
+    //     {
+    //         $account = Customer::find($request->input('id'));
+    //     }
+    //     $account->email = $request->input('email');
+    //     $account->password =  sha1($request->input('password'));
+    //     $account->fax = $request->input('fax');
+    //     $account->birthday = $request->input('birthday');
+    //     $account->first_name = $request->input('first_name');
+    //     $account->last_name = $request->input('last_name');
+    //     $account->name = $request->input('first_name').' '.$request->input('last_name');
+    //     $account->first_huri = $request->input('first_huri');
+    //     $account->last_huri = $request->input('last_huri');
+    //     $account->name_japan = $request->input('first_huri').' '.$request->input('last_huri');
+    //     $account->tel_no = $request->input('tel_no');
+    //     $account->access_token = Customer::generate_access_token($account);
 
-        $account->save();
-        return response()->json([
-            'result' => Config::get('constants.errno.E_OK'),
-            'accessToken' => $account->access_token,
-        ]);
+    //     $account->save();
+    //     return response()->json([
+    //         'result' => Config::get('constants.errno.E_OK'),
+    //         'accessToken' => $account->access_token,
+    //     ]);
 
-    }
+    // }
 
     public function get_bottle(Request $request)
     {
