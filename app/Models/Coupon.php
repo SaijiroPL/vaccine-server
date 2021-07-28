@@ -43,9 +43,12 @@ class Coupon extends Model
 
     public static function get_coupon_by_shop_id($shopID, $customerID)
     {
-        $myShopCoupon = Coupon::where('shop_id', $shopID)->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
+        $myShopCoupon = Coupon::where('shop_id', $shopID)
+            ->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
+            ->where('agree', 1)
             ->get();
-        $commonCoupon = Coupon::where('shop_id', 0)->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
+        $commonCoupon = Coupon::where('shop_id', 0)
+            ->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
             ->get();
         $usedCoupon = DB::table('v_customer_coupon')->where('f_customer', $customerID)->where('to_date', '>', date('Y-m-d', time() - 60 * 60 * 24))
             ->get();
