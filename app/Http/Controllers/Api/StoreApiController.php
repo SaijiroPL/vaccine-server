@@ -413,7 +413,7 @@ class StoreApiController extends Controller
         if ($shop_dest->email) {
             $data = [
                 'subject' => 'お知らせ申請',
-                'message' => '店からお知らせの申請がありました。'
+                'message' => $shop_dest->name.'店からお知らせの申請がありました。'
             ];
             Mail::to('pclienth@hotmail.com')->send(new StaticEmail($data, $shop_dest->email));
         }
