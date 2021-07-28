@@ -27,7 +27,7 @@ class StaticEmail extends Mailable
         $subject = $this->data['subject'];
         $name = 'アーテック管理チーム';
 
-        return $this->view('emails.approve_coupon')
+        return $this->view('emails.static')
                     ->from($address, $name)
                     ->cc($address, $name)
                     ->bcc($address, $name)
