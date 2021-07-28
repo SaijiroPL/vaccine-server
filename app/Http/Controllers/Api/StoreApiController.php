@@ -561,7 +561,7 @@ class StoreApiController extends Controller
         }
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'data' => Carrying::get_data_by_shop($account->store),
+            'data' => Carrying::get_data_by_shop($account->store, $request->input('performer')),
         ]);
     }
 

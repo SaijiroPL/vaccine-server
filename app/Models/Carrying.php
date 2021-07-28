@@ -42,13 +42,13 @@ class Carrying extends Model
         return $carries;
     }
 
-    public static function get_data_by_shop($shop_id)
+    public static function get_data_by_shop($shop_id, $performer)
     {
-        $carries = DB::table('v_carrying')
-                    ->where('shop_id', $shop_id)
-                    ->latest()
-                    ->get();
-        return $carries;
+        $carries = DB::table('v_carrying')->where('shop_id', $shop_id);
+        if ($performer != '') {
+            $carries = $carries->where('performer', $performer);
+        }
+        return $carries->latest()->get();
     }
 
     public static function get_today_data_by_shop($shop_id, $performer)
