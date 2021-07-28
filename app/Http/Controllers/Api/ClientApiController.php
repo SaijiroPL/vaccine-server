@@ -572,5 +572,9 @@ class ClientApiController extends Controller
         $customer = Customer::find($customerID);
         $customer->fcm_flag = $fcm_flag;
         $customer->save();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'updated' => $customer->fcm_flag,
+        ]);
     }
 }
