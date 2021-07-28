@@ -115,7 +115,7 @@ class NoticeController extends Controller
                 $customers = $shop->customers;
             }
             foreach($customers as $m) {
-                if ($m->fcm_token != null) {
+                if ($m->fcm_token != null && $m->fcm_flag == 1) {
                     $client = new Client(['base_uri' => 'https://fcm.googleapis.com/fcm/']);
                     $client->request('POST', 'send', [
                         'headers' => [
