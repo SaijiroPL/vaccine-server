@@ -86,6 +86,7 @@ class ClientApiController extends Controller
         $account->member_no = $member_no;
         $account->access_token = Customer::generate_access_token($account->device_id, $member_no);
         $account->fcm_token = $request->input('fcm_token');
+        $account->fcm_flag = 1;
 
         $check_account = Customer::authenticate($member_no, $password, $account->device_id);
         if (isset($check_account)) {
