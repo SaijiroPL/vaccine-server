@@ -140,11 +140,19 @@ class StoreApiController extends Controller
         $content = $request->input('content');
         CommonApi::add_tossup($account->store, $content);
 
-        $data = [
-            'shop_name' => $account->shop->name,
-            'content' => $content
-        ];
-        Mail::to('s.hirose@oaklay.net')->send(new TossUpEmail($data, $account->shop->email));
+        // $data = [
+        //     'shop_name' => $account->shop->name,
+        //     'content' => $content
+        // ];
+        // Mail::to('s.hirose@oaklay.net')->send(new TossUpEmail($data, $account->shop->email));
+        $shop_dest = $account->shop;
+        if ($shop_dest->email) {
+            $data = [
+                'subject' => 'トスアップ申請',
+                'message' => $shop_dest->name.'店からトスアップの申請がありました。'
+            ];
+            Mail::to('s.hirose@oaklay.net')->send(new StaticEmail($data, $shop_dest->email));
+        }
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
@@ -458,6 +466,15 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/coupon_image/',$coupon->image);
         }
         $coupon->save();
+
+        $shop_dest = $account->shop;
+        if ($shop_dest->email) {
+            $data = [
+                'subject' => 'クーポン申請',
+                'message' => $shop_dest->name.'店からクーポンの申請がありました。'
+            ];
+            Mail::to('s.hirose@oaklay.net')->send(new StaticEmail($data, $shop_dest->email));
+        }
 
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
