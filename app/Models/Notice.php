@@ -43,6 +43,12 @@ class Notice extends Model
         return Notice::where('agree', 1)->orderBy('updated_at', 'DESC')->get();
     }
 
+    public static function get_by_shop($shopid) {
+        return Notice::where('agree', 1)
+            ->whereIn('shop_id', [0, $shopid])
+            ->get();
+    }
+
     public function shop() {
         return $this->belongsTo(Shop::class, 'shop_id');
     }

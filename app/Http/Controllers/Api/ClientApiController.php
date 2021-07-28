@@ -225,11 +225,11 @@ class ClientApiController extends Controller
         ]);
     }
 
-    public function getNotice()
+    public function getNotice(Request $request)
     {
         return response() -> json([
             'result' => Config::get('constants.errno.E_OK'),
-            'notice' => Notice::get_all_data(),
+            'notice' => Notice::get_by_shop($request->input('shop')),
         ]);
     }
 
