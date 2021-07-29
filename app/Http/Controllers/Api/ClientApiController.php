@@ -17,6 +17,7 @@ use App\Models\Carrying;
 use App\Models\ShopReserve;
 use App\Models\CustomerInquiryRead;
 use App\Models\CouponCustomer;
+use App\Models\CustomerNotice;
 use App\Models\CustomerVerifyNumber;
 use App\Models\Policy;
 use App\Models\ShopRestDate;
@@ -231,6 +232,17 @@ class ClientApiController extends Controller
             'result' => Config::get('constants.errno.E_OK'),
             'notice' => Notice::get_by_shop($request->input('shop')),
             'new_notice_count' => $request->account->unreadNotice(),
+        ]);
+    }
+
+    public function readNotice(Request $request)
+    {
+        CustomerNotice::create([
+            'notify_id' => $request->input('notify'),
+            'customer_id' => $request->account->id,
+        ]);
+        return response() -> json([
+            'result' => Config::get('constants.errno.E_OK'),
         ]);
     }
 

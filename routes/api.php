@@ -112,4 +112,5 @@ Route::group(['middleware'=>'token:client'], function() {
     Route::any('/client/getShopByProvince', 'Api\ClientApiController@getShopByProvince');
     Route::any('/client/generateTransferCode', 'Api\ClientApiController@generateTransferCode');
     Route::any('/client/switchNotify', 'Api\ClientApiController@switchNotify');
+    Route::any('/client/readNotice', 'Api\ClientApiController@readNotice');
 });
