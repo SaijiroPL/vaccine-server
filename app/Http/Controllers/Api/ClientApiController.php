@@ -237,10 +237,14 @@ class ClientApiController extends Controller
 
     public function readNotice(Request $request)
     {
-        CustomerNotice::create([
-            'notify_id' => $request->input('notify'),
-            'customer_id' => $request->account->id,
-        ]);
+        $exist = CustomerNotice::where('notify_id', $request->input('notify'))
+            ->where('customer_id', $request->account->id)->count();
+        if ($exist == 0) {
+            CustomerNotice::create([
+                'notify_id' => $request->input('notify'),
+                'customer_id' => $request->account->id,
+            ]);
+        }
         return response() -> json([
             'result' => Config::get('constants.errno.E_OK'),
         ]);
