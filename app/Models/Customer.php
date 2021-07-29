@@ -136,7 +136,7 @@ class Customer extends Model
 
     public function unreadNotice()
     {
-        $total = Notice::where('shop_id', 0)->count() + count($this->shop->notices);
+        $total = Notice::where('shop_id', 0)->count() + count($this->shop->first()->notices);
         $read = count($this->notices);
         return max($total - $read, 0);
     }
