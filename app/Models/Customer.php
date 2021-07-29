@@ -128,4 +128,16 @@ class Customer extends Model
     {
         return $this->belongsToMany(Shop::class, MyShop::class, 'f_customer_id', 'f_shop_id');
     }
+
+    public function notices()
+    {
+        return $this->hasMany(CustomerNotice::class, 'customer_id');
+    }
+
+    public function unreadNotice()
+    {
+        $total = Notice::where('shop_id', 0)->count() + count($this->shop->notices);
+        $read = count($this->notices);
+        return max($total - $read, 0);
+    }
 }

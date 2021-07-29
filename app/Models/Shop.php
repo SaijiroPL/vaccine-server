@@ -134,6 +134,11 @@ class Shop extends Model
         return $this->hasMany(AtecConfirm::class, 'shop_id');
     }
 
+    public function notices()
+    {
+        return $this->hasMany(Notice::class, 'shop_id');
+    }
+
     public function unreadAtec()
     {
         $total = Atec::where('shop', 0)->count() + count($this->atecs);
