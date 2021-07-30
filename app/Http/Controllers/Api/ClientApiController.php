@@ -228,12 +228,18 @@ class ClientApiController extends Controller
 
     public function getNotice(Request $request)
     {
-        return response() -> json([
-            'result' => Config::get('constants.errno.E_OK'),
-            'notice' => Notice::get_by_shop($request->input('shop')),
-            'new_notice_count' => $request->account->unreadNotice(),
-            'notice_flag' => $request->account->fcm_flag,
-        ]);
+        if ($request->account) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_OK'),
+                'notice' => Notice::get_by_shop($request->input('shop')),
+                'new_notice_count' => $request->account->unreadNotice(),
+                'notice_flag' => $request->account->fcm_flag,
+            ]);
+        } else {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_NO_MEMBER'),
+            ]);
+        }
     }
 
     public function readNotice(Request $request)
