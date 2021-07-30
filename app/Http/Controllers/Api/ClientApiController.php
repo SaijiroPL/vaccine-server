@@ -390,6 +390,7 @@ class ClientApiController extends Controller
     {
         $customerID = $request->input('customerID');
         $shopID = $request->input('shopID');
+        MyShop::where('f_customer_id', $customerID)->delete();
         $myShop = new MyShop;
         $myShop->f_customer_id = $customerID;
         $myShop->f_shop_id = $shopID;
