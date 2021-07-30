@@ -84,7 +84,10 @@ class Shop extends Model
 
     public static function filter_shop_by_address($address)
     {
-        return self::where('address', 'like', '%'.$address.'%')->limit(10)->get();
+        return self::where('address', 'like', '%'.$address.'%')
+            ->orWhere('name', 'like', '%'.$address.'%')
+            ->limit(10)
+            ->get();
     }
 
     public static function get_shop_by_city($city_name)
