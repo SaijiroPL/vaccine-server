@@ -46,6 +46,7 @@ class Notice extends Model
     public static function get_by_shop($shopid) {
         return Notice::where('agree', 1)
             ->whereIn('shop_id', [0, $shopid])
+            ->orderBy('updated_at', 'DESC')
             ->get();
     }
 
