@@ -569,6 +569,21 @@ class ClientApiController extends Controller
         ]);
     }
 
+    public function fetchTransferCode(Request $request)
+    {
+        $customerID = $request->input('customerID');
+        $customer = Customer::find($customerID);
+        $transferCode = '';
+        //transfercode is still valid
+        if ($customer->transferCode != NULL && $customer->transferCode_date > date('Y-m-d H:i:s', time() - 60 * 60 * 24)) {
+            $transferCode = $customer->transferCode;
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'code' => $transferCode,
+        ]);
+    }
+
     public function getMyShopDocomoDays(Request $request)
     {
         $shopID = $request->input('shop');
