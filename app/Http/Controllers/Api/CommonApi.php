@@ -125,6 +125,18 @@ class CommonApi
         return $text;
     }
 
+    public static function generate_transcode()
+    {
+        $text="";
+        $length=10;
+        $pattern = "0123456789";
+
+        for($count = 0; $count < $length; $count++) {
+            $text .= $pattern[mt_rand(0, strlen($pattern) - 1)];
+        }
+        return $text;
+    }
+
     public static function makeResetURL($customerID)
     {
         $resetToken = rand(100000, 999999);

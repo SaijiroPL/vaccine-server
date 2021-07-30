@@ -561,10 +561,11 @@ class ClientApiController extends Controller
     public function generateTransferCode(Request $request)
     {
         $customerID = $request->input('customerID');
-        $transferCode = $request->input('transferCode');
+        $transferCode = CommonApi::generate_transcode();
         Customer::set_transfer_code($customerID, $transferCode);
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
+            'code' => $transferCode,
         ]);
     }
 
