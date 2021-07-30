@@ -61,7 +61,7 @@ class CommonApi
     {
         $today = date('Y-m-d');
 
-        return Coupon::whereIn('shop_id', [$shop, 0])
+        return Coupon::where('shop_id', $shop)
             ->where('to_date', '>=', $today)
             ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date, DATE_FORMAT(from_date,"%Y/%m/%d") as from_date1, DATE_FORMAT(to_date,"%Y/%m/%d") as to_date1'))
             ->latest()
@@ -72,7 +72,7 @@ class CommonApi
     {
         $today = date('Y-m-d');
 
-        return Coupon::whereIn('shop_id', [$shop, 0])
+        return Coupon::where('shop_id', 0)
             ->where('to_date', '<', $today)
             ->select(DB::raw('*, DATE_FORMAT(created_at,"%Y-%m-%d") as date, DATE_FORMAT(from_date,"%Y/%m/%d") as from_date1, DATE_FORMAT(to_date,"%Y/%m/%d") as to_date1'))
             ->latest()
