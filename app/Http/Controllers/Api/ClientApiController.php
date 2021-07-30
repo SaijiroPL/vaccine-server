@@ -232,6 +232,7 @@ class ClientApiController extends Controller
             'result' => Config::get('constants.errno.E_OK'),
             'notice' => Notice::get_by_shop($request->input('shop')),
             'new_notice_count' => $request->account->unreadNotice(),
+            'notice_flag' => $request->account->fcm_flag,
         ]);
     }
 
