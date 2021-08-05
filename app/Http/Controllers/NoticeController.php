@@ -16,12 +16,12 @@ class NoticeController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->input('name');
+        $shop = $request->input('shop');
         $brand = $request->input('brand');
         $area = $request->input('area');
 
         $old = [
-            'name' => $name,
+            'name' => $shop,
             'brand' => $brand,
             'area' => $area
         ];
