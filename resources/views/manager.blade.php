@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-md-12">
           <form class="navbar-form navbar-right" role="search" action="{{ url('/manager') }}">
-            <div class="form-group m-form__group pull-right" style="width: 60%">
+            <div class="form-group m-form__group pull-right" style="width: 75%">
               <div class="input-group">
                 <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="店舗">
                 <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
