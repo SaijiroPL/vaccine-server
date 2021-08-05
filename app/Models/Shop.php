@@ -20,14 +20,14 @@ class Shop extends Model
             ->first();
     }
 
-    public static function get_data($area) {
-        // $shops = DB::table('v_shop')
-        //         ->where('name_p', 'like' , '%'.$area.'%')
-        //         ->latest()
-        //         ->paginate(10);
-        return self::latest()
-                ->paginate(10);
-        return $shops;
+    public static function get_data($keys) {
+        return self::where('name', 'like', '%'.$keys['name'].'%')
+            ->where('name', 'like', '%'.$keys['name'].'%')
+            ->whereHas('area', function($query) use ($keys){
+                $query->where('name_p', 'like', '%'.$keys['area'].'%');
+            })
+            ->latest()
+            ->paginate(10);
     }
 
     public static function get_shops($myShopID=NULL) {

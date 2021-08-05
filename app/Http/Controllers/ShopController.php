@@ -24,7 +24,7 @@ class ShopController extends Controller
             'brand' => $brand,
             'area' => $area
         ];
-        $shops = Shop::get_data($area);
+        $shops = Shop::get_data($old);
         $image_url = Storage::url('shop_image/');
         return view('shop', [
             'shops' => $shops,
