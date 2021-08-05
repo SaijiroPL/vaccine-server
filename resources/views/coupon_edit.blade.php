@@ -79,18 +79,20 @@
                 <label for="example-datetime-local-input" class="col-2 col-form-label">有効期限</label>
                 <div class="col-3">
                     <input class="form-control m-input" type="date-local" name="from_date" id="from_date"
-                    value="{{ isset($coupon) ? $coupon->from_date : '' }}" required data-msg-required="有効期限を選択してください.">
+                    value="{{ isset($coupon) ? $coupon->from_date : '' }}" required data-msg-required="有効期限を選択してください."
+                    {{ isset($coupon) ? 'disabled' : '' }}>
                 </div>
                 ~
                 <div class="col-3">
                     <input class="form-control m-input" type="date-local" name="to_date" id="to_date"
-                    value="{{ isset($coupon) ? $coupon->to_date : '' }}" required data-msg-required="有効期限を選択してください.">
+                    value="{{ isset($coupon) ? $coupon->to_date : '' }}" required data-msg-required="有効期限を選択してください."
+                    {{ isset($coupon) ? 'disabled' : '' }}>
                 </div>
             </div>
             <div class="form-group m-form__group row">
                 <label for="exampleSelect1" class="col-2 col-form-label">ショップ</label>
                 <div class="col-6">
-                    <select class="form-control m-input" name="shop">
+                    <select class="form-control m-input" name="shop" {{ isset($coupon) ? 'disabled' : '' }}>
                         @if (isset($coupon) && $coupon->shop_id == 0)
                             <option value="0" selected>共通</option>
                         @else

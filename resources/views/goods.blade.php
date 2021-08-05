@@ -24,7 +24,7 @@
                         <tr>
                             <td>ID</td>
                             <td>商品名</td>
-                            <td>価格</td>
+                            <td>価格（税抜き）</td>
                             <td>画像</td>
                             <td>動作</td>
                         </tr>

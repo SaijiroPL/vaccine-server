@@ -16,8 +16,14 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
+        $name = $request->input('name');
+        $brand = $request->input('brand');
         $area = $request->input('area');
-        $old = ['area' => $area];
+        $old = [
+            'name' => $name,
+            'brand' => $brand,
+            'area' => $area
+        ];
         $shops = Shop::get_data($area);
         $image_url = Storage::url('shop_image/');
         return view('shop', [

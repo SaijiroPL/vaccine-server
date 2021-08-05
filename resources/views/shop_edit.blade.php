@@ -38,7 +38,15 @@
             <div class="form-group m-form__group row">
               <label for="example-text-input" class="col-3 col-form-label">住所</label>
               <div class="col-5">
-                  <input id="address" class="form-control m-input" type="text" name="address" value="{{ isset($shop) ? $shop->address : '' }}" required data-msg-required="住所を選択してください.">
+                  <input
+                    id="address"
+                    class="form-control m-input"
+                    type="text"
+                    name="address"
+                    value="{{ isset($shop) ? $shop->address : '' }}"
+                    required
+                    data-msg-required="住所を選択してください."
+                    placeholder="〒ボタンをおして住所を確定してください">
                   <br />
               </div>
             </div>
@@ -176,7 +184,7 @@
         },
         success: function (v) {
           if (v.location.results.length > 0) {
-            $('#address').val(`${v.text.name_p} ${v.text.name_c}`);
+            $('#address').val(`${v.text.name_p}${v.text.name_c}`);
             const loc = v.location.results[0];
             if (marker) {
               marker.setPosition(new google.maps.LatLng(loc.Latitude, loc.Longitude));
