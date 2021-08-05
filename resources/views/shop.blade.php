@@ -15,7 +15,7 @@
                   </span>
                 </a>
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/shop') }}">
-                  <div class="form-group m-form__group pull-right" style="width: 30%">
+                  <div class="form-group m-form__group pull-right" style="width: 60%">
                     <div class="input-group">
                       <input type="text" class="form-control" name="name" value="{{ $old['name'] }}" placeholder="ショップ名">
                       <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
