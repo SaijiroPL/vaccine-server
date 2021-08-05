@@ -21,7 +21,7 @@ class NoticeController extends Controller
         $area = $request->input('area');
 
         $old = [
-            'name' => $shop,
+            'shop' => $shop,
             'brand' => $brand,
             'area' => $area
         ];
