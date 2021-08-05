@@ -14,7 +14,7 @@ use GuzzleHttp\Client;
 
 class NoticeController extends Controller
 {
-    public function index($request)
+    public function index(Request $request)
     {
         $name = $request->input('name');
         $brand = $request->input('brand');
