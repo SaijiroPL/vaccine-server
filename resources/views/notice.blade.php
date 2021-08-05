@@ -4,19 +4,37 @@
 @section('page_title', __('お知らせ一覧'))
 
 @section('content')
-<form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/notice/delete" method="POST" enctype="multipart/form-data">
+  <form class="m-form m-form--fit m-form--label-align-right" id="del_form" action="/notice/delete" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type=hidden id="del_no" name="del_no" />
-<div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
+  </form>
+  <div class="m-portlet m-portlet--mobile m-portlet--body-progress-">
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
                 <a href="{{ url('/notice/edit') }}" class="btn btn-primary pull-right">
-                        <span>
-                            <i class="fa flaticon-add-circular-button"></i>
-                            <span>&nbsp;&nbsp;おしらせ追加&nbsp;&nbsp;</span>
-                        </span>
+                  <span>
+                    <i class="fa flaticon-add-circular-button"></i>
+                    <span>&nbsp;&nbsp;おしらせ追加&nbsp;&nbsp;</span>
+                  </span>
                 </a>
+                <form class="navbar-form navbar-right" role="search" action="{{ url('/notice') }}">
+                  <div class="form-group m-form__group pull-right" style="width: 60%">
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="対象ショップ">
+                      <input type="text" class="form-control" name="area" value="{{ $old['area'] }}" placeholder="ショップエリア">
+                      <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                          <span>
+                            <i class="fa fa-search"></i>
+                            <span>&nbsp;&nbsp;検 索&nbsp;&nbsp;</span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
             </div>
             <div class="col-md-12">
                 <table width="100%" class="table table-striped table-bordered table-advance table-hover">
@@ -87,7 +105,6 @@
         </div>
     </div>
 </div>
-</form>
 @endsection
 
 @section('script')

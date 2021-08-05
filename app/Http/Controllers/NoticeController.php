@@ -14,8 +14,17 @@ use GuzzleHttp\Client;
 
 class NoticeController extends Controller
 {
-    public function index()
+    public function index($request)
     {
+        $name = $request->input('name');
+        $brand = $request->input('brand');
+        $area = $request->input('area');
+
+        $old = [
+            'name' => $name,
+            'brand' => $brand,
+            'area' => $area
+        ];
 
         $notice_model = new Notice();
         $notices = $notice_model->get_agree_data();
@@ -23,7 +32,8 @@ class NoticeController extends Controller
         return view('notice', [
             'notices' => $notices,
             'per_page' => 10,
-            'image_url' => $image_url
+            'image_url' => $image_url,
+            'old' => $old,
         ]);
     }
 
