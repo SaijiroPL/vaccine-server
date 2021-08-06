@@ -12,7 +12,7 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/notice/edit') }}" class="btn btn-primary pull-right">
+                <a href="{{ url('/notice/edit') }}" class="btn btn-primary">
                   <span>
                     <i class="fa flaticon-add-circular-button"></i>
                     <span>&nbsp;&nbsp;おしらせ追加&nbsp;&nbsp;</span>

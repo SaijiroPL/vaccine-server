@@ -20,9 +20,17 @@ class Notice extends Model
         return $notices;
     }
 
-    public static function get_agree_data() {
-        $notices = self::where('agree','=',1)->latest()->paginate(10);
-        return $notices;
+    public static function get_agree_data($filter) {
+        return DB::table('t_notice')
+            ->leftJoin('t_shop', 't_notice.shop_id', '=', 't_shop.id')
+            ->leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
+            ->where('t_notice.agree','=',1)
+            ->where('t_shop.name', 'like', '%'.$filter['shop'].'%')
+            ->where('t_shop.brand', 'like', '%'.$filter['brand'].'%')
+            ->where('t_area.name_p', 'like', '%'.$filter['area'].'%')
+            ->select('t_notice.*', 't_shop.name', 't_area.name_p', 't_area.name_c', 't_shop.brand')
+            ->orderBy('t_shop.created_at', 'DESC')
+            ->paginate(10);
     }
 
     public static function get_application_data() {
