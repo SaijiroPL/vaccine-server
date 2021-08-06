@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="navbar-form navbar-right" role="search" action="{{ url('/master/customer') }}">
-                    <div class="form-group m-form__group pull-right" style="width: 50%">
+                    <div class="form-group m-form__group pull-right" style="width: 60%">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="店舗">
+                            <input type="text" class="form-control" name="shop" value="{{ $old['shop'] }}" placeholder="お気に入り店舗">
                             <input type="text" class="form-control" name="brand" value="{{ $old['brand'] }}" placeholder="代理店名">
                             <input type="text" class="form-control" name="member_no" value="{{ $old['member_no'] }}" placeholder="ユーザーID">
                             <div class="input-group-append">
