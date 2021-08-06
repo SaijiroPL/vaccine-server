@@ -24,7 +24,7 @@ class Notice extends Model
         return DB::table('t_notice')
             ->leftJoin('t_shop', 't_notice.shop_id', '=', 't_shop.id')
             ->leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
-            ->where('t_notice.agree','=',1)
+            // ->where('t_notice.agree','=',1)
             ->where('t_shop.name', 'like', '%'.$filter['shop'].'%')
             ->where('t_shop.brand', 'like', '%'.$filter['brand'].'%')
             ->where('t_area.name_p', 'like', '%'.$filter['area'].'%')
