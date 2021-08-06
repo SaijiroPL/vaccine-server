@@ -35,7 +35,7 @@ class Notice extends Model
             $query = $query->where('t_area.name_p', 'like', '%'.$filter['area'].'%');
         }
         $query = $query->select('t_notice.*', 't_shop.name', 't_area.name_p', 't_area.name_c', 't_shop.brand')
-            ->orderBy('t_shop.created_at', 'DESC');
+            ->orderBy('t_notice.created_at', 'DESC');
         return $query->paginate(10);
     }
 
