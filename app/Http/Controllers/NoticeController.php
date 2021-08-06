@@ -28,7 +28,7 @@ class NoticeController extends Controller
 
         $notice_model = new Notice();
         $notices = $notice_model->get_agree_data($old);
-        dd($notices);
+        // dd($notices);
         $image_url = Storage::url('notice_image/');
         return view('notice', [
             'notices' => $notices,
