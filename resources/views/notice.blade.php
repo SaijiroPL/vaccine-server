@@ -62,26 +62,14 @@
                             <td>{{ $u->content }}</td>
                             <td>
                                 @if ($u->shop_id != 0)
-                                    {{ $u->shop->name }}
+                                    {{ $u->name }}
                                 @else
                                     全員
                                 @endif
                             </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->area ? $u->shop->area->name_p : '' }}
-                              @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->area ? $u->shop->area->name_c : '' }}
-                              @endif
-                            </td>
-                            <td>
-                              @if ($u->shop_id != 0)
-                                {{ $u->shop->brand }}
-                              @endif
-                            </td>
+                            <td>{{ $u->name_p }}</td>
+                            <td>{{ $u->name_c }}</td>
+                            <td>{{ $u->brand }}</td>
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
