@@ -50,7 +50,7 @@
                           $area = $shop ? $shop->area : null;
                         @endphp
                         <tr class="row-{{ (($carries->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
-                            <td>{{ $u->serial_no }}</td>
+                            <td>{{ str_pad($u->serial_no, 10, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $u->customer_id }}</td>
                             <td>{{ $shop ? $shop->name : '' }}</td>
                             <td>{{ $area ? $area->name_p : '' }}</td>
