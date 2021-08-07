@@ -50,6 +50,12 @@ class TossupController extends Controller
         $atec->shop = $shop;
         $atec->save();
 
+        $inquiry = new Inquiry;
+        $inquiry->shop = $shop;
+        $inquiry->content = $tossup->content;
+        $inquiry->sender = $tossup->shop;
+        $inquiry->save();
+
         $tossup->tossed = 1;
         $tossup->save();
 
