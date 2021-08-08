@@ -27,7 +27,7 @@ class Notice extends Model
                 $q->where('name', 'like', '%'.$filter['shop'].'%')
                     ->orWhere('brand', 'like', '%'.$filter['brand'].'%')
                     ->orWhere('address', 'like', '%'.$filter['area'].'%');
-            })
+            });
         }
         return $query->latest()->paginate(10);
     }
