@@ -43,15 +43,14 @@
                     @forelse ($customers as $ind => $u)
                         @php
                           $shop = $u->shop[0];
-                          $area = $shop ? $shop->area : null;
                         @endphp
                         <tr class="row-{{ (($customers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                           <td>{{ $u->id }}</td>
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
                           <td>{{ $shop ? $shop->name : '' }}</td>
-                          <td>{{ $area ? $area->name_p : '' }}</td>
-                          <td>{{ $area ? $area->name_c : '' }}</td>
+                          <td>{{ $shop ? $area->a_province : '' }}</td>
+                          <td>{{ $shop ? $area->a_detail : '' }}</td>
                           <td>{{ $shop ? $shop->brand : '' }}</td>
                         </tr>
                     @empty
