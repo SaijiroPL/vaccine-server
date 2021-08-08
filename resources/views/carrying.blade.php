@@ -52,8 +52,8 @@
                             <td>{{ str_pad($u->id, 10, '0', STR_PAD_LEFT) }}</td>
                             <td>{{ $u->customer_id }}</td>
                             <td>{{ $shop ? $shop->name : '' }}</td>
-                            <td>{{ $shop ? $area->a_province : '' }}</td>
-                            <td>{{ $shop ? $area->a_detail : '' }}</td>
+                            <td>{{ $shop ? $shop->a_province : '' }}</td>
+                            <td>{{ $shop ? $shop->a_detail : '' }}</td>
                             <td>{{ $shop ? $shop->brand : '' }}</td>
                             <td>{{ $u->performer }}</td>
                             <td>{{ $u->date }}</td>

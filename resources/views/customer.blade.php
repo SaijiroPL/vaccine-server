@@ -49,8 +49,8 @@
                           <td>{{ $u->member_no }}</td>
                           <td>{{ $u->password }}</td>
                           <td>{{ $shop ? $shop->name : '' }}</td>
-                          <td>{{ $shop ? $area->a_province : '' }}</td>
-                          <td>{{ $shop ? $area->a_detail : '' }}</td>
+                          <td>{{ $shop ? $shop->a_province : '' }}</td>
+                          <td>{{ $shop ? $shop->a_detail : '' }}</td>
                           <td>{{ $shop ? $shop->brand : '' }}</td>
                         </tr>
                     @empty
