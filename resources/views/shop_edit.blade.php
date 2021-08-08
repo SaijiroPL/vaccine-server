@@ -173,10 +173,10 @@
         $('input[name="postal"]').inputmask({mask: '9{0,7}'});
     });
 
-    function fetchAddress() {
+    async function fetchAddress() {
       var zipcode = $('#zipcode').val();
       zipcode = zipcode.slice(0, 3) + '-' + zipcode.slice(3, 7);
-      $.ajax({
+      return $.ajax({
         type: "POST",
         url: "{{ url('/api/store/get_address') }}",
         data: {
@@ -184,6 +184,7 @@
         },
         success: function (v) {
           if (v.location.results.length > 0) {
+            addressed = true;
             $('#address').val(`${v.text.name_p}${v.text.name_c}`);
             const loc = v.location.results[0];
             if (marker) {
@@ -198,9 +199,13 @@
             }
             const center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
             window.map.setCenter(center);
+            return true;
+          } else {
+            return false;
           }
         },
         error: function(data, status, err) {
+          return false;
         }
       });
     }
@@ -209,6 +214,7 @@
     let marker;
     let lat = {{ isset($shop) ? $shop->latitude : 35.6684415 }};
     let lng = {{ isset($shop) ? $shop->longitude : 139.6007843 }};
+    let addressed = false;
 
     function myMap() {
       var mapProp= {
@@ -227,9 +233,11 @@
     }
 
     function onSubmit() {
+      if (!addressed)
+        console.log(await fetchAddress());
       $('#latitude').val(marker.getPosition().lat());
       $('#longitude').val(marker.getPosition().lng());
-      $('#theform').submit();
+      // $('#theform').submit();
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoU17c9-vWEDM5VH2-WtilFTJgtUhHvhg&callback=myMap"></script>
