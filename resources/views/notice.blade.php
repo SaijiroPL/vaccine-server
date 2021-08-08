@@ -60,16 +60,17 @@
                             <td>{{ $u->kind }}</td>
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
-                            <td>
-                                @if ($u->shop_id != 0)
-                                    {{ $u->name }}
-                                @else
-                                    全員
-                                @endif
-                            </td>
-                            <td>{{ $u->name_p }}</td>
-                            <td>{{ $u->name_c }}</td>
-                            <td>{{ $u->brand }}</td>
+                            @if ($u->shop_id != 0)
+                                <td>{{ $u->shop->name }}</td>
+                                <td>{{ $u->shop->a_province }}</td>
+                                <td>{{ $u->shop->a_detail }}</td>
+                                <td>{{ $u->shop->brand }}</td>
+                            @else
+                                <td>全員</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            @endif
                             <td>{{ $u->created_at }}</td>
                             <td>
                                 <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
