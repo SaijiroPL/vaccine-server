@@ -37,10 +37,8 @@ class Shop extends Model
 
     public static function get_data($keys) {
         return self::where('name', 'like', '%'.$keys['name'].'%')
-            ->where('name', 'like', '%'.$keys['name'].'%')
-            ->whereHas('area', function($query) use ($keys){
-                $query->where('name_p', 'like', '%'.$keys['area'].'%');
-            })
+            ->where('brand', 'like', '%'.$keys['brand'].'%')
+            ->where('address', 'like', '%'.$keys['area'].'%')
             ->latest()
             ->paginate(10);
     }
