@@ -45,7 +45,8 @@
                     name="address"
                     value="{{ isset($shop) ? $shop->address : '' }}"
                     required
-                    data-msg-required="住所を選択してください.">
+                    data-msg-required="住所を選択してください."
+                    placeholder="〒ボタンをおして住所を確定してください">
                   <br />
                   <input
                     id="addressDetail"
@@ -54,8 +55,7 @@
                     name="a_detail"
                     value="{{ isset($shop) ? $shop->a_detail : '' }}"
                     required
-                    data-msg-required="住所を選択してください."
-                    placeholder="〒ボタンをおして住所を確定してください">
+                    data-msg-required="住所を選択してください.">
               </div>
             </div>
             <div class="form-group m-form__group row">
@@ -192,7 +192,7 @@
         },
         success: function (v) {
           if (v.location.results.length > 0) {
-            $('#address').val({v.text.name_p);
+            $('#address').val(v.text.name_p);
             $('#addressDetail').val(v.text.name_c);
             const loc = v.location.results[0];
             if (marker) {
