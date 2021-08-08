@@ -193,7 +193,7 @@
         success: function (v) {
           if (v.location.results.length > 0) {
             $('#addressProvince').val(v.text.name_p);
-            $('#addressDetail').val(v.text.name_c);
+            $('#addressDetail').val(v.text.name_c + v.text.name_v);
             const loc = v.location.results[0];
             if (marker) {
               marker.setPosition(new google.maps.LatLng(loc.Latitude, loc.Longitude));
