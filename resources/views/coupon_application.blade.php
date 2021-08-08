@@ -55,8 +55,8 @@
                             <td>{{ $u->from_date }} ~ {{ $u->to_date }}</td>
                             @if ($u->shop_id != 0)
                                 <td>{{ $u->shop->name }}</td>
-                                <td>{{ $u->shop->area ? $u->shop->area->name_p : '' }}</td>
-                                <td>{{ $u->shop->area ? $u->shop->area->name_c : '' }}</td>
+                                <td>{{ $u->shop->a_province }}</td>
+                                <td>{{ $u->shop->a_detail }}</td>
                                 <td>{{ $u->shop->brand }}</td>
                             @else
                                 <td>共通</td>
