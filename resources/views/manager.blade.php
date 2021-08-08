@@ -54,8 +54,8 @@
                         <tr class="row-{{ (($managers->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($managers->currentPage() - 1) * $per_page + $ind + 1 }}</td>
                             <td>{{ $u->name }}</td>
-                            <td>{{ $u->name_p }}</td>
-                            <td>{{ $u->name_c }}</td>
+                            <td>{{ $u->a_province }}</td>
+                            <td>{{ $u->a_detail }}</td>
                             <td>{{ $u->brand }}</td>
                             <td>{{ $u->device_id }}</td>
                             <td>{{ $u->lid }}</td>
