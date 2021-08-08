@@ -45,8 +45,7 @@
                     name="address"
                     value="{{ isset($shop) ? $shop->address : '' }}"
                     required
-                    data-msg-required="住所を選択してください."
-                    placeholder="〒ボタンをおして住所を確定してください">
+                    data-msg-required="住所を選択してください.">
                   <br />
                   <input
                     id="addressDetail"
@@ -193,7 +192,8 @@
         },
         success: function (v) {
           if (v.location.results.length > 0) {
-            $('#address').val(`${v.text.name_p}${v.text.name_c}`);
+            $('#address').val({v.text.name_p);
+            $('#addressDetail').val(v.text.name_c);
             const loc = v.location.results[0];
             if (marker) {
               marker.setPosition(new google.maps.LatLng(loc.Latitude, loc.Longitude));
