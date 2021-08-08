@@ -36,7 +36,6 @@
                     @forelse ($coupons as $ind => $u)
                         @php
                           $shop = $u->shop;
-                          $area = $shop ? $shop->area : null;
                         @endphp
                         <tr class="row-{{ (($coupons->currentPage() - 1) * $per_page + $ind + 1)%2 }}" ref="{{ $u->id }}">
                             <td>{{ ($coupons->currentPage() - 1) * $per_page + $ind + 1 }}</td>
@@ -57,8 +56,8 @@
                                     共通
                                 @endif
                             </td>
-                            <td>{{ $area ? $area->name_p : '' }}</td>
-                            <td>{{ $area ? $area->name_c : '' }}</td>
+                            <td>{{ $shop ? $shop->a_province : '' }}</td>
+                            <td>{{ $shop ? $shop->a_detail : '' }}</td>
                             <td>{{ $shop ? $shop->brand : '' }}</td>
                             <td>
                                 @if ($u->reuse == 0)
