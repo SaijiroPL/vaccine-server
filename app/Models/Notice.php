@@ -21,22 +21,15 @@ class Notice extends Model
     }
 
     public static function get_agree_data($filter) {
-        $query = DB::table('t_notice')
-            ->leftJoin('t_shop', 't_notice.shop_id', '=', 't_shop.id')
-            ->leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
-            ->where('t_notice.agree','=',1);
-        if ($filter['shop'] != '') {
-            $query = $query->where('t_shop.name', 'like', '%'.$filter['shop'].'%');
+        $query = self::where('t_notice.agree','=',1);
+        if ($filter['shop'] != '' || $filter['brand'] != '' || $filter['area'] != '') {
+            $query = $query->whereHas('shop', function ($q) use ($filter) {
+                $q->where('name', 'like', '%'.$filter['shop'].'%')
+                    ->orWhere('brand', 'like', '%'.$filter['brand'].'%')
+                    ->orWhere('address', 'like', '%'.$filter['area'].'%');
+            })
         }
-        if ($filter['brand'] != '') {
-            $query = $query->where('t_shop.brand', 'like', '%'.$filter['brand'].'%');
-        }
-        if ($filter['area'] != '') {
-            $query = $query->where('t_area.name_p', 'like', '%'.$filter['area'].'%');
-        }
-        $query = $query->select('t_notice.*', 't_shop.name', 't_area.name_p', 't_area.name_c', 't_shop.brand')
-            ->orderBy('t_notice.created_at', 'DESC');
-        return $query->paginate(10);
+        return $query->latest()->paginate(10);
     }
 
     public static function get_application_data() {
