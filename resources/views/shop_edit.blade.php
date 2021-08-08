@@ -48,6 +48,15 @@
                     data-msg-required="住所を選択してください."
                     placeholder="〒ボタンをおして住所を確定してください">
                   <br />
+                  <input
+                    id="addressDetail"
+                    class="form-control m-input"
+                    type="text"
+                    name="a_detail"
+                    value="{{ isset($shop) ? $shop->a_detail : '' }}"
+                    required
+                    data-msg-required="住所を選択してください."
+                    placeholder="〒ボタンをおして住所を確定してください">
               </div>
             </div>
             <div class="form-group m-form__group row">

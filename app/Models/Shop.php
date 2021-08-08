@@ -10,7 +10,22 @@ class Shop extends Model
     protected $table = 't_shop';
 
     protected $fillable = [
-        'name', 'address', 'postal', 'tel_no', 'image', 'docomo', 'link', 'latitude', 'longitude', 'brand', 'email', 'class_link', 'login_id', 'login_password'
+        'name',
+        'address',
+        'a_province',
+        'a_detail',
+        'postal',
+        'tel_no',
+        'image',
+        'docomo',
+        'link',
+        'latitude',
+        'longitude',
+        'brand',
+        'email',
+        'class_link',
+        'login_id',
+        'login_password'
     ];
 
     public static function authenticate($name, $password)
