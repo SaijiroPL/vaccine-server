@@ -42,7 +42,7 @@
                     id="addressProvince"
                     class="form-control m-input"
                     type="text"
-                    name="address"
+                    name="a_province"
                     value="{{ isset($shop) ? $shop->a_province : '' }}"
                     required
                     data-msg-required="住所を選択してください."
