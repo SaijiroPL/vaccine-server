@@ -39,11 +39,11 @@
               <label for="example-text-input" class="col-3 col-form-label">住所</label>
               <div class="col-5">
                   <input
-                    id="address"
+                    id="addressProvince"
                     class="form-control m-input"
                     type="text"
                     name="address"
-                    value="{{ isset($shop) ? $shop->address : '' }}"
+                    value="{{ isset($shop) ? $shop->a_province : '' }}"
                     required
                     data-msg-required="住所を選択してください."
                     placeholder="〒ボタンをおして住所を確定してください">
@@ -192,7 +192,7 @@
         },
         success: function (v) {
           if (v.location.results.length > 0) {
-            $('#address').val(v.text.name_p);
+            $('#addressProvince').val(v.text.name_p);
             $('#addressDetail').val(v.text.name_c);
             const loc = v.location.results[0];
             if (marker) {
