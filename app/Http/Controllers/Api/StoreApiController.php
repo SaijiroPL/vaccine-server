@@ -935,23 +935,24 @@ class StoreApiController extends Controller
 
     public function register_device(Request $request)
     {
-        $shop = Shop::where('login_id', $request->input('name'))->first();
-        if (!$shop) {
-            return response()->json([
-                'result' => Config::get('constants.errno.E_NO_MEMBER')
-            ]);
-        }
         $exist = Manager::where('device_id', $request->input('deviceID'))->first();
         if ($exist) {
             return response()->json([
                 'result' => Config::get('constants.errno.E_SHOP_DEVICE_ALREADY_EXIST'),
             ]);
         }
+        $origin = Manager::findAccount($request->input('name'), $request->input('password'));
+        if (!$origin) {
+            return response()->json([
+                'result' => Config::get('constants.errno.E_NO_MEMBER')
+            ]);
+        }
+        $shop = $origin->shop;
         $account = new Manager;
         $account->device_id = $request->input('deviceID');
-        $account->name = $shop->login_id;
+        $account->name = CommonApi::generate_shop_unique_id($shop->id);
         $account->store = $shop->id;
-        $account->real_password = $shop->login_password;
+        $account->real_password = CommonApi::generate_password();
         $account->password = sha1($account->real_password);
         $account->allow = 0;
         $account->access_token = Manager::generate_access_token($account);

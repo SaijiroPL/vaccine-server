@@ -33,6 +33,14 @@ class Manager extends Model
                     ->first();
     }
 
+    public static function findAccount($name, $password)
+    {
+        return Manager::where('name', $name)
+                    ->where('password', sha1($password))
+                    ->where('allow', 1)
+                    ->first();
+    }
+
     public static function get_managers($shop, $brand)
     {
         return self::with('shop')
