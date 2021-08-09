@@ -11,6 +11,7 @@ use App\Models\Atec;
 use App\Models\Coupon;
 use App\Models\Notice;
 use App\Models\CarryingGoods;
+use App\Models\Manager;
 
 class CommonApi
 {
@@ -109,6 +110,15 @@ class CommonApi
     {
         $tmp = '0000';
         $tmp = $tmp.$shop_id;
+        $tmp_str = 'id';
+        return $tmp_str.substr($tmp, strlen($tmp)-4, 4);
+    }
+
+    public static function generate_manager_unique_id()
+    {
+        $id = Manager::max('id') + 1;
+        $tmp = '0000';
+        $tmp = $tmp.$id;
         $tmp_str = 'id';
         return $tmp_str.substr($tmp, strlen($tmp)-4, 4);
     }
