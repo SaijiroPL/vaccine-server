@@ -894,7 +894,7 @@ class StoreApiController extends Controller
         $shop->address = $request->input('a_province').$request->input('a_detail');
         $shop->postal = $request->input('postal');
         $shop->tel_no = $request->input('tel_no');
-        $shop->docomo = (NULL !== $request->input('docomo'));
+        $shop->docomo = $request->input('docomo');
         $shop->link = $request->input('link');
         $shop->latitude = $request->input('latitude');
         $shop->longitude = $request->input('longitude');
