@@ -889,7 +889,9 @@ class StoreApiController extends Controller
     public function register(Request $request) {
         $shop = new Shop();
         $shop->name = $request->input('name');
-        $shop->address = $request->input('address');
+        $shop->a_province = $request->input('a_province');
+        $shop->a_detail = $request->input('a_detail');
+        $shop->address = $request->input('a_province').$request->input('a_detail');
         $shop->postal = $request->input('postal');
         $shop->tel_no = $request->input('tel_no');
         $shop->docomo = (NULL !== $request->input('docomo'));
