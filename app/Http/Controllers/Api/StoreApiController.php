@@ -957,6 +957,16 @@ class StoreApiController extends Controller
         $account->allow = 0;
         $account->access_token = Manager::generate_access_token($account);
         $account->save();
+
+        $shop_dest = $account->shop;
+        if ($shop_dest->email) {
+            $data = [
+                'subject' => 'デバイス申請',
+                'message' => $shop_dest->name.'店舗の新しいデバイスが申請されました。'
+            ];
+            Mail::to('s.hirose@oaklay.net')->send(new StaticEmail($data, $shop_dest->email));
+        }
+
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'shop' => $account->id,
