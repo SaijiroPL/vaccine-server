@@ -485,6 +485,20 @@ class StoreApiController extends Controller
         ]);
     }
 
+    public function delete_coupon(Request $request)
+    {
+        $account = $request->account;
+        $coupon_id = $request->input('id');
+        $coupon = Coupon::find($coupon_id);
+        if ($coupon) {
+            $coupon->delete();
+        }
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'data' => CommonApi::get_coupon_by_shop($account->store),
+        ]);
+    }
+
     public function index_carrying(Request $request)
     {
         $account = $request->account;

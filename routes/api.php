@@ -35,6 +35,7 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/confirm_atec', 'Api\StoreApiController@confirm_atec');
     Route::any('/store/search_member', 'Api\StoreApiController@search_member');
     Route::post('/store/add_coupon', 'Api\StoreApiController@add_coupon');
+    Route::any('/store/delete_coupon', 'Api\StoreApiController@delete_coupon');
     Route::any('/store/get_coupon', 'Api\StoreApiController@get_coupon');
     Route::any('/store/change_date_coupon', 'Api\StoreApiController@change_date_coupon');
     Route::any('/store/get_last_coupon', 'Api\StoreApiController@get_last_coupon');
