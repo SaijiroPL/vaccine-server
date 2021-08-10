@@ -202,10 +202,13 @@ class StoreApiController extends Controller
     public function confirm_atec(Request $request)
     {
         $account = $request->account;
-        $atec = new AtecConfirm;
-        $atec->atec_id = $request->input('atec_id');
-        $atec->shop_id = $account->store;
-        $atec->save();
+        $exist = AtecConfirm::where('atec_id', $request->input('atec_id'))->where('shop_id', $account->store)->count();
+        if ($exist < 1) {
+            $atec = new AtecConfirm;
+            $atec->atec_id = $request->input('atec_id');
+            $atec->shop_id = $account->store;
+            $atec->save();
+        }
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'data' => CommonApi::get_atec($account->store),
