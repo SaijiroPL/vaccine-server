@@ -80,9 +80,9 @@ class Shop extends Model
 
     public static function get_province_list()
     {
-        return DB::table('v_shop')->select(DB::raw('name_p'))
-            ->groupBy('name_p')
-            ->orderby('name_p', 'asc')
+        return self::select('a_province')
+            ->groupBy('a_province')
+            ->orderby('a_province', 'asc')
             ->get();
     }
 
