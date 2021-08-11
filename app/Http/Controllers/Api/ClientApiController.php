@@ -53,7 +53,8 @@ class ClientApiController extends Controller
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'account' => $account,
-                'accessToken' => $account->access_token
+                'accessToken' => $account->access_token,
+                'shop' => $account->shop->first()
             ]);
         }
     }
