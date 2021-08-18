@@ -45,7 +45,7 @@ class ThreeDaysCron extends Command
         $startDate = time();
         $beforeDate = date('Y-m-d H:i:s', strtotime('-3 day', $startDate));
         $notices = Notice::whereNotNull('customer_id')
-            ->where('created_at', '>', $beforeDate)
+            ->where('created_at', '<', $beforeDate)
             ->where('agree', 0)
             ->get();
         foreach($notices as $n) {
