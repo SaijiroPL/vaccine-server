@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Notice;
 use Log;
 
 class ThreeDaysCron extends Command

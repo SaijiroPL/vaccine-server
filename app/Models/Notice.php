@@ -21,7 +21,7 @@ class Notice extends Model
     }
 
     public static function get_agree_data($filter) {
-        $query = self::where('t_notice.agree','=',1);
+        $query = self::where('t_notice.agree','=',1)->where('t_notice.customer_id', null);
         if ($filter['shop'] != '' || $filter['brand'] != '' || $filter['area'] != '') {
             $query = $query->whereHas('shop', function ($q) use ($filter) {
                 $q->where('name', 'like', '%'.$filter['shop'].'%')
