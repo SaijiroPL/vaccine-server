@@ -80,13 +80,13 @@
                 <div class="col-3">
                     <input class="form-control m-input" type="date-local" name="from_date" id="from_date"
                     value="{{ isset($coupon) ? $coupon->from_date : '' }}" required data-msg-required="有効期限を選択してください."
-                    >
+                    {{ isset($coupon) ? 'disabled' : '' }}>
                 </div>
                 ~
                 <div class="col-3">
                     <input class="form-control m-input" type="date-local" name="to_date" id="to_date"
                     value="{{ isset($coupon) ? $coupon->to_date : '' }}" required data-msg-required="有効期限を選択してください."
-                    >
+                    {{ isset($coupon) ? 'disabled' : '' }}>
                 </div>
             </div>
             <div class="form-group m-form__group row">
