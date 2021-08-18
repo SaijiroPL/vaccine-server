@@ -92,7 +92,7 @@
             <div class="form-group m-form__group row">
                 <label for="exampleSelect1" class="col-2 col-form-label">ショップ</label>
                 <div class="col-6">
-                    <select class="form-control m-input" name="shop" {{ isset($coupon) ? 'disabled' : '' }}>
+                    <select class="form-control m-input" name="shop" {{ isset($coupon) ? 'readonly' : '' }}>
                         @if (isset($coupon) && $coupon->shop_id == 0)
                             <option value="0" selected>共通</option>
                         @else
