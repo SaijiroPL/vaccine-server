@@ -554,7 +554,7 @@ class StoreApiController extends Controller
             $notice_3_days = new Notice;
             $notice_3_days->kind = 'Wハルトコーティングのご案内';
             $notice_3_days->title = 'Wハルトコーティング';
-            $notice_3_days->content = '施工を行ったお客様に配信しています。\nハルトコーティングは二重で施工する事でさらに効果を発揮します。\n是非、Wハルトコーティングをお試しに近くの店舗までご来店ください。';
+            $notice_3_days->content = '施工を行ったお客様に配信しています。ハルトコーティングは二重で施工する事でさらに効果を発揮します。是非、Wハルトコーティングをお試しに近くの店舗までご来店ください。';
             $notice_3_days->image = '';
             $notice_3_days->image_path = '';
             $notice_3_days->shop_id = $carrying->shop_id;
