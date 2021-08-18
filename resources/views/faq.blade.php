@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('利用規約 & プライバシーポリシー'))
-@section('page_title', __('利用規約 & プライバシーポリシー'))
+@section('title', __('よくある質問'))
+@section('page_title', __('よくある質問'))
 
 @section('content')
 <div class="m-portlet">
