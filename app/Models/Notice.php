@@ -34,7 +34,9 @@ class Notice extends Model
 
     public static function get_application_data() {
         $coupons =  DB::table('v_notice')
-                    ->where('agree','=',0)->latest()
+                    ->where('agree','=',0)
+                    ->where('customer_id', null)
+                    ->latest()
                     ->paginate(10);
         return $coupons;
     }
