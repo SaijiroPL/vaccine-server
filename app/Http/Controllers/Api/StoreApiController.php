@@ -26,6 +26,7 @@ use App\Models\Inquiry;
 use App\Models\CarryingManual;
 use App\Models\ShopImage;
 use App\Models\CarryingGoodsDetail;
+use App\Models\CustomerNotice;
 
 use Config;
 use Mail;
@@ -421,6 +422,7 @@ class StoreApiController extends Controller
         }
         $notice->save();
         $shop_dest = $account->shop;
+        CustomerNotice::where('notify_id', $notice->id)->delete();
         if ($shop_dest->email) {
             $data = [
                 'subject' => 'お知らせ申請',
