@@ -45,7 +45,7 @@
                             <td>{{ $u->content }}</td>
                             <td>
                                 @if ($u->shop_id != 0)
-                                    {{ $u->shop_name }}
+                                    {{ $u->shop->name }}
                                 @else
                                     全員
                                 @endif
