@@ -42,7 +42,12 @@ class ThreeDaysCron extends Command
     public function handle()
     {
         Log::info("Cron is working");
-        $notices = Notice::whereNotNull('customer_id')->get();
+        $startDate = time();
+        $beforeDate = date('Y-m-d H:i:s', strtotime('-3 day', $startDate));
+        $notices = Notice::whereNotNull('customer_id')
+            ->where('created_at', '>', $beforeDate)
+            ->where('agree', 0)
+            ->get();
         foreach($notices as $n) {
             $m = Customer::where('member_no', $n->customer_id)->first();
             if ($m->fcm_token != null && $m->fcm_flag == 1) {
@@ -65,6 +70,8 @@ class ThreeDaysCron extends Command
                     ],
                 ]);
             }
+            $n->agree = 1;
+            $n->save();
         }
     }
 }
