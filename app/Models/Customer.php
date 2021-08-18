@@ -136,7 +136,12 @@ class Customer extends Model
 
     public function unreadNotice()
     {
-        $total = Notice::where('shop_id', 0)->count() + count($this->shop->first()->notices);
+        $shop = $this->shop->first();
+        $total = Notice::where('agree', 1)
+            ->where(function($q) use($shop) {
+                $q->where('shop_id', 0)->orWhere('shop_id', $shop->id);
+            })->count();
+        // $total = Notice::where('shop_id', 0)->count() + count($this->shop->first()->notices);
         $read = count($this->notices);
         return max($total - $read, 0);
     }

@@ -10,6 +10,7 @@ use Mail;
 
 use App\Models\Notice;
 use App\Models\Shop;
+use App\Models\CustomerNotice;
 use App\Mail\ApproveNoticeEmail;
 
 class NoticeApplicationController extends Controller
@@ -43,6 +44,7 @@ class NoticeApplicationController extends Controller
             ];
             Mail::to($shop->email)->send(new ApproveNoticeEmail($data, 's.hirose@oaklay.net'));
         }
+        CustomerNotice::where('notify_id', $notice->id)->delete();
 
         foreach($customers as $m) {
             if ($m->fcm_token != null && $m->fcm_flag == 1) {

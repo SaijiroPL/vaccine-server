@@ -422,7 +422,6 @@ class StoreApiController extends Controller
         }
         $notice->save();
         $shop_dest = $account->shop;
-        CustomerNotice::where('notify_id', $notice->id)->delete();
         if ($shop_dest->email) {
             $data = [
                 'subject' => 'お知らせ申請',
