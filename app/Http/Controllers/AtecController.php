@@ -116,8 +116,8 @@ class AtecController extends Controller
                                 'notify' => $atec->id,
                             ],
                             'notification' => [
-                                'body' => $request->input('title'),
-                                'title' => $request->input('content'),
+                                'title' => $request->input('title'),
+                                'body' => $request->input('content'),
                             ]
                         ],
                     ]);

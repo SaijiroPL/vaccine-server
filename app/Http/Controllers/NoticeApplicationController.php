@@ -59,8 +59,8 @@ class NoticeApplicationController extends Controller
                             'notify' => $notice->id,
                         ],
                         'notification' => [
-                            'body' => $request->input('title'),
-                            'title' => $request->input('content'),
+                            'title' => $notice->title,
+                            'body' => $notice->content,
                         ]
                     ],
                 ]);
