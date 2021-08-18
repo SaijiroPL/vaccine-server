@@ -189,7 +189,7 @@
             reader.onload = (function (file) {
                 return function(e) {
                     $('#div_img').addClass('img');
-                    $('#div_img').html('<img src="' + e.target.result + '" height="100%">');
+                    $('#div_img').html('<img src="' + e.target.result + '" style="width: 480px;height:320px">');
                 };
             })(f);
             reader.readAsDataURL(f);

@@ -57,7 +57,7 @@
                 <div class="offset-2 col-md-9">
                     <div id="div_img">
                         @if (isset($goods))
-                            <img src="{{ asset( $image_url.$goods->image ) }}" height="100%">
+                            <img src="{{ asset( $image_url.$goods->image ) }}" style="width: 480px;height:320px">
                         @endif
                     </div>
                 </div>
@@ -123,7 +123,7 @@
             reader.onload = (function (file) {
                 return function(e) {
                     $('#div_img').addClass('img');
-                    $('#div_img').html('<img src="' + e.target.result + '" height="100%">');
+                    $('#div_img').html('<img src="' + e.target.result + '" style="width: 480px;height:320px">');
                 };
             })(f);
             reader.readAsDataURL(f);
