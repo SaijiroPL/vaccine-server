@@ -141,7 +141,7 @@
                 <div class="offset-2 col-md-9">
                     <div id="div_img">
                         @if (isset($coupon))
-                            <img src="{{ asset( $image_url.$coupon->image ) }}" height="100%">
+                            <img src="{{ asset( $image_url.$coupon->image ) }}" style="width: 480px;height:320px">
                         @endif
                     </div>
                 </div>
