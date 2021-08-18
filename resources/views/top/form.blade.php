@@ -43,7 +43,7 @@
                 <div class="offset-2 col-md-9">
                     <div id="div_img">
                         @if (isset($topic))
-                            <img src="{{ asset( $image_url.$topic->image ) }}" style="width: 480px;height:320px">
+                          <img src="{{ asset( $image_url.$topic->image ) }}" style="width: 480px;height:320px">
                         @endif
                     </div>
                 </div>
@@ -53,10 +53,10 @@
             <div class="m-form__actions">
                 <div class="row">
                     <div class="col-2 offset-2">
-                        <button type="submit" class="btn btn-success btn-block">OK</button>
+                      <button type="submit" class="btn btn-success btn-block">OK</button>
                     </div>
                     <div class="col-2">
-                            <a href="{{ url('/topic') }}" class="btn btn-secondary btn-block">Cancel</a>
+                      <a href="{{ url('/topic') }}" class="btn btn-secondary btn-block">Cancel</a>
                     </div>
                 </div>
             </div>
