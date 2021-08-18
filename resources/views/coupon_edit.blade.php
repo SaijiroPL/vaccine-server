@@ -167,16 +167,18 @@
 <script>
     $(function() {
         $('form').validate();
+        @if (!isset($coupon))
+          $('#from_date').datepicker({
+              language: 'ja',
+              orientation:"bottom left"
+          });
 
-        $('#from_date').datepicker({
-            language: 'ja',
-            orientation:"bottom left"
-        });
+          $('#to_date').datepicker({
+              language: 'ja',
+              orientation:"bottom left"
+          });
+        @endif
 
-        $('#to_date').datepicker({
-            language: 'ja',
-            orientation:"bottom left"
-        });
 
         $('input[name="thumbnail"]').on('change', function() {
             $('input[name="change_thumb"]').val(1);
