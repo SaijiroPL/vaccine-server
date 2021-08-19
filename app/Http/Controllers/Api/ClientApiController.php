@@ -108,6 +108,7 @@ class ClientApiController extends Controller
                 'member_no' => $member_no,
                 'password' => $account->password,
                 'id' => $account->id,
+                'new_notice_count' => $account->unreadNotice(),
             ]);
         }
     }
