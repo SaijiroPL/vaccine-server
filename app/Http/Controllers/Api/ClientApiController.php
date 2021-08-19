@@ -38,6 +38,7 @@ class ClientApiController extends Controller
         $password = $request->input('password');
         $device_id = $request->input('deviceId');
         $transferCode = $request->input('transferCode');
+        $token = $request->input('token');
         if ($transferCode) {
             $account = Customer::authenticate_transferCode($transferCode);
         } else {
@@ -50,6 +51,8 @@ class ClientApiController extends Controller
             ]);
         }
         else {
+            $account->fcm_token = $token;
+            $account->save();
             return response()->json([
                 'result' => Config::get('constants.errno.E_OK'),
                 'account' => $account,
