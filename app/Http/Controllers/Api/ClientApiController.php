@@ -54,7 +54,8 @@ class ClientApiController extends Controller
                 'result' => Config::get('constants.errno.E_OK'),
                 'account' => $account,
                 'accessToken' => $account->access_token,
-                'shop' => $account->shop->first()
+                'shop' => $account->shop->first(),
+                'new_notice_count' => $account->unreadNotice(),
             ]);
         }
     }
