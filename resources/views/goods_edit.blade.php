@@ -123,7 +123,7 @@
             reader.onload = (function (file) {
                 return function(e) {
                     $('#div_img').addClass('img');
-                    $('#div_img').html('<img src="' + e.target.result + '" style="width: 480px;height:320px">');
+                    $('#div_img').html('<img src="' + e.target.result + '" style="height:100%">');
                 };
             })(f);
             reader.readAsDataURL(f);
