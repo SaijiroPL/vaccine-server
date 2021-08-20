@@ -40,6 +40,11 @@
                       @else
                           <option value="0">全員</option>
                       @endif
+                      @if (isset($atec) && $atec->shop == -1)
+                          <option value="-1" selected>ドコモショップ</option>
+                      @else
+                          <option value="-1">ドコモショップ</option>
+                      @endif
                       @foreach ($shops as $ind => $shop)
                           @if (isset($atec) && $shop->id == $atec->shop)
                               <option value="{{ $shop->id }}" selected>{{ $shop->name }}</option>
