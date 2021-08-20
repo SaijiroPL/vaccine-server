@@ -19,6 +19,10 @@ Route::get('/', function () {
         return redirect('/login');
 })->name('login');
 
+Route::get('/test', function() {
+    dd(storage_path('app/public'));
+});
+
 Route::get('/login', function() {
     return view('signin');
 });
