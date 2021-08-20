@@ -474,6 +474,14 @@ class StoreApiController extends Controller
             $coupon->image = time().'_'.$request->file( '_file')->getClientOriginalName();
             $coupon->image_path = asset(Storage::url('coupon_image/').$coupon->image);
             $request->file('_file')->storeAs('public/coupon_image/',$coupon->image);
+            $targetName = 'tmb_'.$coupon->image;
+            ImageService::resizeImage(
+                storage_path('app/public/coupon_image/'.$coupon->image),
+                storage_path('app/public/coupon_image/'.$targetName),
+                640,
+                480
+            );
+            $coupon->image_path = asset(Storage::url('coupon_image/').$targetName);
         }
         $coupon->save();
 
@@ -587,6 +595,14 @@ class StoreApiController extends Controller
             $history_image->image = time().'_'.$request->file( '_file')->getClientOriginalName();
             $history_image->image_path = asset(Storage::url('carrying_history_image/').$history_image->image);
             $request->file('_file')->storeAs('public/carrying_history_image/', time().'_'.$request->file( '_file')->getClientOriginalName());
+            $targetName = 'tmb_'.$history_image->image;
+            ImageService::resizeImage(
+                storage_path('app/public/coupon_image/'.$history_image->image),
+                storage_path('app/public/coupon_image/'.$targetName),
+                640,
+                480
+            );
+            $history_image->image_path = asset(Storage::url('coupon_image/').$targetName);
         }
 
         $history_image->save();
