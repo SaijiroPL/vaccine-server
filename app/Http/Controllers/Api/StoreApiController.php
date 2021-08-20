@@ -870,8 +870,8 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/shop_image/', $shopImage->filename);
             $targetName = 'tmb_'.$shopImage->filename;
             ImageService::resizeImage(
-                storage_path('public/shop_image/'.$shopImage->filename),
-                storage_path('public/shop_image/'.$targetName),
+                storage_path('app/public/shop_image/'.$shopImage->filename),
+                storage_path('app/public/shop_image/'.$targetName),
                 1024,
                 768
             );
