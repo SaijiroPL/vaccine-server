@@ -20,7 +20,7 @@ Route::get('/', function () {
 })->name('login');
 
 Route::get('/test', function() {
-    dd(storage_path('app/public'));
+    dd(getimagesize(storage_path('app/public/shop_image/1626840379_23B04F47-6CFF-450D-99F1-B0CBDE8880E8.jpg')));
 });
 
 Route::get('/login', function() {
