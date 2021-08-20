@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Services\ImageService;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +20,12 @@ Route::get('/', function () {
 })->name('login');
 
 Route::get('/test', function() {
-    dd(getimagesize(storage_path('app/public/shop_image/1626840379_23B04F47-6CFF-450D-99F1-B0CBDE8880E8.jpg')));
+    ImageService::resizeImage(
+        storage_path('app/public/shop_image/1626840379_23B04F47-6CFF-450D-99F1-B0CBDE8880E8.jpg'),
+        storage_path('app/public/shop_image/test.jpg'),
+        1024,
+        768
+    );
 });
 
 Route::get('/login', function() {
