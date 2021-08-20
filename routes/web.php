@@ -19,15 +19,6 @@ Route::get('/', function () {
         return redirect('/login');
 })->name('login');
 
-Route::get('/test', function() {
-    ImageService::resizeImage(
-        storage_path('app/public/shop_image/1626840379_23B04F47-6CFF-450D-99F1-B0CBDE8880E8.jpg'),
-        storage_path('app/public/shop_image/test.jpg'),
-        1024,
-        768
-    );
-});
-
 Route::get('/login', function() {
     return view('signin');
 });

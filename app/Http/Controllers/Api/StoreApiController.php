@@ -943,6 +943,14 @@ class StoreApiController extends Controller
             $shop->image = time().'_'.$request->file( '_file')->getClientOriginalName();
             $shop->image_path = asset(Storage::url('shop_image/').$shop->image);
             $request->file('_file')->storeAs('public/shop_image/',$shop->image);
+            $targetName = 'tmb_'.$shop->image;
+            ImageService::resizeImage(
+                storage_path('app/public/shop_image/'.$shop->image),
+                storage_path('app/public/shop_image/'.$targetName),
+                1024,
+                768
+            );
+            $shop->image_path = asset(Storage::url('shop_image/').$targetName);
         }
         $shop->save();
 
