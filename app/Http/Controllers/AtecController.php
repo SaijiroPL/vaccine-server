@@ -85,6 +85,11 @@ class AtecController extends Controller
             $managers = Manager::where('store', $shop)->where('allow', 1)->get();
             if ($shop == 0) {
                 $managers = Manager::where('allow', 1)->get();
+            } else if ($shop == -1) {
+                $managers = Manager::where('allow', 1)
+                    ->whereHas('shop', function ($query) {
+                        $query->where('docomo', 1);
+                    })->get();
             }
         }
 
@@ -124,7 +129,7 @@ class AtecController extends Controller
                 }
             }
             $shop = $request->input('shop');
-            if ($shop != 0) {
+            if ($shop > 0) {
                 $shop_dest = Shop::find($shop);
                 if ($shop_dest && $shop_dest->email) {
                     $data = [
@@ -133,8 +138,19 @@ class AtecController extends Controller
                     ];
                     Mail::to($shop_dest->email)->send(new StaticEmail($data, 's.hirose@oaklay.net'));
                 }
-            } else {
+            } else if ($shop == 0) {
                 $shops = Shop::get();
+                foreach($shops as $sh) {
+                    if ($sh && $sh->email) {
+                        $data = [
+                            'subject' => 'アーテック通信を受信しました。',
+                            'message' => '店舗アプリから内容を確認してください。'
+                        ];
+                        Mail::to($sh->email)->send(new StaticEmail($data, 's.hirose@oaklay.net'));
+                    }
+                }
+            } else if ($shop == -1) {
+                $shops = Shop::where('docomo', 1)->get();
                 foreach($shops as $sh) {
                     if ($sh && $sh->email) {
                         $data = [
