@@ -417,6 +417,14 @@ class StoreApiController extends Controller
             $notice->image = time().'_'.$request->file( '_file')->getClientOriginalName();
             $notice->image_path = asset(Storage::url('notice_image/').$notice->image);
             $request->file('_file')->storeAs('public/notice_image/', $notice->image);
+            $targetName = 'tmb_'.$notice->image;
+            ImageService::resizeImage(
+                storage_path('app/public/notice_image/'.$notice->image),
+                storage_path('app/public/notice_image/'.$targetName),
+                640,
+                480
+            );
+            $notice->image_path = asset(Storage::url('notice_image/').$targetName);
         }
         $notice->save();
         $shop_dest = $account->shop;
@@ -872,8 +880,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/shop_image/'.$shopImage->filename),
                 storage_path('app/public/shop_image/'.$targetName),
-                1024,
-                768
+                640,
+                480
             );
             $shopImage->url = asset(Storage::url('shop_image/').$targetName);
         }
@@ -947,8 +955,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/shop_image/'.$shop->image),
                 storage_path('app/public/shop_image/'.$targetName),
-                1024,
-                768
+                640,
+                480
             );
             $shop->image_path = asset(Storage::url('shop_image/').$targetName);
         }
