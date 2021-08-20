@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use Config;
+use Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,16 +28,13 @@ use App\Models\CarryingManual;
 use App\Models\ShopImage;
 use App\Models\CarryingGoodsDetail;
 use App\Models\CustomerNotice;
-
-use Config;
-use Mail;
-
 use App\Http\Controllers\Api\CommonApi;
 use App\Mail\RegisterShopEmail;
 use App\Mail\StaticEmail;
 use App\Mail\TossUpEmail;
 use App\Models\Area;
 use App\Models\Performer;
+use App\Services\ImageService;
 
 class StoreApiController extends Controller
 {
@@ -870,6 +868,14 @@ class StoreApiController extends Controller
             $shopImage->display_name = $request->file( '_file')->getClientOriginalName();
             $shopImage->url = asset(Storage::url('shop_image/').$shopImage->filename);
             $request->file('_file')->storeAs('public/shop_image/', $shopImage->filename);
+            $targetName = 'tmb_'.$shopImage->filename;
+            ImageService::resizeImage(
+                storage_path('public/shop_image/', $shopImage->filename),
+                storage_path('public/shop_image/', $targetName),
+                1024,
+                768
+            );
+            $shopImage->url = asset(Storage::url('shop_image/').$shopImage->targetName);
         }
 
         $shopImage->save();
