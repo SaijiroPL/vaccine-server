@@ -1088,5 +1088,11 @@ class StoreApiController extends Controller
             $p->order_no = $o['order'];
             $p->save();
         }
+        $shop = $request->input('shop');
+        $performers = Performer::where('shop_id', $shop)->get();
+        return response()->json([
+            'result' => Config::get('constants.errno.E_OK'),
+            'performers' => $performers,
+        ]);
     }
 }
