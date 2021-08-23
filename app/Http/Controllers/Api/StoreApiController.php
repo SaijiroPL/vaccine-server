@@ -1079,4 +1079,14 @@ class StoreApiController extends Controller
             'performers' => $performers,
         ]);
     }
+
+    public function order_performer(Request $request)
+    {
+        $orders = $request->input('orders');
+        foreach($orders as $o) {
+            $p = Performer::find($o['id']);
+            $p->order_no = $o['order'];
+            $p->save();
+        }
+    }
 }

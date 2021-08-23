@@ -8,5 +8,5 @@ class Performer extends Model
 {
     //
     protected $table = 't_performers';
-    protected $fillable = ['shop_id', 'name'];
+    protected $fillable = ['shop_id', 'name', 'order_no'];
 }

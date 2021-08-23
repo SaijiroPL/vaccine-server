@@ -73,6 +73,7 @@ Route::group(['middleware'=>'token:store'], function() {
     Route::any('/store/get_performers', 'Api\StoreApiController@get_performers');
     Route::any('/store/add_performer', 'Api\StoreApiController@add_performer');
     Route::any('/store/delete_performer', 'Api\StoreApiController@delete_performer');
+    Route::any('/store/order_performer', 'Api\StoreApiController@order_performer');
 });
 
 Route::any('/client/test', 'Api\ClientApiController@test');
