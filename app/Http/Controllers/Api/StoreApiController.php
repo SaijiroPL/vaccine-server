@@ -1089,7 +1089,7 @@ class StoreApiController extends Controller
             $p->save();
         }
         $shop = $request->input('shop');
-        $performers = Performer::where('shop_id', $shop)->get();
+        $performers = Performer::where('shop_id', $shop)->orderBy('order_no', 'ASC')->get();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
             'performers' => $performers,
