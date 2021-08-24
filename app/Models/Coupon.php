@@ -11,7 +11,7 @@ class Coupon extends Model
     protected $table = 't_coupon';
 
     protected $fillable = [
-        'title', 'content', 'from_date', 'to_date', 'shop_id', 'reuse', 'agree',
+        'title', 'content', 'from_date', 'to_date', 'shop_id', 'reuse', 'agree', 'thumbnail'
     ];
 
     public static function get_data() {

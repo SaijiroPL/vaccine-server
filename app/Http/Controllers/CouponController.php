@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Coupon;
 use App\Models\Shop;
+use App\Services\ImageService;
 
 class CouponController extends Controller
 {
@@ -119,6 +120,14 @@ class CouponController extends Controller
             $coupon->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
             $coupon->image_path = asset(Storage::url('coupon_image/').$coupon->image);
             $request->file('thumbnail')->storeAs('public/coupon_image/',$coupon->image);
+            $targetName = 'thmb_'.$coupon->image;
+            ImageService::resizeImage(
+                storage_path('app/public/coupon_image/'.$coupon->image),
+                storage_path('app/public/coupon_image/'.$targetName),
+                512,
+                384
+            );
+            $coupon->thumbnail = asset(Storage::url('coupon_image/').$targetName);
         }
         $coupon->save();
 
