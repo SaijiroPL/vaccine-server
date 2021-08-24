@@ -9,7 +9,7 @@ class CarryingHistoryImage extends Model
     protected $table = 't_carrying_history_image';
 
     protected $fillable = [
-        'carrying_id', 'image', 'iamge_path',
+        'carrying_id', 'image', 'iamge_path', 'thumbnail'
     ];
 
     public static function get_image_by_carrying($carrying_id)

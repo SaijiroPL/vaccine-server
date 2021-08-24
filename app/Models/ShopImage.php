@@ -11,7 +11,7 @@ class ShopImage extends Model
     protected $table = 't_shop_image';
 
     protected $fillable = [
-        'shop_id', 'filename', 'display_name', 'url',
+        'shop_id', 'filename', 'display_name', 'url', 'thumbnail'
     ];
 
     public static function get_images_by_shop($shop_id) {

@@ -421,10 +421,10 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/notice_image/'.$notice->image),
                 storage_path('app/public/notice_image/'.$targetName),
-                640,
-                480
+                512,
+                384
             );
-            $notice->image_path = asset(Storage::url('notice_image/').$targetName);
+            $notice->thumbnail = asset(Storage::url('notice_image/').$targetName);
         }
         $notice->save();
         $shop_dest = $account->shop;
@@ -478,10 +478,10 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/coupon_image/'.$coupon->image),
                 storage_path('app/public/coupon_image/'.$targetName),
-                640,
-                480
+                512,
+                384
             );
-            $coupon->image_path = asset(Storage::url('coupon_image/').$targetName);
+            $coupon->thumbnail = asset(Storage::url('coupon_image/').$targetName);
         }
         $coupon->save();
 
@@ -599,10 +599,10 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/carrying_history_image/'.$history_image->image),
                 storage_path('app/public/carrying_history_image/'.$targetName),
-                640,
-                480
+                512,
+                384
             );
-            $history_image->image_path = asset(Storage::url('carrying_history_image/').$targetName);
+            $history_image->thumbnail = asset(Storage::url('carrying_history_image/').$targetName);
         }
 
         $history_image->save();
@@ -901,7 +901,7 @@ class StoreApiController extends Controller
                 640,
                 480
             );
-            $shopImage->url = asset(Storage::url('shop_image/').$targetName);
+            $shopImage->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }
 
         $shopImage->save();
@@ -976,7 +976,7 @@ class StoreApiController extends Controller
                 640,
                 480
             );
-            $shop->image_path = asset(Storage::url('shop_image/').$targetName);
+            $shop->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }
         $shop->save();
 
