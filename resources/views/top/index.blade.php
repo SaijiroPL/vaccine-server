@@ -38,7 +38,7 @@
                             <td>{{ $u->title }}</td>
                             <td>{{ $u->content }}</td>
                             <td>
-                                <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
+                                <div><img src="{{ $u->thumbnail ? $u->thumbnail : $u->image_link }}" style="height:50px"/></div>
                             </td>
                             <td>{{ $u->created_at }}</td>
                             <td>
