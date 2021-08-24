@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-
+use App\Services\ImageService;
 
 class NoticeController extends Controller
 {
@@ -116,6 +116,14 @@ class NoticeController extends Controller
             $notice->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
             $notice->image_path = asset(Storage::url('notice_image/').$notice->image);
             $request->file('thumbnail')->storeAs('public/notice_image/',$notice->image);
+            $targetName = 'thmb_'.$notice->image;
+            ImageService::resizeImage(
+                storage_path('app/public/notice_image/'.$notice->image),
+                storage_path('app/public/notice_image/'.$targetName),
+                512,
+                384
+            );
+            $notice->thumbnail = asset(Storage::url('notice_image/').$targetName);
         }
         $notice->save();
 

@@ -11,7 +11,7 @@ class Notice extends Model
     protected $table = 't_notice';
 
     protected $fillable = [
-        'kind', 'title', 'content', 'shop_id', 'agree', 'image_path',
+        'kind', 'title', 'content', 'shop_id', 'agree', 'image_path', 'thumbnail'
     ];
 
     public static function get_data() {
