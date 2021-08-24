@@ -22,6 +22,9 @@ Route::get('/', function () {
 Route::get('/login', function() {
     return view('signin');
 });
+Route::get('/test', function() {
+    phpinfo();
+});
 Route::post('/do_login', 'HomeController@do_login');
 Route::post('/do_signup', 'HomeController@do_signup');
 
