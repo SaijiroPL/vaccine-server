@@ -597,12 +597,12 @@ class StoreApiController extends Controller
             $request->file('_file')->storeAs('public/carrying_history_image/', time().'_'.$request->file( '_file')->getClientOriginalName());
             $targetName = 'tmb_'.$history_image->image;
             ImageService::resizeImage(
-                storage_path('app/public/coupon_image/'.$history_image->image),
-                storage_path('app/public/coupon_image/'.$targetName),
+                storage_path('app/public/carrying_history_image/'.$history_image->image),
+                storage_path('app/public/carrying_history_image/'.$targetName),
                 640,
                 480
             );
-            $history_image->image_path = asset(Storage::url('coupon_image/').$targetName);
+            $history_image->image_path = asset(Storage::url('carrying_history_image/').$targetName);
         }
 
         $history_image->save();
