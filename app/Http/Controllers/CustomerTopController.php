@@ -102,8 +102,8 @@ class CustomerTopController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/topic_image/'.$topic->image),
                 storage_path('app/public/topic_image/'.$targetName),
-                640,
-                480
+                512,
+                384
             );
             $topic->thumbnail = asset(Storage::url('topic_image/').$targetName);
         }
