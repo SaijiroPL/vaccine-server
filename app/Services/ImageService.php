@@ -36,8 +36,12 @@ class ImageService {
         // Create final image with new dimensions.
         $newImage = imagecreatetruecolor($newWidth, $newHeight);
         imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
-        imagejpeg($newImage, $targetImage, $quality);
 
+        $exif = exif_read_data($sourceImage, 'IFD0');
+        if($exif['Orientation'] == 3){
+            $newImage = imagerotate($newImage, 180, 0);
+        }
+        imagejpeg($newImage, $targetImage, $quality);
         // Free up the memory.
         imagedestroy($image);
         imagedestroy($newImage);
