@@ -52,7 +52,7 @@
                             </td>
                             <td>{{ $u->created_at }}</td>
                             <td>
-                                <div><img src="{{ $image_url.$u->image }}" style="height:50px"/></div>
+                                <div><img src="{{ $u->thumbnail ? $u->thumbnail : $u->image_path }}" style="height:50px"/></div>
                             </td>
                         <td>
                             <div class="p-action">
