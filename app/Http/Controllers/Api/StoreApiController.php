@@ -830,6 +830,8 @@ class StoreApiController extends Controller
         $shop = Shop::find($account->store);
         $shop->start_time = $request->input('start_time');
         $shop->end_time = $request->input('end_time');
+        $shop->link = $request->input('link');
+        $shop->class_link = $request->input('class_link');
         $shop->save();
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
