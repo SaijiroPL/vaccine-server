@@ -6,6 +6,7 @@ use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Services\ImageService;
 
 class ShopController extends Controller
 {
@@ -84,9 +85,17 @@ class ShopController extends Controller
         $shop->class_link = $request->input('class_link');
         if ($request->file('thumbnail') != NULL)
         {
-            $shop->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
+            $shop->image = time().'_'.$request->file('thumbnail')->getClientOriginalName();
             $shop->image_path = asset(Storage::url('shop_image/').$shop->image);
             $request->file('thumbnail')->storeAs('public/shop_image/',$shop->image);
+            $targetName = 'thmb_'.$shop->image;
+            ImageService::resizeImage(
+                storage_path('app/public/shop_image/'.$shop->image),
+                storage_path('app/public/shop_image/'.$targetName),
+                640,
+                480
+            );
+            $shop->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }
         $shop->save();
 

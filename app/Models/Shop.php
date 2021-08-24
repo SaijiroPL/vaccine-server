@@ -25,7 +25,8 @@ class Shop extends Model
         'email',
         'class_link',
         'login_id',
-        'login_password'
+        'login_password',
+        'thumbnail'
     ];
 
     public static function authenticate($name, $password)
