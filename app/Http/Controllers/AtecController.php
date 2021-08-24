@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
 use App\Mail\StaticEmail;
+use App\Services\ImageService;
 
 class AtecController extends Controller
 {
@@ -102,6 +103,14 @@ class AtecController extends Controller
             $atec->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
             $atec->image_path = asset(Storage::url('atec_image/').$atec->image);
             $request->file('thumbnail')->storeAs('public/atec_image/',$atec->image);
+            $targetName = 'thmb_'.$atec->image;
+            ImageService::resizeImage(
+                storage_path('app/public/atec_image/'.$atec->image),
+                storage_path('app/public/atec_image/'.$targetName),
+                512,
+                384
+            );
+            $atec->thumbnail = asset(Storage::url('atec_image/').$targetName);
         }
         $atec->save();
 
