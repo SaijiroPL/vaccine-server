@@ -7,6 +7,7 @@ use App\Models\CustomerTop;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\ImageService;
 
 class CustomerTopController extends Controller
 {
@@ -97,6 +98,14 @@ class CustomerTopController extends Controller
             $topic->image = time().'_'.$request->file( 'thumbnail')->getClientOriginalName();
             $topic->image_link = asset(Storage::url('topic_image/').$topic->image);
             $request->file('thumbnail')->storeAs('public/topic_image/',$topic->image);
+            $targetName = 'thmb_'.$topic->image;
+            ImageService::resizeImage(
+                storage_path('app/public/topic_image/'.$topic->image),
+                storage_path('app/public/topic_image/'.$targetName),
+                640,
+                480
+            );
+            $topic->thumbnail = asset(Storage::url('topic_image/').$targetName);
         }
         $topic->save();
 

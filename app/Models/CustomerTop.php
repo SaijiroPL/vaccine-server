@@ -15,6 +15,7 @@ class CustomerTop extends Model
         'title',
         'content',
         'image',
-        'image_link'
+        'image_link',
+        'thumbnail'
     ];
 }
