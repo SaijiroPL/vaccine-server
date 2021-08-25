@@ -43,7 +43,7 @@ class MakeThumbnail extends Command
     {
         $atecs = Atec::get();
         foreach($atecs as $atec) {
-            if (!$atec->thumbnail) {
+            if ($atec->thumbnail == null) {
                 $targetName = 'thmb_'.$atec->image;
                 ImageService::resizeImage(
                     storage_path('app/public/atec_image/'.$atec->image),
