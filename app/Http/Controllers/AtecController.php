@@ -107,8 +107,8 @@ class AtecController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/atec_image/'.$atec->image),
                 storage_path('app/public/atec_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $atec->thumbnail = asset(Storage::url('atec_image/').$targetName);
         }

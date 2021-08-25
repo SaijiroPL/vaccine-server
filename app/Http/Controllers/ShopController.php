@@ -92,8 +92,8 @@ class ShopController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/shop_image/'.$shop->image),
                 storage_path('app/public/shop_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $shop->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }

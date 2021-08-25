@@ -124,8 +124,8 @@ class CouponController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/coupon_image/'.$coupon->image),
                 storage_path('app/public/coupon_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $coupon->thumbnail = asset(Storage::url('coupon_image/').$targetName);
         }

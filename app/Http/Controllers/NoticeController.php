@@ -120,8 +120,8 @@ class NoticeController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/notice_image/'.$notice->image),
                 storage_path('app/public/notice_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $notice->thumbnail = asset(Storage::url('notice_image/').$targetName);
         }

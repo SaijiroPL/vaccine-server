@@ -421,8 +421,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/notice_image/'.$notice->image),
                 storage_path('app/public/notice_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $notice->thumbnail = asset(Storage::url('notice_image/').$targetName);
         }
@@ -478,8 +478,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/coupon_image/'.$coupon->image),
                 storage_path('app/public/coupon_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $coupon->thumbnail = asset(Storage::url('coupon_image/').$targetName);
         }
@@ -599,8 +599,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/carrying_history_image/'.$history_image->image),
                 storage_path('app/public/carrying_history_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $history_image->thumbnail = asset(Storage::url('carrying_history_image/').$targetName);
         }
@@ -898,8 +898,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/shop_image/'.$shopImage->filename),
                 storage_path('app/public/shop_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $shopImage->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }
@@ -973,8 +973,8 @@ class StoreApiController extends Controller
             ImageService::resizeImage(
                 storage_path('app/public/shop_image/'.$shop->image),
                 storage_path('app/public/shop_image/'.$targetName),
-                512,
-                384
+                240,
+                180
             );
             $shop->thumbnail = asset(Storage::url('shop_image/').$targetName);
         }
