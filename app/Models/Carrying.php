@@ -44,7 +44,7 @@ class Carrying extends Model
 
     public static function get_data_by_shop($shop_id, $performer)
     {
-        $carries = DB::table('v_carrying')->where('shop_id', $shop_id);
+        $carries = self::with('shop')->where('shop_id', $shop_id);
         if ($performer != '') {
             $carries = $carries->where('performer', $performer);
         }
