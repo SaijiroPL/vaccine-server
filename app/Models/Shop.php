@@ -103,11 +103,9 @@ class Shop extends Model
             ->get();
     }
 
-    public static function get_shop_by_city($city_name)
+    public static function get_shop_by_city($province, $detail)
     {
-        return DB::table('v_shop')
-                ->where('name_c', $city_name)
-                ->get();
+        return self::where('a_province', $province)->where('a_detail', $detail)->get();
     }
 
     public static function get_shop_by_province($name_province)
