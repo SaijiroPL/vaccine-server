@@ -16,8 +16,7 @@ class MyShop extends Model
 
     public static function get_my_shop($customerID)
     {
-        return DB::table('v_my_shop')
-            ->where('f_customer_id', $customerID)
+        return self::where('f_customer_id', $customerID)
             ->orderby('updated_at', 'desc')
             ->first();
     }
