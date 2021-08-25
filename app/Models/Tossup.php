@@ -30,10 +30,8 @@ class Tossup extends Model
 
     public static function get_tossup_by_shop($shop)
     {
-        return DB::table('v_tossup')
-            ->where(['tossed' => 0, 'shop' => $shop])
-            ->latest()
-            ->get();
+        $tosses = self::where(['tossed' => 0, 'shop' => $shop])->latest()->get();
+        return $tosses;
     }
 
     public function shopO()
