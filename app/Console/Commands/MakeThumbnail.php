@@ -53,6 +53,7 @@ class MakeThumbnail extends Command
                     180
                 );
                 $atec->thumbnail = asset(Storage::url('atec_image/').$targetName);
+                $atec->save();
             }
         }
     }
