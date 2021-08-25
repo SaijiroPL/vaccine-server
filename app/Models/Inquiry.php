@@ -16,13 +16,18 @@ class Inquiry extends Model
     ];
 
     public static function get_data($shop_name) {
-
-        $inquiries = DB::table('v_inquiry')
-                ->where('shop_name', 'like', $shop_name)
-                ->latest()
-                ->paginate(10);
+        $inquiries = self::with('shop')
+            ->whereHas('shop', function ($q) use ($shop_name) {
+                $q->where('shop_name', 'like', $shop_name);
+            })->latest()
+            ->paginate(10);
 
         return $inquiries;
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop');
     }
 
     public static function get_by_shop($shop)
