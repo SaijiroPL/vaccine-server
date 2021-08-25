@@ -38,13 +38,16 @@ class ImageService {
         imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
 
         $exif = exif_read_data($sourceImage, 'IFD0');
-        if ($exif['Orientation'] == 3){
-            $newImage = imagerotate($newImage, 180, 0);
-        } else if ($exif['Orientation'] == 8){
-            $newImage = imagerotate($newImage, 90, 0);
-        } else if ($exif['Orientation'] == 6){
-            $newImage = imagerotate($newImage, -90, 0);
+        if ($exif) {
+            if ($exif['Orientation'] == 3){
+                $newImage = imagerotate($newImage, 180, 0);
+            } else if ($exif['Orientation'] == 8){
+                $newImage = imagerotate($newImage, 90, 0);
+            } else if ($exif['Orientation'] == 6){
+                $newImage = imagerotate($newImage, -90, 0);
+            }
         }
+
         imagejpeg($newImage, $targetImage, $quality);
         // Free up the memory.
         imagedestroy($image);
