@@ -18,7 +18,7 @@ class Inquiry extends Model
     public static function get_data($shop_name) {
         $inquiries = self::with('shop')
             ->whereHas('shop', function ($q) use ($shop_name) {
-                $q->where('shop_name', 'like', $shop_name);
+                $q->where('name', 'like', $shop_name);
             })->latest()
             ->paginate(10);
 
