@@ -333,10 +333,11 @@ class ClientApiController extends Controller
 
     public function getShopListByCity(Request $request)
     {
-        $name_city = $request->input('name_city');
+        $a_province = $request->input('a_province');
+        $a_detail = $request->input('a_detail');
         return response()->json([
             'result' => Config::get('constants.errno.E_OK'),
-            'shopList' => Shop::get_shop_by_city($name_city),
+            'shopList' => Shop::get_shop_by_city($a_province, $a_detail),
         ]);
     }
 
