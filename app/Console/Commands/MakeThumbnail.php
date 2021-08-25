@@ -43,7 +43,7 @@ class MakeThumbnail extends Command
     {
         $atecs = Atec::get();
         foreach($atecs as $atec) {
-            printf($atec->id);
+            printf($atec->id.'\n');
             if ($atec->thumbnail == null && $atec->image != null) {
                 $targetName = 'thmb_'.$atec->image;
                 ImageService::resizeImage(
