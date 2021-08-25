@@ -54,7 +54,7 @@ class Carrying extends Model
     public static function get_today_data_by_shop($shop_id, $performer)
     {
         $today = date('Y-m-d');
-        $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', $today);
+        $carries = self::with('shop')->where('shop_id', $shop_id)->where('date', $today);
         if ($performer != '') {
             $carries = $carries->where('performer', $performer);
         }
@@ -65,8 +65,9 @@ class Carrying extends Model
     {
         if (!$from) $from='';
         if (!$to) $to='2100/01/01';
-
-        $carries = DB::table('v_carrying')->where('shop_id', $shop_id)->where('date', '>=', $from)->where('date', '<=', $to);
+        $carries = self::with('shop')->where('shop_id', $shop_id)
+            ->where('date', '>=', $from)
+            ->where('date', '<=', $to);
         if ($performer != '') {
             $carries = $carries->where('performer', $performer);
         }
