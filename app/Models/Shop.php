@@ -89,10 +89,15 @@ class Shop extends Model
 
     public static function get_city_list_by_province($name_province)
     {
-        return DB::table('v_shop')->select(DB::raw('name_c, name_p'))
-            ->where('name_p', $name_province)
-            ->groupBy('name_c')
-            ->orderby('name_c', 'asc')
+        // return DB::table('v_shop')->select(DB::raw('name_c, name_p'))
+        //     ->where('name_p', $name_province)
+        //     ->groupBy('name_c')
+        //     ->orderby('name_c', 'asc')
+        //     ->get();
+        return self::leftJoin('t_area', 't_shop.postal', '=', 't_area.postal')
+            ->where('t_area.name_p', $name_province)
+            ->groupBy('t_area.name_c')
+            ->select('name_c')
             ->get();
     }
 
