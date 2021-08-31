@@ -18,7 +18,7 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
-          <textarea class="summernote" name="policy">{!! isset($data) ? $data->policy : '' !!}</textarea>
+          <textarea class="summernote" name="policy" style="height: 500px">{!! isset($data) ? $data->policy : '' !!}</textarea>
         </div>
         <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
           <textarea class="summernote" name="privacy">{!! isset($data) ? $data->privacy : '' !!}</textarea>
