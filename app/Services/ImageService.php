@@ -22,6 +22,11 @@ class ImageService {
             $maxHeight = $origHeight;
         }
 
+        if ($origWidth < $maxWidth && $origHeight < $maxHeight) {
+            $maxWidth  = $origWidth;
+            $maxHeight = $origHeight;
+        }
+
         // Calculate ratio of desired maximum sizes and original sizes.
         $widthRatio = $maxWidth / $origWidth;
         $heightRatio = $maxHeight / $origHeight;
