@@ -37,7 +37,9 @@
 @section('script')
 <script>
   $(function() {
-    $(".summernote").summernote({height:500});
+    $(".summernote").summernote({
+      height:500,
+    });
   });
 </script>
 @endsection
