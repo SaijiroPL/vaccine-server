@@ -16,17 +16,17 @@
                   <span>&nbsp;&nbsp;すべて&nbsp;&nbsp;</span>
                 </span>
               </a>
-              <a href="{{ url('/master/carrying_goods?type=0') }}" class="btn @if ($type == 0) btn-primary @endif">
+              <a href="{{ url('/master/carrying_goods?type=1') }}" class="btn @if ($type == 1) btn-primary @endif">
                 <span>
                   <span>&nbsp;&nbsp;ハルトコーティング&nbsp;&nbsp;</span>
                 </span>
               </a>
-              <a href="{{ url('/master/carrying_goods?type=1') }}" class="btn @if ($type == 1) btn-primary @endif">
+              <a href="{{ url('/master/carrying_goods?type=2') }}" class="btn @if ($type == 2) btn-primary @endif">
                 <span>
                   <span>&nbsp;&nbsp;ハルトコーティングtypeF&nbsp;&nbsp;</span>
                 </span>
               </a>
-              <a href="{{ url('/master/carrying_goods?type=2') }}" class="btn @if ($type == 2) btn-primary @endif">
+              <a href="{{ url('/master/carrying_goods?type=0') }}" class="btn @if ($type == 0) btn-primary @endif">
                 <span>
                   <span>&nbsp;&nbsp;その他&nbsp;&nbsp;</span>
                 </span>
