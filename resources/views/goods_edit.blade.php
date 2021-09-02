@@ -81,13 +81,19 @@
                     <tr>
                       <td>サイズ</td>
                       <td>価格</td>
+                      <td></td>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($goods->details as $d)
+                    @foreach ($goods->details as $key => $d)
                       <tr>
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->price }}</td>
+                        <td>
+                          <button class="btn">
+                            <i class="la la-arrow-up"></i>
+                          </button>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>
