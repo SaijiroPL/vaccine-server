@@ -91,12 +91,12 @@
                         <td>{{ $d->price }}</td>
                         <td>
                           @if ($key > 0)
-                            <button class="btn btn-info">
+                            <button type="button" class="btn btn-info" onclick="reorder({{ $key }}, 0)">
                               <i class="la la-arrow-up"></i>
                             </button>
                           @endif
                           @if ($key < count($goods->details) - 1)
-                            <button class="btn btn-info">
+                            <button type="button" class="btn btn-info" onclick="reorder({{ $key }}, 1)">
                               <i class="la la-arrow-down"></i>
                             </button>
                           @endif
