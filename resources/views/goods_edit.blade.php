@@ -10,17 +10,13 @@
         {{ csrf_field() }}
         <input type="hidden" name="no" value="{{ isset($goods) ?  $goods->id : '' }}" />
         <div class="m-portlet__body">
-            <div class="form-group m-form__group row" style="display: none">
+            <div class="form-group m-form__group row">
                 <label for="exampleSelect1" class="col-2 col-form-label">種類</label>
                 <div class="col-6">
                     <select class="form-control m-input" name="type">
-                        @if (isset($goods) && $goods->type == 1)
-                          <option value="0">そのた</option>
-                          <option value="1" selected>フォン</option>
-                        @else
-                          <option value="0" selected>そのた</option>
-                          <option value="1">フォン</option>
-                        @endif
+                        <option value="0" @if (isset($goods) && $goods->type == 0) selected @endif>ハルトコーティング</option>
+                        <option value="1" @if (isset($goods) && $goods->type == 1) selected @endif>ハルトコーティングtypeF</option>
+                        <option value="2" @if (isset($goods) && $goods->type == 2) selected @endif>その他</option>
                     </select>
                 </div>
             </div>
