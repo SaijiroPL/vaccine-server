@@ -10,6 +10,6 @@ class CarryingGoodsDetail extends Model
     protected $table = 't_carrying_goods_details';
 
     protected $fillable = [
-        'goods_id', 'name', 'price',
+        'goods_id', 'name', 'price', 'order_no'
     ];
 }

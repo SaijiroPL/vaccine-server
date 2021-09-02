@@ -101,6 +101,7 @@
                             </button>
                           @endif
                         </td>
+                        <input type="hidden" name="orders[]" id="order-{{ $key }}" value="{{ $d->order_no }}">
                       </tr>
                     @endforeach
                   </tbody>
