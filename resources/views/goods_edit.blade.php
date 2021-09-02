@@ -90,7 +90,7 @@
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->price }}</td>
                         <td>
-                          <button class="btn">
+                          <button class="btn btn-info">
                             <i class="la la-arrow-up"></i>
                           </button>
                         </td>
