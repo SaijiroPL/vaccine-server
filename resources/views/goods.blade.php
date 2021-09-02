@@ -11,7 +11,7 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-              <a href="{{ url('/master/carrying_goods') }}" class="btn btn-primary">
+              <a href="{{ url('/master/carrying_goods') }}" class="btn @if ($type == null) btn-primary @endif">
                 <span>
                   <span>&nbsp;&nbsp;すべて&nbsp;&nbsp;</span>
                 </span>
