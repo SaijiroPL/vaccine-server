@@ -14,21 +14,15 @@
                 <label for="example-text-input" class="col-2 col-form-label"></label>
                 <div class="col-6">
                   <label class="m-radio">
-                    @if (isset($coupon) && $coupon->type == 0)
-                      <input type="radio" name="type" value="0" checked="checked"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @elseif(!isset($counpon))
-                      <input type="radio" name="type" value="0" checked="checked"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @else
-                      <input type="radio" name="type" value="0"> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @endif
+                    <input type="radio" name="type" value="0" @if (isset($coupon) && $coupon->type == 0) checked="checked" @endif> ハルト&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    @if (isset($coupon) && $coupon->type == 1)
-                      <input type="radio" name="type" value="1" checked="checked"> ハルトtypeF
-                    @else
-                      <input type="radio" name="type" value="1"> ハルトtypeF
-                    @endif
+                    <input type="radio" name="type" value="1" @if (isset($coupon) && $coupon->type == 1) checked="checked" @endif> ハルトtypeF
+                    <span></span>
+                  </label>
+                  <label class="m-radio">
+                    <input type="radio" name="type" value="2" @if (isset($coupon) && $coupon->type == 2) checked="checked" @endif> その他
                     <span></span>
                   </label>
                 </div>
