@@ -18,7 +18,7 @@
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    <input type="radio" name="type" value="1" @if (isset($coupon) && $coupon->type == 1) checked="checked" @endif> ハルトtypeF
+                    <input type="radio" name="type" value="1" @if (isset($coupon) && $coupon->type == 1) checked="checked" @endif> ハルトtypeF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span></span>
                   </label>
                   <label class="m-radio">
