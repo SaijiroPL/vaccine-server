@@ -18,11 +18,11 @@
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    <input type="radio" name="type" value="1" @if (isset($goods) && $goods->type == 0) checked="checked" @endif> ハルトコーティングtypeF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="type" value="1" @if (isset($goods) && $goods->type == 1) checked="checked" @endif> ハルトコーティングtypeF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    <input type="radio" name="type" value="2" @if (isset($goods) && $goods->type == 0) checked="checked" @endif> その他&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="type" value="2" @if (isset($goods) && $goods->type == 2) checked="checked" @endif> その他&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span></span>
                   </label>
                 </div>
