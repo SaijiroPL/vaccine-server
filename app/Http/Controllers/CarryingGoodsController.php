@@ -24,7 +24,8 @@ class CarryingGoodsController extends Controller
         return view('goods', [
             'goods' => $goods,
             'per_page' => 10,
-            'image_url' => $image_url
+            'image_url' => $image_url,
+            'type'=> $type
         ]);
     }
 
