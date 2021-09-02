@@ -11,12 +11,30 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-                <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary pull-right">
-                        <span>
-                            <i class="fa flaticon-add-circular-button"></i>
-                            <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
-                        </span>
-                </a>
+              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+                <span>
+                  <i class="fa flaticon-add-circular-button"></i>
+                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                </span>
+              </a>
+              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+                <span>
+                  <i class="fa flaticon-add-circular-button"></i>
+                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                </span>
+              </a>
+              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+                <span>
+                  <i class="fa flaticon-add-circular-button"></i>
+                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                </span>
+              </a>
+              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary pull-right">
+                <span>
+                  <i class="fa flaticon-add-circular-button"></i>
+                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                </span>
+              </a>
             </div>
             <div class="col-md-12">
                 <table width="100%" class="table table-striped table-bordered table-advance table-hover">
