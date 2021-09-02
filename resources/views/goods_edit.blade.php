@@ -12,7 +12,7 @@
         <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                 <label for="exampleSelect1" class="col-2 col-form-label">種類</label>
-                <div class="col-9">
+                <div class="col-9" style="margin-top: 8px;">
                   <label class="m-radio">
                     <input type="radio" name="type" value="0" @if (isset($goods) && $goods->type == 0) checked="checked" @endif> ハルトコーティング&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span></span>
