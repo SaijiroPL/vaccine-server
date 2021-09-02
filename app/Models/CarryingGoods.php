@@ -15,9 +15,12 @@ class CarryingGoods extends Model
         'type', 'name', 'price',
     ];
 
-    public static function get_data() {
-        $goods =  CarryingGoods::latest()->paginate(10);
-        return $goods;
+    public static function get_data($type) {
+        if ($type != null) {
+            return CarryingGoods::where('type', $type)->latest()->paginate(10);
+        } else {
+            return CarryingGoods::latest()->paginate(10);
+        }
     }
 
     public static function get_goods($id) {

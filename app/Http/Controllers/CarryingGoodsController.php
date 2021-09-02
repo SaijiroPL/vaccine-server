@@ -19,8 +19,7 @@ class CarryingGoodsController extends Controller
     public function index(Request $request)
     {
         $type = $request->input('type');
-        dd($type);
-        $goods = CarryingGoods::get_data();
+        $goods = CarryingGoods::get_data($type);
         $image_url = Storage::url('goods_image/');
         return view('goods', [
             'goods' => $goods,
