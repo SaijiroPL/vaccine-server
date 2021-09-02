@@ -21,6 +21,7 @@ class CarryingGoodsController extends Controller
         $type = $request->input('type');
         $goods = CarryingGoods::get_data($type);
         $image_url = Storage::url('goods_image/');
+        if ($type == null) $type = -1;
         return view('goods', [
             'goods' => $goods,
             'per_page' => 10,
