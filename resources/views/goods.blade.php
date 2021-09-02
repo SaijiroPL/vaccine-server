@@ -13,19 +13,16 @@
             <div class="col-md-12 m--padding-bottom-15">
               <a href="{{ url('/master/carrying_goods?type=0') }}" class="btn btn-primary">
                 <span>
-                  <i class="fa flaticon-add-circular-button"></i>
                   <span>&nbsp;&nbsp;ハルトコーティング&nbsp;&nbsp;</span>
                 </span>
               </a>
               <a href="{{ url('/master/carrying_goods?type=1') }}" class="btn btn-primary">
                 <span>
-                  <i class="fa flaticon-add-circular-button"></i>
                   <span>&nbsp;&nbsp;ハルトコーティングtypeF&nbsp;&nbsp;</span>
                 </span>
               </a>
               <a href="{{ url('/master/carrying_goods?type=2') }}" class="btn btn-primary">
                 <span>
-                  <i class="fa flaticon-add-circular-button"></i>
                   <span>&nbsp;&nbsp;その他&nbsp;&nbsp;</span>
                 </span>
               </a>
