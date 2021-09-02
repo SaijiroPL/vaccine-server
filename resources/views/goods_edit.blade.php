@@ -90,9 +90,16 @@
                         <td>{{ $d->name }}</td>
                         <td>{{ $d->price }}</td>
                         <td>
-                          <button class="btn btn-info">
-                            <i class="la la-arrow-up"></i>
-                          </button>
+                          @if ($key > 0)
+                            <button class="btn btn-info">
+                              <i class="la la-arrow-up"></i>
+                            </button>
+                          @endif
+                          @if ($key < count($goods->details) - 1)
+                            <button class="btn btn-info">
+                              <i class="la la-arrow-down"></i>
+                            </button>
+                          @endif
                         </td>
                       </tr>
                     @endforeach
