@@ -11,22 +11,22 @@
     <div class="m-portlet__body">
         <div class="row">
             <div class="col-md-12 m--padding-bottom-15">
-              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+              <a href="{{ url('/master/carrying_goods?type=0') }}" class="btn btn-primary">
                 <span>
                   <i class="fa flaticon-add-circular-button"></i>
-                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                  <span>&nbsp;&nbsp;ハルトコーティング&nbsp;&nbsp;</span>
                 </span>
               </a>
-              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+              <a href="{{ url('/master/carrying_goods?type=1') }}" class="btn btn-primary">
                 <span>
                   <i class="fa flaticon-add-circular-button"></i>
-                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                  <span>&nbsp;&nbsp;ハルトコーティングtypeF&nbsp;&nbsp;</span>
                 </span>
               </a>
-              <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary">
+              <a href="{{ url('/master/carrying_goods?type=2') }}" class="btn btn-primary">
                 <span>
                   <i class="fa flaticon-add-circular-button"></i>
-                  <span>&nbsp;&nbsp;施工商品追加&nbsp;&nbsp;</span>
+                  <span>&nbsp;&nbsp;その他&nbsp;&nbsp;</span>
                 </span>
               </a>
               <a href="{{ url('/master/carrying_goods/edit') }}" class="btn btn-primary pull-right">
